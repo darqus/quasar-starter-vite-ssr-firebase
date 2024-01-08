@@ -207,7 +207,6 @@ $ firebase init hosting
 * ? What do you want to use as your public directory? dist/spa
 * ? Configure as a single-page app (rewrite all urls to /index.html)? Yes
 * ? Set up automatic builds and deploys with GitHub? No
-* ? Wrote dist/index.html? Yes
 
 ```sh
 $ firebase emulators:start
