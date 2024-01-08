@@ -16,7 +16,7 @@
           <div class="row">
             <div class="col-0 col-sm-5 bg-primary xs-hide">
               <div class="row full-width q-px-xl q-pb-xl full-height flex flex-center">
-                <div class="">
+                <div>
                   <div
                     class="text-h4 text-white"
                     style="min-width: 220px"
