@@ -28,7 +28,7 @@
               <div class="row">
                 <div class="col-12 text-subtitle1">
                   <router-link
-                    class="text-primary text-decoration-none"
+                    class="text-primary"
                     to="/"
                   >
                     На Главную
