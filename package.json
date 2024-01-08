@@ -47,7 +47,7 @@
   },
   "name": "quasar-starter-vite-ssr-firebase",
   "private": true,
-  "productName": "quasar-starter-vite-ssr",
+  "productName": "quasar-starter-vite-ssr-firebase",
   "scripts": {
     "dev": "quasar dev",
     "dev:ssr": "quasar dev -m ssr",
