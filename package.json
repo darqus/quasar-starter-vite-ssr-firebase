@@ -62,7 +62,8 @@
     "test:unit": "vitest",
     "test:unit:ci": "vitest run",
     "upgrade:deps": "yarn upgrade-interactive --latest",
-    "deploy:firebase": "bash publish.sh"
+    "deploy:firebase": "firebase deploy --only hosting",
+    "publish": "bash publish.sh"
   },
   "version": "0.0.1"
 }
