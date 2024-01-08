@@ -8,10 +8,6 @@ import {
   setDoc,
 } from 'firebase/firestore'
 
-import { useStoreAuth, } from '@/stores/store-auth'
-
-const storeAuth = useStoreAuth()
-
 // init firebase app
 const firebaseApp: FirebaseApp = initializeApp({
   apiKey: import.meta.env.VITE_API_KEY,
@@ -32,5 +28,3 @@ export const getCollection = (collectionName: string) => getDocs(collection(db, 
 
 // set doc https://firebase.google.com/docs/firestore/query-data/queries?authuser=0&hl=en
 export const addDoc = (collectionName: string, data: unknown) => setDoc(doc(collection(db, collectionName)), data)
-
-storeAuth.watchAuthStateChanged()
