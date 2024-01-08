@@ -18,11 +18,10 @@ echo '"'$COMMENT'"'
 echo
 
 quasar build
+firebase deploy --only hosting
+quasar clean
 
 git checkout main
 git add .
 git commit -m "$COMMENT"
 git push
-
-firebase deploy --only hosting
-quasar clean
