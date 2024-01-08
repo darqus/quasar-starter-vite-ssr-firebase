@@ -76,6 +76,18 @@
               Забыли пароль?
             </q-btn>
           </div>
+
+          <div class="q-mt-lg">
+            <div class="q-mt-sm">
+              Нет аккаунта?
+              <router-link
+                :to="ROUTE_TYPE.REGISTER"
+                class="text-primary"
+              >
+                Зарегистрироваться
+              </router-link>
+            </div>
+          </div>
         </q-card-section>
       </q-card>
     </q-form>
@@ -83,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, type Ref, onUnmounted, /* nextTick, */ } from 'vue'
+import { ref, watch, type Ref, onUnmounted, } from 'vue'
 
 import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from '@/types/enums'
 
@@ -96,14 +108,14 @@ const storeAuth = useStoreAuth()
 const refLoginForm: Ref = ref(null)
 
 const reset = () => {
-  storeAuth.onResetForm()
+  storeAuth.onResetForm(AUTH_TYPE.LOGIN_EMAIL)
   if (refLoginForm.value) {
     refLoginForm.value.resetValidation()
   }
 }
 
 onUnmounted(() => {
-  // nextTick(() => reset())
+  reset()
 })
 
 watch(

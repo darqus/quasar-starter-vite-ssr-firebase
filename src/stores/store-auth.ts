@@ -137,8 +137,22 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
           this.toggleLoading()
         })
     },
-    onResetForm () {
-      this.$state = getDefaultAuthState()
+    onResetForm (authType: string) {
+      switch (authType) {
+        case AUTH_TYPE.LOGIN_EMAIL: {
+          this.formsAuth[AUTH_TYPE.LOGIN_EMAIL] = FORM_LOGIN_EMAIL()
+          break
+        }
+
+        case AUTH_TYPE.REGISTER: {
+          this.formsAuth[AUTH_TYPE.REGISTER] = FORM_REGISTER()
+          break
+        }
+
+        default: {
+          this.formsAuth[AUTH_TYPE.FORGOT_PASSWORD] = FORM_FORGOT_PASSWORD()
+        }
+      }
     },
     onLogout (goToLogin?: boolean) {
       this.toggleLoading()
