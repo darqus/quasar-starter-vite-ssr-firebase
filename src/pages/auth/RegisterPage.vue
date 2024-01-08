@@ -35,11 +35,9 @@
                   </router-link>
                 </div>
                 <div class="col-12">
-                  <div class="q-mb-xl">
-                    <div class="flex justify-center">
-                      <div class="text-h5 q-my-none text-weight-bold text-primary">
-                        Регистрация
-                      </div>
+                  <div class="flex justify-center">
+                    <div class="text-h5 q-my-lg text-weight-bold text-primary">
+                      Регистрация
                     </div>
                   </div>
 
