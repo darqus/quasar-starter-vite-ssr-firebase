@@ -6,12 +6,6 @@
       @submit.prevent="storeAuth.onLogin"
     >
       <q-card style="min-width: 300px">
-        <!-- <q-card-section class="bg-primary text-white">
-          <div class="text-h6">
-            <div>Вход</div>
-          </div>
-        </q-card-section> -->
-
         <q-card-section>
           <div class="row">
             <div class="col-0 col-sm-5 bg-primary xs-hide">
