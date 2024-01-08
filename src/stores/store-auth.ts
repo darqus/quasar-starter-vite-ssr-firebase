@@ -63,6 +63,12 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
           visible: !this.loggedIn,
         },
         {
+          title: ROUTE_NAME.FORGOT,
+          icon: ROUTE_ICON.FORGOT,
+          path: ROUTE_TYPE.FORGOT,
+          visible: !this.loggedIn,
+        },
+        {
           title: ROUTE_NAME.ACCOUNT,
           icon: ROUTE_ICON.ACCOUNT,
           path: ROUTE_TYPE.ACCOUNT,
