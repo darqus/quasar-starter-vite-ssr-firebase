@@ -11,7 +11,14 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> {{ APP_NAME }} </q-toolbar-title>
+        <q-toolbar-title>
+          <router-link
+            class="text-white text-decoration-none"
+            to="/"
+          >
+            {{ APP_NAME }}
+          </router-link>
+        </q-toolbar-title>
 
         <div>{{ title }}</div>
       </q-toolbar>
