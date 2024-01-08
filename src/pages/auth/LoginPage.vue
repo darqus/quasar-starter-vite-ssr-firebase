@@ -7,18 +7,18 @@
     >
       <q-card style="min-width: 300px">
         <div class="row">
-          <div class="col-sm-5 bg-primary xs-hide">
-            <div class="bg-blue text-white text-center q-pa-md flex flex-center">
-              <div class="text-right">
-                <div
-                  class="text-h4 text-white"
-                  style="min-width: 220px"
-                >
-                  Добро пожаловать
-                </div>
-                <div class="text-white q-my-sm text-subtitle1">
-                  Для начала работы войдите в ваш аккаунт!
-                </div>
+          <div class="col-sm-5 bg-blue-8 xs-hide text-right">
+            <div class="bg-blue-6 text-white q-pa-md">
+              <div
+                class="text-h6 text-white"
+                style="min-width: 220px"
+              >
+                Добро пожаловать
+              </div>
+            </div>
+            <div class="bg-blue-5 text-white q-pa-md">
+              <div class="text-white q-my-sm text-subtitle1">
+                Для начала работы войдите в ваш аккаунт!
               </div>
             </div>
           </div>
