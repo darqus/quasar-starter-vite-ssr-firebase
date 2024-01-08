@@ -41,6 +41,7 @@
               :disable="storeAuth.disabledSubmitButton"
               :loading="storeAuth.loading"
               :type="BUTTON_TYPE.SUBMIT"
+              class="full-width"
               color="primary"
               label="Сбросить пароль"
               no-caps
