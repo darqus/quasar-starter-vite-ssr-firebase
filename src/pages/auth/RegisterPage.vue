@@ -7,7 +7,7 @@
     >
       <q-card style="min-width: 300px">
         <div class="row">
-          <div class="col-sm-5 bg-blue-8 xs-hide text-right">
+          <q-card class="col-sm-5 bg-blue-8 xs-hide text-right">
             <div class="bg-blue-6 text-white q-pa-md">
               <div
                 class="text-h6 text-white"
@@ -21,7 +21,7 @@
                 Для начала работы пройдите регистрацию!
               </div>
             </div>
-          </div>
+          </q-card>
 
           <div class="col-sm-7">
             <div class="q-pa-lg">
