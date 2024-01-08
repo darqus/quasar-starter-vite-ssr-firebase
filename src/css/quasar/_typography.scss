@@ -48,3 +48,9 @@ $text-weights: (
   bold: 700,
   bolder: 900,
 ) !default;
+
+// https://quasar.dev/style/typography/#css-helper-classes
+
+.text-decoration-none {
+  text-decoration: none !important;
+}
