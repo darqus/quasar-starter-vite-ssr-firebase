@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "skill-flash",
+    "skill-flash": "skill-flash"
+  },
+  "targets": {},
+  "etags": {}
+}

@@ -1,0 +1,54 @@
+{
+  "extends": "@quasar/app-vite/tsconfig-preset",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "esnext",
+    "module": "esnext",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "declaration": true,
+    "noEmit": true,
+    "allowJs": true,
+    "paths": {
+      "@/*": [
+        "src/*",
+        "test/*"
+      ],
+    },
+    "types": [
+      "@types/node",
+      "vite/client"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "test/**/*.ts",
+    "test/**/*.vue",
+    ".eslintrc.cjs",
+    "quasar.config.js",
+    "vite.config.ts",
+    "vitest.config.ts",
+  ],
+  "exclude": [
+    ".quasar",
+    "dist",
+    "node_modules",
+    "tsconfig.json",
+    "package.json",
+    "package-lock.json",
+    "quasar.testing.json",
+    "quasar.extensions.json",
+  ],
+}
