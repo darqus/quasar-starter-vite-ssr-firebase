@@ -4,7 +4,10 @@
       Главное меню
     </q-item-label>
 
-    <UserAvatar />
+    <UserAvatar
+      v-if="storeAuth.loggedIn"
+      :user-email="storeAuth.currentUser?.email"
+    />
 
     <RouterMenuLink
       v-for="link in storeAuth.routerMenuLinks"
