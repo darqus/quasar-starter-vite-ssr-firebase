@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="storeAuth.loggedIn"
-    class="q-pa-md q-gutter-md row justify-center"
-  >
+  <div class="q-pa-md q-gutter-md row justify-center">
     <q-avatar
       color="primary"
       font-size="52px"
@@ -11,7 +8,7 @@
       text-color="white"
     />
     <q-input
-      :model-value="storeAuth.currentUser?.email"
+      :model-value="userEmail"
       label="Ваш Email"
       outlined
       readonly
@@ -20,7 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import { useStoreAuth, } from '@/stores/store-auth'
+type UserAvatar = {
+  userEmail?: string | null
+}
 
-const storeAuth = useStoreAuth()
+withDefaults(defineProps<UserAvatar>(), {
+  userEmail: '',
+})
 </script>
