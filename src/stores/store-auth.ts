@@ -1,10 +1,5 @@
 import { defineStore, } from 'pinia'
 
-import type { TAuthLinks, TAuthState, CurrentUser, } from '@/types/auth'
-import { AUTH_TYPE, INPUT_TYPE, PASSWORD_VISIBILITY_ICON_MAP, ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE, STORE_TYPES, } from '@/types/enums'
-
-import { createNotify, } from '@/utils/notify'
-
 import type { AuthError, } from 'firebase/auth'
 import {
   onAuthStateChanged,
@@ -13,6 +8,11 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
+
+import type { TAuthLinks, TAuthState, CurrentUser, } from '@/types/auth'
+import { AUTH_TYPE, INPUT_TYPE, PASSWORD_VISIBILITY_ICON_MAP, ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE, STORE_TYPES, } from '@/types/enums'
+
+import { createNotify, } from '@/utils/notify'
 
 import { FORM_FORGOT_PASSWORD, FORM_LOGIN_EMAIL, FORM_REGISTER, } from './authForms'
 

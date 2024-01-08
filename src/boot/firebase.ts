@@ -1,5 +1,3 @@
-import { useStoreAuth, } from '@/stores/store-auth'
-
 import { type FirebaseApp, initializeApp, } from 'firebase/app'
 import { getAuth, } from 'firebase/auth'
 import {
@@ -9,6 +7,8 @@ import {
   getFirestore,
   setDoc,
 } from 'firebase/firestore'
+
+import { useStoreAuth, } from '@/stores/store-auth'
 
 const storeAuth = useStoreAuth()
 
