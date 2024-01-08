@@ -113,6 +113,8 @@ $ npx build:ssr:debug
 ```sh
 $ cd dist/spa
 $ yarn quasar dev
+# or
+$ npx quasar dev
 ```
 
 ### Check build ssr
