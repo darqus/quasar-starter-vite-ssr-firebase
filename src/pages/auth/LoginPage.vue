@@ -6,26 +6,26 @@
       @submit.prevent="storeAuth.onLogin"
     >
       <q-card style="min-width: 300px">
-        <q-card-section>
-          <div class="row">
-            <div class="col-0 col-sm-5 bg-primary xs-hide">
-              <div class="row full-width q-px-xl q-pb-xl full-height flex flex-center">
-                <div class="text-right">
-                  <div
-                    class="text-h4 text-white"
-                    style="min-width: 220px"
-                  >
-                    Добро пожаловать
-                  </div>
-                  <div class="text-white q-my-sm text-subtitle1">
-                    Для начала работы войдите в ваш аккаунт!
-                  </div>
+        <div class="row">
+          <div class="col-0 col-sm-5 bg-primary xs-hide">
+            <div class="bg-blue text-white text-center q-pa-md flex flex-center">
+              <div class="text-right">
+                <div
+                  class="text-h4 text-white"
+                  style="min-width: 220px"
+                >
+                  Добро пожаловать
+                </div>
+                <div class="text-white q-my-sm text-subtitle1">
+                  Для начала работы войдите в ваш аккаунт!
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="col-12 col-sm-7">
-              <div class="row q-ml-sm q-mt-sm sm-and-up-hide">
+          <div class="col-12 col-sm-7">
+            <q-card-section>
+              <div class="row q-pa-sm">
                 <div class="col-12 text-subtitle1">
                   <router-link
                     class="text-primary text-decoration-none"
@@ -34,8 +34,6 @@
                     На Главную
                   </router-link>
                 </div>
-              </div>
-              <div class="row q-pa-sm-sm q-pa-md">
                 <div class="col-12">
                   <div class="q-mb-xl">
                     <div class="flex justify-center">
@@ -125,9 +123,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </q-card-section>
           </div>
-        </q-card-section>
+        </div>
       </q-card>
     </q-form>
   </q-page>
