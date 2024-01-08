@@ -7,7 +7,7 @@
     >
       <q-card style="min-width: 300px; max-width: 700px;">
         <div class="row">
-          <div class="col-0 col-sm-5 bg-primary xs-hide">
+          <div class="col-sm-5 bg-primary xs-hide">
             <div class="bg-blue text-white text-center q-pa-md flex flex-center">
               <div class="text-right">
                 <div
@@ -23,9 +23,9 @@
             </div>
           </div>
 
-          <div class="col-12 col-sm-7">
-            <q-card-section>
-              <div class="row q-pa-sm">
+          <div class="col-sm-7">
+            <div class="q-pa-lg">
+              <div class="row">
                 <div class="col-12 text-subtitle1">
                   <router-link
                     class="text-primary text-decoration-none"
@@ -79,7 +79,7 @@
                   </div>
                 </div>
               </div>
-            </q-card-section>
+            </div>
           </div>
         </div>
       </q-card>
