@@ -5,7 +5,10 @@
       @reset="reset"
       @submit.prevent="storeAuth.onLogin"
     >
-      <q-card style="min-width: 300px">
+      <q-card
+        class="shadow-up-1"
+        style="min-width: 300px; max-width: 700px;"
+      >
         <div class="row">
           <q-card class="col-sm-5 bg-blue-8 xs-hide text-right">
             <div class="bg-blue-6 text-white q-pa-md">
@@ -23,7 +26,7 @@
             </div>
           </q-card>
 
-          <div class="col-sm-7">
+          <div class="col-sm-7 shadow-1">
             <div class="q-pa-lg">
               <div class="row">
                 <div class="col-12 text-subtitle1">
