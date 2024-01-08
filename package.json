@@ -27,7 +27,7 @@
     "stylelint": "~15.11.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recess-order": "^4.4.0",
-    "stylelint-config-recommended-scss": "^13.1.0",
+    "stylelint-config-recommended-scss": "^14.0.0",
     "stylelint-config-recommended-vue": "^1.5.0",
     "stylelint-config-standard": "^34.0.0",
     "typescript": "^5.3.3",
@@ -61,7 +61,7 @@
     "lint:fix": "eslint --ext .ts,.vue ./ --fix",
     "test:unit": "vitest",
     "test:unit:ci": "vitest run",
-    "upgrade:deps": "yarn upgrade-interactive",
+    "upgrade:deps": "yarn upgrade-interactive --latest",
     "deploy:firebase": "bash publish.sh"
   },
   "version": "0.0.1"
