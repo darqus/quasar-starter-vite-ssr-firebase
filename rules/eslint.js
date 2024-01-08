@@ -12,6 +12,7 @@ module.exports = {
     pathGroups: [
       { pattern: 'vue**', group: 'external', position: 'before', },
       { pattern: 'pinia', group: 'external', position: 'before', },
+      { pattern: 'firebase', group: 'external', position: 'before', },
       { pattern: 'http-status-codes', group: 'external', position: 'before', },
       { pattern: 'quasar', group: 'external', position: 'before', },
       { pattern: 'quasar/**', group: 'external', position: 'before', },
@@ -202,4 +203,5 @@ module.exports = {
     ],
     alphabetical: true,
   }, ],
+
 }
