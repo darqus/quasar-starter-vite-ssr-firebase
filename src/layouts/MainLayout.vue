@@ -26,13 +26,13 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
+      class="bg-drawer"
       bordered
       show-if-above
     >
       <SidebarDrawer />
     </q-drawer>
-
-    <q-page-container>
+    <q-page-container class="bg-main-layout">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -53,3 +53,7 @@ const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 </script>
+
+<style lang="scss">
+@import "./scss/main-layout";
+</style>
