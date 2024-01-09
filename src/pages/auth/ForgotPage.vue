@@ -56,7 +56,6 @@
                     :rules="field.rule"
                     :type="field.inputType === INPUT_TYPE.PASSWORD ? storeAuth.currentInputType : field.inputType"
                     class="q-mb-sm"
-                    lazy-rules
                   >
                     <template #prepend>
                       <q-icon

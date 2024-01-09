@@ -58,6 +58,7 @@
                         :required="field.required"
                         :rules="field.rule"
                         :type="field.inputType"
+                        class="q-mb-sm"
                         outlined
                       />
                     </template>
@@ -68,7 +69,6 @@
                         :options="field.options"
                         :required="field.required"
                         :rules="field.rule"
-                        lazy-rules
                         outlined
                       />
                     </template>
