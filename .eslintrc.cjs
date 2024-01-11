@@ -17,7 +17,14 @@ module.exports = {
   },
 
   ignorePatterns: [
-    '/lib/**/*', // Ignore built files.
+    '.quasar',
+    'dist',
+    'node_modules',
+    'tsconfig.json',
+    'package.json',
+    'package-lock.json',
+    'quasar.testing.json',
+    'quasar.extensions.json',
   ],
 
   env: {
