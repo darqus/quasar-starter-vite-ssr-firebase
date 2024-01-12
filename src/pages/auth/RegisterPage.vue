@@ -31,8 +31,8 @@
               <div class="row">
                 <div class="col-12 text-subtitle1">
                   <router-link
+                    :to="VITE_ROUTER_BASE"
                     class="text-primary"
-                    to="/"
                   >
                     На Главную
                   </router-link>
@@ -134,6 +134,8 @@ import { INPUT_REQUIRED, } from '@/utils/constants'
 const storeAuth = useStoreAuth()
 
 const refRegisterForm: Ref = ref(null)
+
+const { VITE_ROUTER_BASE, } = import.meta.env
 
 const reset = () => {
   storeAuth.onResetForm(AUTH_TYPE.REGISTER)

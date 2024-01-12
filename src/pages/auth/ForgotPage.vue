@@ -31,8 +31,8 @@
               <div class="row">
                 <div class="col-12 text-subtitle1">
                   <router-link
+                    :to="VITE_ROUTER_BASE"
                     class="text-primary"
-                    to="/"
                   >
                     На Главную
                   </router-link>
@@ -95,6 +95,8 @@ import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, } from '@/types/enums'
 import { useStoreAuth, } from '@/stores/store-auth'
 
 import { INPUT_REQUIRED, } from '@/utils/constants'
+
+const { VITE_ROUTER_BASE, } = import.meta.env
 
 const storeAuth = useStoreAuth()
 

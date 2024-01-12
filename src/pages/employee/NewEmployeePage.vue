@@ -31,8 +31,8 @@
               <div class="row">
                 <div class="col-12 text-subtitle1">
                   <router-link
+                    :to="VITE_ROUTER_BASE"
                     class="text-primary"
-                    to="/"
                   >
                     На Главную
                   </router-link>
@@ -114,6 +114,8 @@ import { BUTTON_TYPE, FORM_FIELD_TYPE, } from '@/types/enums'
 import { useStoreNewEmployee, } from '@/stores/store-new-employee'
 
 import { INPUT_REQUIRED, } from '@/utils/constants'
+
+const { VITE_ROUTER_BASE, } = import.meta.env
 
 const storeNewEmployee = useStoreNewEmployee()
 

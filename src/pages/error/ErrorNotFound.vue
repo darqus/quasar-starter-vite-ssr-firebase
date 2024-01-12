@@ -13,10 +13,10 @@
       </div>
 
       <q-btn
+        :to="VITE_ROUTER_BASE"
         color="white"
         label="На Главную"
         text-color="primary"
-        to="/"
         no-caps
         unelevated
       />
@@ -26,6 +26,8 @@
 
 <script setup lang="ts">
 import { useQuasar, } from 'quasar'
+
+const { VITE_ROUTER_BASE, } = import.meta.env
 
 const $q = useQuasar()
 </script>

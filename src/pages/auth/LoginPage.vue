@@ -31,8 +31,8 @@
               <div class="row">
                 <div class="col-12 text-subtitle1">
                   <router-link
+                    :to="VITE_ROUTER_BASE"
                     class="text-primary"
-                    to="/"
                   >
                     На Главную
                   </router-link>
@@ -97,28 +97,28 @@
                   </div>
 
                   <div class="row q-mt-md">
-                    <q-btn
-                      class="full-width"
-                      color="primary"
-                      size="12px"
-                      no-caps
-                      outline
-                      rounded
-                      @click="$router.push(ROUTE_TYPE.FORGOT)"
-                    >
-                      Забыли пароль?
-                    </q-btn>
-                  </div>
+                    <div class="q-mt-lg">
+                      <div class="q-mt-sm">
+                        Забыли пароль?
+                        <router-link
+                          :to="ROUTE_TYPE.FORGOT"
+                          class="text-primary"
+                        >
+                          Восстановить доступ
+                        </router-link>
+                      </div>
+                    </div>
 
-                  <div class="q-mt-lg">
-                    <div class="q-mt-sm">
-                      Нет аккаунта?
-                      <router-link
-                        :to="ROUTE_TYPE.REGISTER"
-                        class="text-primary"
-                      >
-                        Зарегистрироваться
-                      </router-link>
+                    <div class="q-mt-lg">
+                      <div class="q-mt-sm">
+                        Нет аккаунта?
+                        <router-link
+                          :to="ROUTE_TYPE.REGISTER"
+                          class="text-primary"
+                        >
+                          Зарегистрироваться
+                        </router-link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -139,6 +139,8 @@ import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from '@/types/enums'
 import { useStoreAuth, } from '@/stores/store-auth'
 
 import { INPUT_REQUIRED, } from '@/utils/constants'
+
+const { VITE_ROUTER_BASE, } = import.meta.env
 
 const storeAuth = useStoreAuth()
 

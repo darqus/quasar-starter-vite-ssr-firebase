@@ -3,6 +3,7 @@ import { type RouteRecordRaw, } from 'vue-router'
 import { ROUTE_TYPE, } from '@/types/enums'
 
 const { VITE_ROUTER_BASE, } = import.meta.env
+
 const {
   REGISTER,
   LOGIN,

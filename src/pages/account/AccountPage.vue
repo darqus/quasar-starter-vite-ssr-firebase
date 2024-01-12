@@ -26,8 +26,8 @@
             <div class="row">
               <div class="col-12 text-subtitle1">
                 <router-link
+                  :to="VITE_ROUTER_BASE"
                   class="text-primary"
-                  to="/"
                 >
                   На Главную
                 </router-link>
@@ -57,6 +57,8 @@
 
 <script setup lang="ts">
 import { useStoreAuth, } from '@/stores/store-auth'
+
+const { VITE_ROUTER_BASE, } = import.meta.env
 
 const storeAuth = useStoreAuth()
 </script>
