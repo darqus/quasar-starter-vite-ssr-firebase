@@ -258,13 +258,19 @@ VITE_ADMIN_UIDS - array of uids blog admins
 ### Yarn interactive update deps
 
 ```sh
-$ yarn upgrade-interactive
+$ yarn upgrade-interactive --latest
 ```
 
 ### Clean cache
 
 ```sh
 $ yarn cache clean
+```
+
+### For auto generate new page template use
+
+```sh
+$ bash create-page.sh
 ```
 
 ### Demo preview
