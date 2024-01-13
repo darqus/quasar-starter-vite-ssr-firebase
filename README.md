@@ -2,7 +2,7 @@
 
 Based on Vue 3 + vite, quasar, pinia, firebase
 
-![Quasar Framework logo](https://cdn.quasar.dev/logo-v2/header.png)
+![Quasar Framework logo](https://cdn.quasar.dev/logo-v2/svg/logo-vertical-dark.svg)
 
 ## Documentaion
 
