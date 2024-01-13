@@ -24,12 +24,6 @@ export const useStoreNewEmployee = defineStore(STORE_TYPES.NEW_EMPLOYEE, {
     toggleLoading () {
       this.loading = !this.loading
     },
-    setValidForm () {
-      this.valid = true
-    },
-    unsetValidForm () {
-      this.valid = false
-    },
     add () {
       this.toggleLoading()
       addDoc('employees', {

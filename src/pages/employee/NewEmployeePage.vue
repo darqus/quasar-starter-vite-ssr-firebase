@@ -125,9 +125,7 @@ watch(
   () => storeNewEmployee.formEmployee,
   () => {
     refForm.value?.validate()
-      .then((success: boolean) => success
-        ? storeNewEmployee.setValidForm()
-        : storeNewEmployee.unsetValidForm())
+      .then((success: boolean) => (storeNewEmployee.valid = success))
   },
   { deep: true, }
 )

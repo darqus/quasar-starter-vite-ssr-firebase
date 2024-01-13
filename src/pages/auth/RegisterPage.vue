@@ -156,9 +156,7 @@ watch(
   () => storeAuth.formsAuth[AUTH_TYPE.REGISTER],
   () => {
     refRegisterForm.value?.validate()
-      .then((success: boolean) => success
-        ? storeAuth.setValidForm()
-        : storeAuth.unsetValidForm())
+      .then((success: boolean) => (storeAuth.valid = success))
   },
   { deep: true, }
 )

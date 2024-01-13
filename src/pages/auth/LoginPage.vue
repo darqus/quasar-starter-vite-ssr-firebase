@@ -165,9 +165,7 @@ watch(
   () => storeAuth.formsAuth[AUTH_TYPE.LOGIN_EMAIL],
   () => {
     refLoginForm.value?.validate()
-      .then((success: boolean) => success
-        ? storeAuth.setValidForm()
-        : storeAuth.unsetValidForm())
+      .then((success: boolean) => (storeAuth.valid = success))
   },
   { deep: true, }
 )

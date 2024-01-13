@@ -90,12 +90,6 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
     togglePasswordVisible () {
       this.passwordVisibility = !this.passwordVisibility
     },
-    setValidForm () {
-      this.valid = true
-    },
-    unsetValidForm () {
-      this.valid = false
-    },
     watchAuthStateChanged () {
       onAuthStateChanged(auth, (user: CurrentUser) => {
         this.currentUser = user

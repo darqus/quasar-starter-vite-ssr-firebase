@@ -121,9 +121,7 @@ watch(
   () => storeAuth.formsAuth[AUTH_TYPE.FORGOT_PASSWORD],
   () => {
     refForgotForm.value?.validate()
-      .then((success: boolean) => success
-        ? storeAuth.setValidForm()
-        : storeAuth.unsetValidForm())
+      .then((success: boolean) => (storeAuth.valid = success))
   },
   { deep: true, }
 )
