@@ -49,19 +49,23 @@
                     :key="field.id"
                     v-model="field.model"
                     :debounce="field.debounce"
-                    :label="field.required ? `${field.label}${INPUT_REQUIRED}` : field.label"
                     :mask="field.mask"
                     :name="field.name"
                     :required="field.required"
                     :rules="field.rule"
                     :type="field.inputType === INPUT_TYPE.PASSWORD ? storeAuth.currentInputType : field.inputType"
                     class="q-mb-sm"
+                    label-slot
                   >
                     <template #prepend>
                       <q-icon
                         :name="field.iconPrepend"
                         class="cursor-pointer"
                       />
+                    </template>
+                    <template #label>
+                      <span>{{ field.label }}</span>
+                      <sup class="text-red">{{ INPUT_REQUIRED }}</sup>
                     </template>
                   </q-input>
 
