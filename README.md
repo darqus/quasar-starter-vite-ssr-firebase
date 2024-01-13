@@ -27,41 +27,41 @@ See [State management with Pinia](https://quasar.dev/quasar-cli-vite/state-manag
 ### Install the dependencies
 
 ```sh
-$ yarn
+yarn
 # or
-$ npm i
+npm i
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
 ```sh
-$ yarn quasar dev
+yarn quasar dev
 # or
-$ npx quasar dev
+npx quasar dev
 ```
 
 ### Start the app in development mode SSR (hot-code reloading, error reporting, etc.)
 
 ```sh
-$ yarn quasar dev:ssr
+yarn quasar dev:ssr
 # or
-$ npx quasar dev:ssr
+npx quasar dev:ssr
 ```
 
 ### Linting errors with ESLint
 
 ```sh
-$ yarn lint:fix
+yarn lint:fix
 # or
-$ npm run lint:fix
+npm run lint:fix
 ```
 
 ### Compiles and minifies for production
 
 ```sh
-$ yarn quasar build
+yarn quasar build
 # or
-$ npx quasar build
+npx quasar build
 ```
 
 ## Tests
@@ -69,17 +69,17 @@ $ npx quasar build
 ### With CLI
 
 ```sh
-$ yarn vitest
+yarn vitest
 # or
-$ npx vitest
+npx vitest
 ```
 
 ### For CI
 
 ```sh
-$ yarn vitest run
+yarn vitest run
 # or
-$ npx vitest run
+npx vitest run
 ```
 
 ## Build
@@ -87,57 +87,57 @@ $ npx vitest run
 ### Build app in SPA mode
 
 ```sh
-$ yarn build
+yarn build
 # or
-$ npx build
+npx build
 ```
 
 ### Build app in SSR mode
 
 ```sh
-$ yarn build:ssr
+yarn build:ssr
 # or
-$ npx build:ssr
+npx build:ssr
 ```
 
 ### Build app in SSR mode with debug
 
 ```sh
-$ yarn build:ssr:debug
+yarn build:ssr:debug
 # or
-$ npx build:ssr:debug
+npx build:ssr:debug
 ```
 
 ### Check build spa
 
 ```sh
-$ cd dist/spa
-$ yarn quasar dev
+cd dist/spa
+yarn quasar dev
 # or
-$ npx quasar dev
+npx quasar dev
 ```
 
 ### Check build ssr
 
 ```sh
-$ cd dist/ssr
-$ npm run start
+cd dist/ssr
+npm run start
 ```
 
 ### Deploy to Firebase
 
 ```sh
-$ yarn deploy:firebase
+yarn deploy:firebase
 # or
-$ npx deploy:firebase
+npx deploy:firebase
 ```
 
 ### Upgrade dependencies
 
 ```sh
-$ yarn upgrade:deps
+yarn upgrade:deps
 # or
-$ npx upgrade:deps
+npx upgrade:deps
 ```
 
 ### Customize the configuration
@@ -147,9 +147,9 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 ### Deploy you project to Firebase
 
 ```sh
-$ yarn deploy
+yarn deploy
 # or
-$ npm run deploy
+npm run deploy
 ```
 
 ### Customize configuration
@@ -164,29 +164,33 @@ $ npm run deploy
 * See [Initial Firebase](https://firebase.google.com/docs/hosting/quickstart#initialize)
 
 install firebase tools
+
 ```sh
-$ npm i -g firebase-tools
+npm i -g firebase-tools
 # or (*nix like)
-$ curl -sL https://firebase.tools | bash
+curl -sL https://firebase.tools | bash
 
 ```
 
 initial repo
+
 ```sh
-$ npm init
-$ npm install --save firebase
+npm init
+npm install --save firebase
 # or
-$ yarn add firebase
+yarn add firebase
 ```
 
 login to firebase
+
 ```sh
-$ firebase login
+firebase login
 ```
 
 add alias to project
+
 ```sh
-$ firebase use --add
+firebase use --add
 ```
 
 ? What alias do you want to use for this project? (e.g. staging)
@@ -199,7 +203,7 @@ type your alias in console
 click button "Get started"
 
 ```sh
-$ firebase init hosting
+firebase init hosting
 ```
 
 ### "Don't set up a default project"
@@ -211,19 +215,19 @@ $ firebase init hosting
 * ? Set up automatic builds and deploys with GitHub? No
 
 ```sh
-$ firebase emulators:start
+firebase emulators:start
 ```
 
 ```sh
-$ firebase deploy --only hosting
-$ firebase deploy --only hosting:skill-flash --project skill-flash
+firebase deploy --only hosting
+firebase deploy --only hosting:skill-flash --project skill-flash
 ```
 
 if you have deploy troubles
 
 ```sh
-$ firebase logout
-$ firebase login
+firebase logout
+firebase login
 ```
 
 ### Local project firebase config, e.g. .env.local (see .env.local-example)
@@ -258,19 +262,19 @@ VITE_ADMIN_UIDS - array of uids blog admins
 ### Yarn interactive update deps
 
 ```sh
-$ yarn upgrade-interactive --latest
+yarn upgrade-interactive --latest
 ```
 
 ### Clean cache
 
 ```sh
-$ yarn cache clean
+yarn cache clean
 ```
 
 ### For auto generate new page template use
 
 ```sh
-$ bash create-page.sh
+bash create-page.sh
 ```
 
 ### Demo preview
