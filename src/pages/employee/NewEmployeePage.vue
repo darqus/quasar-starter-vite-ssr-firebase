@@ -73,12 +73,20 @@
                     <template v-if="field.formFieldType === FORM_FIELD_TYPE.SELECT">
                       <q-select
                         v-model="field.model"
-                        :label="field.required ? `${field.label}${INPUT_REQUIRED}` : field.label"
                         :options="field.options"
                         :required="field.required"
                         :rules="field.rule"
+                        label-slot
                         outlined
-                      />
+                      >
+                        <template #label>
+                          <span>{{ field.label }}</span>
+                          <sup
+                            v-if="field.required"
+                            class="text-red"
+                          >{{ INPUT_REQUIRED }}</sup>
+                        </template>
+                      </q-select>
                     </template>
                   </template>
 
