@@ -52,15 +52,23 @@
                       <q-input
                         v-model="field.model"
                         :debounce="field.debounce"
-                        :label="field.required ? `${field.label}${INPUT_REQUIRED}` : field.label"
                         :mask="field.mask"
                         :name="field.name"
                         :required="field.required"
                         :rules="field.rule"
                         :type="field.inputType"
                         class="q-mb-sm"
+                        label-slot
                         outlined
-                      />
+                      >
+                        <template #label>
+                          <span>{{ field.label }}</span>
+                          <sup
+                            v-if="field.required"
+                            class="text-red"
+                          >{{ INPUT_REQUIRED }}</sup>
+                        </template>
+                      </q-input>
                     </template>
                     <template v-if="field.formFieldType === FORM_FIELD_TYPE.SELECT">
                       <q-select

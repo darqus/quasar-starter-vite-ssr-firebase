@@ -65,7 +65,10 @@
                     </template>
                     <template #label>
                       <span>{{ field.label }}</span>
-                      <sup class="text-red">{{ INPUT_REQUIRED }}</sup>
+                      <sup
+                        v-if="field.required"
+                        class="text-red"
+                      >{{ INPUT_REQUIRED }}</sup>
                     </template>
                   </q-input>
 
