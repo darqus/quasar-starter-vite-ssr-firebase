@@ -5,126 +5,91 @@
       @reset="reset"
       @submit.prevent="storeAuth.onRegister"
     >
-      <q-card
-        class="shadow-up-1"
-        style="min-width: 300px; max-width: 700px;"
+      <EssentialForm
+        card-style="min-width: 300px; max-width: 700px;"
+        description="Для начала работы пройдите регистрацию!"
+        title="Регистрация"
       >
-        <div class="row">
-          <q-card class="col-sm-5 bg-blue-8 xs-hide text-right">
-            <div class="bg-blue-6 text-white q-pa-md">
-              <div
-                class="text-h6 text-white"
-                style="min-width: 220px"
+        <template #fields>
+          <q-input
+            v-for="field in storeAuth.formsAuth[AUTH_TYPE.REGISTER]"
+            :key="field.id"
+            v-model="field.model"
+            :debounce="field.debounce"
+            :mask="field.mask"
+            :name="field.name"
+            :required="field.required"
+            :rules="field.rule"
+            :type="field.inputType === INPUT_TYPE.PASSWORD ? storeAuth.currentInputType : field.inputType"
+            class="q-mb-sm"
+            label-slot
+          >
+            <template #prepend>
+              <q-icon
+                :name="field.iconPrepend"
+                class="cursor-pointer"
+              />
+            </template>
+            <template #append>
+              <q-icon
+                v-if="field.inputType === INPUT_TYPE.PASSWORD"
+                :name="storeAuth.iconPassword"
+                class="cursor-pointer"
+                @click="storeAuth.togglePasswordVisible"
+              />
+            </template>
+            <template #label>
+              <span>{{ field.label }}</span>
+              <sup
+                v-if="field.required"
+                class="text-red"
+              >{{ INPUT_REQUIRED }}</sup>
+            </template>
+          </q-input>
+        </template>
+
+        <template #buttons>
+          <!-- <q-toggle
+            v-model="storeAuth.accept"
+            label="I accept the license and terms"
+          /> -->
+
+          <div class="row">
+            <q-btn
+              :disable="storeAuth.loading"
+              :type="BUTTON_TYPE.RESET"
+              color="primary"
+              label="Очистить"
+              no-caps
+              outline
+              rounded
+            />
+            <q-btn
+              :disable="storeAuth.disabledSubmitButton"
+              :loading="storeAuth.loading"
+              :type="BUTTON_TYPE.SUBMIT"
+              class="col-grow"
+              color="primary"
+              label="Зарегистрироваться"
+              style="margin-left: 15px;"
+              no-caps
+              rounded
+            />
+          </div>
+
+          <div class="q-mt-lg">
+            <div class="q-mt-sm">
+              Уже есть аккаунт?
+              <router-link
+                :to="ROUTE_TYPE.LOGIN"
+                class="text-primary"
               >
-                Добро пожаловать
-              </div>
-            </div>
-            <div class="bg-blue-5 text-white q-pa-md">
-              <div class="text-white q-my-sm text-subtitle1">
-                Для начала работы пройдите регистрацию!
-              </div>
-            </div>
-          </q-card>
-
-          <div class="col-sm-7 shadow-1">
-            <div class="q-pa-lg">
-              <div class="row">
-                <div class="col-12 text-subtitle1">
-                  <router-link
-                    :to="VITE_ROUTER_BASE"
-                    class="text-primary"
-                  >
-                    На Главную
-                  </router-link>
-                </div>
-                <div class="col-12">
-                  <div class="flex justify-center">
-                    <div class="text-h5 q-my-lg text-weight-bold text-primary">
-                      Регистрация
-                    </div>
-                  </div>
-
-                  <q-input
-                    v-for="field in storeAuth.formsAuth[AUTH_TYPE.REGISTER]"
-                    :key="field.id"
-                    v-model="field.model"
-                    :debounce="field.debounce"
-                    :mask="field.mask"
-                    :name="field.name"
-                    :required="field.required"
-                    :rules="field.rule"
-                    :type="field.inputType === INPUT_TYPE.PASSWORD ? storeAuth.currentInputType : field.inputType"
-                    class="q-mb-sm"
-                    label-slot
-                  >
-                    <template #prepend>
-                      <q-icon
-                        :name="field.iconPrepend"
-                        class="cursor-pointer"
-                      />
-                    </template>
-                    <template #append>
-                      <q-icon
-                        v-if="field.inputType === INPUT_TYPE.PASSWORD"
-                        :name="storeAuth.iconPassword"
-                        class="cursor-pointer"
-                        @click="storeAuth.togglePasswordVisible"
-                      />
-                    </template>
-                    <template #label>
-                      <span>{{ field.label }}</span>
-                      <sup
-                        v-if="field.required"
-                        class="text-red"
-                      >{{ INPUT_REQUIRED }}</sup>
-                    </template>
-                  </q-input>
-
-                  <!-- <q-toggle
-                    v-model="storeAuth.accept"
-                    label="I accept the license and terms"
-                  /> -->
-
-                  <div class="row">
-                    <q-btn
-                      :disable="storeAuth.loading"
-                      :type="BUTTON_TYPE.RESET"
-                      color="primary"
-                      label="Очистить"
-                      no-caps
-                      outline
-                      rounded
-                    />
-                    <q-btn
-                      :disable="storeAuth.disabledSubmitButton"
-                      :loading="storeAuth.loading"
-                      :type="BUTTON_TYPE.SUBMIT"
-                      class="col-grow"
-                      color="primary"
-                      label="Зарегистрироваться"
-                      style="margin-left: 15px;"
-                      no-caps
-                      rounded
-                    />
-                  </div>
-
-                  <div class="q-mt-lg">
-                    <div class="q-mt-sm">
-                      Уже есть аккаунт?
-                      <router-link
-                        :to="ROUTE_TYPE.LOGIN"
-                        class="text-primary"
-                      >
-                        Войти
-                      </router-link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                Войти
+              </router-link>
             </div>
           </div>
-        </div>
-      </q-card>
+        </template>
+      </EssentialForm>
     </q-form>
   </q-page>
 </template>
@@ -138,11 +103,11 @@ import { useStoreAuth, } from '@/stores/store-auth'
 
 import { INPUT_REQUIRED, } from '@/utils/constants'
 
+import EssentialForm from '@/components/form/EssentialForm.vue'
+
 const storeAuth = useStoreAuth()
 
 const refRegisterForm: Ref = ref(null)
-
-const { VITE_ROUTER_BASE, } = import.meta.env
 
 const reset = () => {
   storeAuth.onResetForm(AUTH_TYPE.REGISTER)

@@ -5,119 +5,84 @@
       @reset="storeNewEmployee.onReset"
       @submit.prevent="storeNewEmployee.add"
     >
-      <q-card
-        class="shadow-up-1"
-        style="min-width: 300px; max-width: 700px;"
+      <EssentialForm
+        card-style="min-width: 300px; max-width: 700px;"
+        description="Создайте нового сотрудника!"
+        title="Новый сотрудник"
       >
-        <div class="row">
-          <q-card class="col-sm-5 bg-blue-8 xs-hide text-right">
-            <div class="bg-blue-6 text-white q-pa-md">
-              <div
-                class="text-h6 text-white"
-                style="min-width: 220px"
+        <template #fields>
+          <template
+            v-for="field in storeNewEmployee.formEmployee"
+            :key="field.id"
+          >
+            <template v-if="field.formFieldType === FORM_FIELD_TYPE.INPUT">
+              <q-input
+                v-model="field.model"
+                :debounce="field.debounce"
+                :mask="field.mask"
+                :name="field.name"
+                :required="field.required"
+                :rules="field.rule"
+                :type="field.inputType"
+                class="q-mb-sm"
+                label-slot
+                outlined
               >
-                Добро пожаловать
-              </div>
-            </div>
-            <div class="bg-blue-5 text-white q-pa-md">
-              <div class="text-white q-my-sm text-subtitle1">
-                Создайте нового сотрудника!
-              </div>
-            </div>
-          </q-card>
+                <template #label>
+                  <span>{{ field.label }}</span>
+                  <sup
+                    v-if="field.required"
+                    class="text-red"
+                  >{{ INPUT_REQUIRED }}</sup>
+                </template>
+              </q-input>
+            </template>
+            <template v-if="field.formFieldType === FORM_FIELD_TYPE.SELECT">
+              <q-select
+                v-model="field.model"
+                :options="field.options"
+                :required="field.required"
+                :rules="field.rule"
+                label-slot
+                outlined
+              >
+                <template #label>
+                  <span>{{ field.label }}</span>
+                  <sup
+                    v-if="field.required"
+                    class="text-red"
+                  >{{ INPUT_REQUIRED }}</sup>
+                </template>
+              </q-select>
+            </template>
+          </template>
+        </template>
 
-          <div class="col-sm-7 shadow-1">
-            <div class="q-pa-lg">
-              <div class="row">
-                <div class="col-12 text-subtitle1">
-                  <router-link
-                    :to="VITE_ROUTER_BASE"
-                    class="text-primary"
-                  >
-                    На Главную
-                  </router-link>
-                </div>
-                <div class="col-12">
-                  <div class="flex justify-center">
-                    <div class="text-h5 q-my-lg text-weight-bold text-primary">
-                      Новый сотрудник
-                    </div>
-                  </div>
-
-                  <template
-                    v-for="field in storeNewEmployee.formEmployee"
-                    :key="field.id"
-                  >
-                    <template v-if="field.formFieldType === FORM_FIELD_TYPE.INPUT">
-                      <q-input
-                        v-model="field.model"
-                        :debounce="field.debounce"
-                        :mask="field.mask"
-                        :name="field.name"
-                        :required="field.required"
-                        :rules="field.rule"
-                        :type="field.inputType"
-                        class="q-mb-sm"
-                        label-slot
-                        outlined
-                      >
-                        <template #label>
-                          <span>{{ field.label }}</span>
-                          <sup
-                            v-if="field.required"
-                            class="text-red"
-                          >{{ INPUT_REQUIRED }}</sup>
-                        </template>
-                      </q-input>
-                    </template>
-                    <template v-if="field.formFieldType === FORM_FIELD_TYPE.SELECT">
-                      <q-select
-                        v-model="field.model"
-                        :options="field.options"
-                        :required="field.required"
-                        :rules="field.rule"
-                        label-slot
-                        outlined
-                      >
-                        <template #label>
-                          <span>{{ field.label }}</span>
-                          <sup
-                            v-if="field.required"
-                            class="text-red"
-                          >{{ INPUT_REQUIRED }}</sup>
-                        </template>
-                      </q-select>
-                    </template>
-                  </template>
-
-                  <div class="row justify-between q-mt-md">
-                    <q-btn
-                      :disable="storeNewEmployee.loading"
-                      :type="BUTTON_TYPE.RESET"
-                      color="primary"
-                      label="Сбросить"
-                      no-caps
-                      outline
-                      rounded
-                    />
-                    <q-btn
-                      :disable="storeNewEmployee.disabledSubmitButton"
-                      :loading="storeNewEmployee.loading"
-                      :type="BUTTON_TYPE.SUBMIT"
-                      class="col-grow"
-                      color="primary"
-                      label="Добавить"
-                      style="margin-left: 15px;"
-                      no-caps
-                      rounded
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+        <template #buttons>
+          <div class="row justify-between q-mt-md">
+            <q-btn
+              :disable="storeNewEmployee.loading"
+              :type="BUTTON_TYPE.RESET"
+              color="primary"
+              label="Сбросить"
+              no-caps
+              outline
+              rounded
+            />
+            <q-btn
+              :disable="storeNewEmployee.disabledSubmitButton"
+              :loading="storeNewEmployee.loading"
+              :type="BUTTON_TYPE.SUBMIT"
+              class="col-grow"
+              color="primary"
+              label="Добавить"
+              style="margin-left: 15px;"
+              no-caps
+              rounded
+            />
           </div>
-        </div>
-      </q-card>
+        </template>
+      </EssentialForm>
     </q-form>
   </q-page>
 </template>
@@ -131,7 +96,7 @@ import { useStoreNewEmployee, } from '@/stores/store-new-employee'
 
 import { INPUT_REQUIRED, } from '@/utils/constants'
 
-const { VITE_ROUTER_BASE, } = import.meta.env
+import EssentialForm from '@/components/form/EssentialForm.vue'
 
 const storeNewEmployee = useStoreNewEmployee()
 

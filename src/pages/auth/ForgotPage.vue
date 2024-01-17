@@ -5,91 +5,56 @@
       @reset="reset"
       @submit.prevent="storeAuth.onForgot"
     >
-      <q-card
-        class="shadow-up-1"
-        style="min-width: 300px; max-width: 700px;"
+      <EssentialForm
+        card-style="min-width: 300px; max-width: 700px;"
+        description="Для начала работы восстановите доступ в ваш аккаунт!"
+        title="Восстановить доступ"
       >
-        <div class="row">
-          <q-card class="col-sm-5 bg-blue-8 xs-hide text-right">
-            <div class="bg-blue-6 text-white q-pa-md">
-              <div
-                class="text-h6 text-white"
-                style="min-width: 220px"
-              >
-                Добро пожаловать
-              </div>
-            </div>
-            <div class="bg-blue-5 text-white q-pa-md">
-              <div class="text-white q-my-sm text-subtitle1">
-                Для начала работы восстановите доступ в ваш аккаунт!
-              </div>
-            </div>
-          </q-card>
+        <template #fields>
+          <q-input
+            v-for="field in storeAuth.formsAuth[AUTH_TYPE.FORGOT_PASSWORD]"
+            :key="field.id"
+            v-model="field.model"
+            :debounce="field.debounce"
+            :mask="field.mask"
+            :name="field.name"
+            :required="field.required"
+            :rules="field.rule"
+            :type="field.inputType === INPUT_TYPE.PASSWORD ? storeAuth.currentInputType : field.inputType"
+            class="q-mb-sm"
+            label-slot
+          >
+            <template #prepend>
+              <q-icon
+                :name="field.iconPrepend"
+                class="cursor-pointer"
+              />
+            </template>
+            <template #label>
+              <span>{{ field.label }}</span>
+              <sup
+                v-if="field.required"
+                class="text-red"
+              >{{ INPUT_REQUIRED }}</sup>
+            </template>
+          </q-input>
+        </template>
 
-          <div class="col-sm-7 shadow-1">
-            <div class="q-pa-lg">
-              <div class="row">
-                <div class="col-12 text-subtitle1">
-                  <router-link
-                    :to="VITE_ROUTER_BASE"
-                    class="text-primary"
-                  >
-                    На Главную
-                  </router-link>
-                </div>
-                <div class="col-12">
-                  <div class="flex justify-center">
-                    <div class="text-h5 q-my-lg text-weight-bold text-primary">
-                      Восстановить доступ
-                    </div>
-                  </div>
-
-                  <q-input
-                    v-for="field in storeAuth.formsAuth[AUTH_TYPE.FORGOT_PASSWORD]"
-                    :key="field.id"
-                    v-model="field.model"
-                    :debounce="field.debounce"
-                    :mask="field.mask"
-                    :name="field.name"
-                    :required="field.required"
-                    :rules="field.rule"
-                    :type="field.inputType === INPUT_TYPE.PASSWORD ? storeAuth.currentInputType : field.inputType"
-                    class="q-mb-sm"
-                    label-slot
-                  >
-                    <template #prepend>
-                      <q-icon
-                        :name="field.iconPrepend"
-                        class="cursor-pointer"
-                      />
-                    </template>
-                    <template #label>
-                      <span>{{ field.label }}</span>
-                      <sup
-                        v-if="field.required"
-                        class="text-red"
-                      >{{ INPUT_REQUIRED }}</sup>
-                    </template>
-                  </q-input>
-
-                  <div class="row">
-                    <q-btn
-                      :disable="storeAuth.disabledSubmitButton"
-                      :loading="storeAuth.loading"
-                      :type="BUTTON_TYPE.SUBMIT"
-                      class="full-width"
-                      color="primary"
-                      label="Сбросить пароль"
-                      no-caps
-                      rounded
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+        <template #buttons>
+          <div class="row">
+            <q-btn
+              :disable="storeAuth.disabledSubmitButton"
+              :loading="storeAuth.loading"
+              :type="BUTTON_TYPE.SUBMIT"
+              class="full-width"
+              color="primary"
+              label="Сбросить пароль"
+              no-caps
+              rounded
+            />
           </div>
-        </div>
-      </q-card>
+        </template>
+      </EssentialForm>
     </q-form>
   </q-page>
 </template>
@@ -103,7 +68,7 @@ import { useStoreAuth, } from '@/stores/store-auth'
 
 import { INPUT_REQUIRED, } from '@/utils/constants'
 
-const { VITE_ROUTER_BASE, } = import.meta.env
+import EssentialForm from '@/components/form/EssentialForm.vue'
 
 const storeAuth = useStoreAuth()
 
