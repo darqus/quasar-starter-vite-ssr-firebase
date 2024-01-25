@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, type Ref, onUnmounted, computed, nextTick, } from 'vue'
+import { ref, watch, type Ref, computed, nextTick, } from 'vue'
 
 import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, } from '@/types/enums'
 import type { FormField, } from '@/types/models'
@@ -95,10 +95,6 @@ const validate = async () => {
   refForgotForm.value?.validate()
     .then((success: boolean) => (storeAuth.valid = success))
 }
-
-onUnmounted(() => {
-  reset()
-})
 
 watch(
   () => currentAuthForm,
