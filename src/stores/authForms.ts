@@ -1,11 +1,13 @@
-import { FORM_FIELD_TYPE, INPUT_TYPE, } from '@/types/enums'
+import { ref, } from 'vue'
+
+import { AUTH_TYPE, FORM_FIELD_TYPE, INPUT_TYPE, } from '@/types/enums'
 import { type Form, } from '@/types/models'
 
 import { DEBOUNCE, } from '@/utils/constants'
 import { generateId, } from '@/utils/generator'
 import rules from '@/utils/rules'
 
-export const FORM_LOGIN_EMAIL = (): Form => [
+const FORM_LOGIN_EMAIL = (): Form => [
   {
     id: generateId(),
     formFieldType: FORM_FIELD_TYPE.INPUT,
@@ -32,7 +34,7 @@ export const FORM_LOGIN_EMAIL = (): Form => [
   },
 ]
 
-export const FORM_REGISTER = (): Form => [
+const FORM_REGISTER = (): Form => [
   {
     id: generateId(),
     formFieldType: FORM_FIELD_TYPE.INPUT,
@@ -59,7 +61,7 @@ export const FORM_REGISTER = (): Form => [
   },
 ]
 
-export const FORM_FORGOT_PASSWORD = (): Form => [
+const FORM_FORGOT_PASSWORD = (): Form => [
   {
     id: generateId(),
     formFieldType: FORM_FIELD_TYPE.INPUT,
@@ -73,3 +75,11 @@ export const FORM_FORGOT_PASSWORD = (): Form => [
     rule: [ ...rules.requiredInput, ...rules.email, ],
   },
 ]
+
+const formsAuth = ref({
+  [AUTH_TYPE.LOGIN_EMAIL]: FORM_LOGIN_EMAIL(),
+  [AUTH_TYPE.REGISTER]: FORM_REGISTER(),
+  [AUTH_TYPE.FORGOT_PASSWORD]: FORM_FORGOT_PASSWORD(),
+})
+
+export const getCurrentAuthForm = (currentAuthFormType: AUTH_TYPE) => formsAuth.value[currentAuthFormType]

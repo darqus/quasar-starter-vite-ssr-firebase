@@ -3,7 +3,7 @@
     <q-form
       ref="refLoginForm"
       @reset="reset"
-      @submit.prevent="storeAuth.onLogin"
+      @submit.prevent="storeAuth.onLogin(currentAuthForm)"
     >
       <EssentialForm
         card-style="min-width: 300px; max-width: 700px;"
@@ -12,7 +12,7 @@
       >
         <template #fields>
           <q-input
-            v-for="field in storeAuth.formsAuth[AUTH_TYPE.LOGIN_EMAIL]"
+            v-for="field in currentAuthForm"
             :key="field.id"
             v-model="field.model"
             :debounce="field.debounce"
@@ -104,10 +104,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, type Ref, onUnmounted, } from 'vue'
+import { ref, watch, type Ref, onUnmounted, computed, nextTick, } from 'vue'
 
 import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from '@/types/enums'
 
+import { getCurrentAuthForm, } from '@/stores/authForms'
 import { useStoreAuth, } from '@/stores/store-auth'
 
 import { INPUT_REQUIRED, } from '@/utils/constants'
@@ -118,11 +119,18 @@ const storeAuth = useStoreAuth()
 
 const refLoginForm: Ref = ref(null)
 
+const currentAuthForm = computed(() => getCurrentAuthForm(AUTH_TYPE.LOGIN_EMAIL))
+
 const reset = () => {
-  storeAuth.onResetForm(AUTH_TYPE.LOGIN_EMAIL)
   if (refLoginForm.value) {
     refLoginForm.value.resetValidation()
   }
+}
+
+const validate = async () => {
+  await nextTick()
+  refLoginForm.value?.validate()
+    .then((success: boolean) => (storeAuth.valid = success))
 }
 
 onUnmounted(() => {
@@ -130,10 +138,9 @@ onUnmounted(() => {
 })
 
 watch(
-  () => storeAuth.formsAuth[AUTH_TYPE.LOGIN_EMAIL],
+  () => currentAuthForm,
   () => {
-    refLoginForm.value?.validate()
-      .then((success: boolean) => (storeAuth.valid = success))
+    validate()
   },
   { deep: true, }
 )

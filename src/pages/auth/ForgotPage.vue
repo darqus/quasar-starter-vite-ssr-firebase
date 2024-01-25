@@ -3,7 +3,7 @@
     <q-form
       ref="refForgotForm"
       @reset="reset"
-      @submit.prevent="storeAuth.onForgot"
+      @submit.prevent="storeAuth.onForgot(currentAuthForm)"
     >
       <EssentialForm
         card-style="min-width: 300px; max-width: 700px;"
@@ -12,7 +12,7 @@
       >
         <template #fields>
           <q-input
-            v-for="field in storeAuth.formsAuth[AUTH_TYPE.FORGOT_PASSWORD]"
+            v-for="field in currentAuthForm"
             :key="field.id"
             v-model="field.model"
             :debounce="field.debounce"
@@ -60,10 +60,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, type Ref, onUnmounted, } from 'vue'
+import { ref, watch, type Ref, onUnmounted, computed, nextTick, } from 'vue'
 
 import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, } from '@/types/enums'
 
+import { getCurrentAuthForm, } from '@/stores/authForms'
 import { useStoreAuth, } from '@/stores/store-auth'
 
 import { INPUT_REQUIRED, } from '@/utils/constants'
@@ -74,11 +75,18 @@ const storeAuth = useStoreAuth()
 
 const refForgotForm: Ref = ref(null)
 
+const currentAuthForm = computed(() => getCurrentAuthForm(AUTH_TYPE.FORGOT_PASSWORD))
+
 const reset = () => {
-  storeAuth.onResetForm(AUTH_TYPE.FORGOT_PASSWORD)
   if (refForgotForm.value) {
     refForgotForm.value.resetValidation()
   }
+}
+
+const validate = async () => {
+  await nextTick()
+  refForgotForm.value?.validate()
+    .then((success: boolean) => (storeAuth.valid = success))
 }
 
 onUnmounted(() => {
@@ -86,10 +94,9 @@ onUnmounted(() => {
 })
 
 watch(
-  () => storeAuth.formsAuth[AUTH_TYPE.FORGOT_PASSWORD],
+  () => currentAuthForm,
   () => {
-    refForgotForm.value?.validate()
-      .then((success: boolean) => (storeAuth.valid = success))
+    validate()
   },
   { deep: true, }
 )

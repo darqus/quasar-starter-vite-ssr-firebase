@@ -3,7 +3,7 @@
     <q-form
       ref="refForm"
       @reset="storeNewEmployee.onReset"
-      @submit.prevent="storeNewEmployee.add"
+      @submit.prevent="storeNewEmployee.add(newEmployeeForm)"
     >
       <EssentialForm
         card-style="min-width: 300px; max-width: 700px;"
@@ -12,7 +12,7 @@
       >
         <template #fields>
           <template
-            v-for="field in storeNewEmployee.formEmployee"
+            v-for="field in newEmployeeForm"
             :key="field.id"
           >
             <template v-if="field.formFieldType === FORM_FIELD_TYPE.INPUT">
@@ -92,6 +92,7 @@ import { ref, watch, type Ref, } from 'vue'
 
 import { BUTTON_TYPE, FORM_FIELD_TYPE, } from '@/types/enums'
 
+import { newEmployeeForm, } from '@/stores/employeeForms'
 import { useStoreNewEmployee, } from '@/stores/store-new-employee'
 
 import { INPUT_REQUIRED, } from '@/utils/constants'
@@ -103,7 +104,7 @@ const storeNewEmployee = useStoreNewEmployee()
 const refForm: Ref = ref(null)
 
 watch(
-  () => storeNewEmployee.formEmployee,
+  () => newEmployeeForm,
   () => {
     refForm.value?.validate()
       .then((success: boolean) => (storeNewEmployee.valid = success))

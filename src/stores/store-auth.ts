@@ -10,20 +10,14 @@ import {
 } from 'firebase/auth'
 
 import type { TAuthLinks, TAuthState, CurrentUser, } from '@/types/auth'
-import { AUTH_TYPE, INPUT_TYPE, PASSWORD_VISIBILITY_ICON_MAP, ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE, STORE_TYPES, } from '@/types/enums'
+import { INPUT_TYPE, PASSWORD_VISIBILITY_ICON_MAP, ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE, STORE_TYPES, } from '@/types/enums'
+import { type Form, } from '@/types/models'
 
 import { createNotify, } from '@/utils/notify'
-
-import { FORM_FORGOT_PASSWORD, FORM_LOGIN_EMAIL, FORM_REGISTER, } from './authForms'
 
 import { auth, } from '@/boot/firebase'
 
 const getDefaultAuthState = (): TAuthState => ({
-  formsAuth: {
-    [AUTH_TYPE.LOGIN_EMAIL]: FORM_LOGIN_EMAIL(),
-    [AUTH_TYPE.REGISTER]: FORM_REGISTER(),
-    [AUTH_TYPE.FORGOT_PASSWORD]: FORM_FORGOT_PASSWORD(),
-  },
   currentUser: null,
   loggedIn: false,
   isCheckedPolicy: true,
@@ -97,13 +91,13 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
       })
     },
     // https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0#create_a_password-based_account
-    onRegister () {
+    onRegister (currentAuthForm: Form) {
       this.toggleLoading()
-      createUserWithEmailAndPassword(auth, this.formsAuth[AUTH_TYPE.REGISTER][0].model, this.formsAuth[AUTH_TYPE.REGISTER][1].model)
+      createUserWithEmailAndPassword(auth, currentAuthForm[0].model, currentAuthForm[1].model)
         .then(({ user, }) => {
           const { uid, email, } = user
 
-          if (this.formsAuth[AUTH_TYPE.REGISTER][0].model === email && uid) {
+          if (currentAuthForm[0].model === email && uid) {
             this.router.push({ path: ROUTE_TYPE.LOGIN, }).then(() =>
               createNotify(`Пользователь c id ${uid} зарегистрирован на email ${email}`)
             )
@@ -117,12 +111,12 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
         })
     },
     // https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0#sign_in_a_user_with_an_email_address_and_password
-    onLogin () {
+    onLogin (currentAuthForm: Form) {
       this.toggleLoading()
       signInWithEmailAndPassword(
         auth,
-        this.formsAuth[AUTH_TYPE.LOGIN_EMAIL][0].model,
-        this.formsAuth[AUTH_TYPE.LOGIN_EMAIL][1].model
+        currentAuthForm[0].model,
+        currentAuthForm[1].model
       )
         .then(() => {
           this.router.push({ path: ROUTE_TYPE.ACCOUNT, })
@@ -136,23 +130,6 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
         .finally(() => {
           this.toggleLoading()
         })
-    },
-    onResetForm (authType: string) {
-      switch (authType) {
-        case AUTH_TYPE.LOGIN_EMAIL: {
-          this.formsAuth[AUTH_TYPE.LOGIN_EMAIL] = FORM_LOGIN_EMAIL()
-          break
-        }
-
-        case AUTH_TYPE.REGISTER: {
-          this.formsAuth[AUTH_TYPE.REGISTER] = FORM_REGISTER()
-          break
-        }
-
-        default: {
-          this.formsAuth[AUTH_TYPE.FORGOT_PASSWORD] = FORM_FORGOT_PASSWORD()
-        }
-      }
     },
     onLogout (goToLogin?: boolean) {
       this.toggleLoading()
@@ -172,13 +149,13 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
           this.toggleLoading()
         })
     },
-    onForgot () {
+    onForgot (currentAuthForm: Form) {
       this.toggleLoading()
-      sendPasswordResetEmail(auth, this.formsAuth[AUTH_TYPE.FORGOT_PASSWORD][0].model)
+      sendPasswordResetEmail(auth, currentAuthForm[0].model)
         .then(() => {
           this.router.push({ path: ROUTE_TYPE.LOGIN, }).then(() => {
             createNotify('Проверьте почту и перейдите по ссылке для восстановления пароля', 'green-4', 'cloud_done')
-            this.formsAuth[AUTH_TYPE.FORGOT_PASSWORD][0].model = ''
+            currentAuthForm[0].model = ''
           })
         })
         .catch((error) => {

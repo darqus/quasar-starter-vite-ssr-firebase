@@ -1,3 +1,5 @@
+import { ref, } from 'vue'
+
 import { FORM_FIELD_TYPE, INPUT_TYPE, } from '@/types/enums'
 import { type Form, } from '@/types/models'
 
@@ -87,3 +89,5 @@ export const NEW_EMPLOYEE_FORM = (): Form => [
     rule: [],
   },
 ]
+
+export const newEmployeeForm = ref(NEW_EMPLOYEE_FORM())

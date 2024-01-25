@@ -1,6 +1,7 @@
 import { defineStore, } from 'pinia'
 
 import { STORE_TYPES, } from '@/types/enums'
+import { type Form, } from '@/types/models'
 import type { TNewEmployeeState, } from '@/types/new-employee'
 
 import { createNotify, } from '@/utils/notify'
@@ -24,18 +25,18 @@ export const useStoreNewEmployee = defineStore(STORE_TYPES.NEW_EMPLOYEE, {
     toggleLoading () {
       this.loading = !this.loading
     },
-    add () {
+    add (newEmployeeForm: Form) {
       this.toggleLoading()
       addDoc('employees', {
-        name: this.formEmployee[0].model,
-        email: this.formEmployee[1].model,
-        position: this.formEmployee[2].model,
-        level: this.formEmployee[3].model,
-        rate: this.formEmployee[4].model,
-        description: this.formEmployee[5].model,
+        name: newEmployeeForm[0].model,
+        email: newEmployeeForm[1].model,
+        position: newEmployeeForm[2].model,
+        level: newEmployeeForm[3].model,
+        rate: newEmployeeForm[4].model,
+        description: newEmployeeForm[5].model,
       })
         .then(() => {
-          createNotify(`Сотрудник "${this.formEmployee[0].model}" добавлен`, 'green-4', 'how_to_reg')
+          createNotify(`Сотрудник "${newEmployeeForm[0].model}" добавлен`, 'green-4', 'how_to_reg')
           this.onReset()
         }
         )
