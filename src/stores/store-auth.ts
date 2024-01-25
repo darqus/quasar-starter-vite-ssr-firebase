@@ -3,7 +3,6 @@ import { defineStore, } from 'pinia'
 import type { AuthError, } from 'firebase/auth'
 import {
   onAuthStateChanged,
-  createUserWithEmailAndPassword,
   sendPasswordResetEmail, // updateProfile,
   signOut,
 } from 'firebase/auth'
@@ -90,24 +89,10 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
       })
     },
     // https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0#create_a_password-based_account
-    onRegister (currentAuthForm: Form) {
-      this.toggleLoading()
-      createUserWithEmailAndPassword(auth, currentAuthForm[0].model, currentAuthForm[1].model)
-        .then(({ user, }) => {
-          const { uid, email, } = user
-
-          if (currentAuthForm[0].model === email && uid) {
-            this.router.push({ path: ROUTE_TYPE.LOGIN, }).then(() =>
-              createNotify(`Пользователь c id ${uid} зарегистрирован на email ${email}`)
-            )
-          }
-        })
-        .catch((error) => {
-          this.createErrorMessage(error)
-        })
-        .finally(() => {
-          this.toggleLoading()
-        })
+    onRegisterSuccess (uid: string, email: string) {
+      this.router.push({ path: ROUTE_TYPE.ACCOUNT, }).then(() =>
+        createNotify(`Пользователь c id ${uid} зарегистрирован на email ${email}`, 'green-4', 'cloud_done')
+      )
     },
     // https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0#sign_in_a_user_with_an_email_address_and_password
     onLoginSuccess () {
