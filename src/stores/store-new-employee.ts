@@ -34,7 +34,6 @@ export const useStoreNewEmployee = defineStore(STORE_TYPES.NEW_EMPLOYEE, {
       })
         .then(() => {
           createNotify(`Сотрудник "${newEmployeeForm[0].model}" добавлен`, 'green-4', 'how_to_reg')
-          this.onReset()
         }
         )
         .catch((error) => {
@@ -43,9 +42,6 @@ export const useStoreNewEmployee = defineStore(STORE_TYPES.NEW_EMPLOYEE, {
         .finally(() => {
           this.toggleLoading()
         })
-    },
-    onReset () {
-      this.$state = getDefaultUserState()
     },
   },
 })

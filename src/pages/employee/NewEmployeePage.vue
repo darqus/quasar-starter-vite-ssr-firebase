@@ -2,8 +2,8 @@
   <q-page class="row items-center justify-evenly">
     <q-form
       ref="refForm"
-      @reset="storeNewEmployee.onReset"
-      @submit.prevent="storeNewEmployee.add(newEmployeeForm)"
+      @reset="reset"
+      @submit.prevent="storeNewEmployee.add(employeeForm)"
     >
       <EssentialForm
         card-style="min-width: 300px; max-width: 700px;"
@@ -12,7 +12,7 @@
       >
         <template #fields>
           <template
-            v-for="field in newEmployeeForm"
+            v-for="field in employeeForm"
             :key="field.id"
           >
             <template v-if="field.formFieldType === FORM_FIELD_TYPE.INPUT">
@@ -91,6 +91,7 @@
 import { ref, watch, type Ref, nextTick, } from 'vue'
 
 import { BUTTON_TYPE, FORM_FIELD_TYPE, } from '@/types/enums'
+import type { FormField, } from '@/types/models'
 
 import { newEmployeeForm, } from '@/stores/employeeForms'
 import { useStoreNewEmployee, } from '@/stores/store-new-employee'
@@ -102,6 +103,19 @@ import EssentialForm from '@/components/form/EssentialForm.vue'
 const storeNewEmployee = useStoreNewEmployee()
 
 const refForm: Ref = ref(null)
+const employeeForm: Ref = ref(newEmployeeForm)
+
+const reset = async () => {
+  if (refForm.value) {
+    employeeForm.value.forEach((item: FormField) => {
+      item.model = ''
+
+      return item
+    })
+    await nextTick()
+    refForm.value.resetValidation()
+  }
+}
 
 const validate = async () => {
   await nextTick()
