@@ -5,7 +5,6 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail, // updateProfile,
-  signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
 
@@ -111,25 +110,8 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
         })
     },
     // https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0#sign_in_a_user_with_an_email_address_and_password
-    onLogin (currentAuthForm: Form) {
-      this.toggleLoading()
-      signInWithEmailAndPassword(
-        auth,
-        currentAuthForm[0].model,
-        currentAuthForm[1].model
-      )
-        .then(() => {
-          this.router.push({ path: ROUTE_TYPE.ACCOUNT, })
-          /* .then(() => {
-            }) */
-        }
-        )
-        .catch((error) => {
-          this.createErrorMessage(error)
-        })
-        .finally(() => {
-          this.toggleLoading()
-        })
+    onLoginSuccess () {
+      this.router.push({ path: ROUTE_TYPE.ACCOUNT, })
     },
     onLogout (goToLogin?: boolean) {
       this.toggleLoading()

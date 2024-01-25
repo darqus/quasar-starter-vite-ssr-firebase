@@ -3,7 +3,7 @@
     <q-form
       ref="refLoginForm"
       @reset="reset"
-      @submit.prevent="storeAuth.onLogin(currentAuthFormRef)"
+      @submit.prevent="onLogin"
     >
       <EssentialForm
         card-style="min-width: 300px; max-width: 700px;"
@@ -106,6 +106,8 @@
 <script setup lang="ts">
 import { ref, watch, type Ref, nextTick, } from 'vue'
 
+import { signInWithEmailAndPassword, } from 'firebase/auth'
+
 import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from '@/types/enums'
 import type { FormField, } from '@/types/models'
 
@@ -115,6 +117,8 @@ import { useStoreAuth, } from '@/stores/store-auth'
 import { INPUT_REQUIRED, } from '@/utils/constants'
 
 import EssentialForm from '@/components/form/EssentialForm.vue'
+
+import { auth, } from '@/boot/firebase'
 
 const storeAuth = useStoreAuth()
 
@@ -138,6 +142,25 @@ const validate = async () => {
   await nextTick()
   refLoginForm.value?.validate()
     .then((success: boolean) => (storeAuth.valid = success))
+}
+
+const onLogin = () => {
+  storeAuth.toggleLoading()
+  signInWithEmailAndPassword(
+    auth,
+    currentAuthFormRef.value[0].model,
+    currentAuthFormRef.value[1].model
+  )
+    .then(() => {
+      reset()
+      storeAuth.onLoginSuccess()
+    })
+    .catch((error) => {
+      storeAuth.createErrorMessage(error)
+    })
+    .finally(() => {
+      storeAuth.toggleLoading()
+    })
 }
 
 watch(
