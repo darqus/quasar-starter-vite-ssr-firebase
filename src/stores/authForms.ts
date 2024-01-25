@@ -1,5 +1,3 @@
-import { ref, } from 'vue'
-
 import { AUTH_TYPE, FORM_FIELD_TYPE, INPUT_TYPE, } from '@/types/enums'
 import { type Form, } from '@/types/models'
 
@@ -76,10 +74,10 @@ const FORM_FORGOT_PASSWORD = (): Form => [
   },
 ]
 
-const formsAuth = ref({
+const formsAuth = {
   [AUTH_TYPE.LOGIN_EMAIL]: FORM_LOGIN_EMAIL(),
   [AUTH_TYPE.REGISTER]: FORM_REGISTER(),
   [AUTH_TYPE.FORGOT_PASSWORD]: FORM_FORGOT_PASSWORD(),
-})
+}
 
-export const getCurrentAuthForm = (currentAuthFormType: AUTH_TYPE) => formsAuth.value[currentAuthFormType]
+export const getCurrentAuthForm = (currentAuthFormType: AUTH_TYPE) => formsAuth[currentAuthFormType]

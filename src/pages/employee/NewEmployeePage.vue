@@ -3,7 +3,7 @@
     <q-form
       ref="refForm"
       @reset="reset"
-      @submit.prevent="storeNewEmployee.add(employeeForm)"
+      @submit.prevent="storeNewEmployee.add(employeeFormRef)"
     >
       <EssentialForm
         card-style="min-width: 300px; max-width: 700px;"
@@ -12,7 +12,7 @@
       >
         <template #fields>
           <template
-            v-for="field in employeeForm"
+            v-for="field in employeeFormRef"
             :key="field.id"
           >
             <template v-if="field.formFieldType === FORM_FIELD_TYPE.INPUT">
@@ -103,11 +103,11 @@ import EssentialForm from '@/components/form/EssentialForm.vue'
 const storeNewEmployee = useStoreNewEmployee()
 
 const refForm: Ref = ref(null)
-const employeeForm: Ref = ref(newEmployeeForm)
+const employeeFormRef: Ref = ref(newEmployeeForm)
 
 const reset = async () => {
   if (refForm.value) {
-    employeeForm.value.forEach((item: FormField) => {
+    employeeFormRef.value.forEach((item: FormField) => {
       item.model = ''
 
       return item
@@ -124,7 +124,7 @@ const validate = async () => {
 }
 
 watch(
-  () => newEmployeeForm,
+  () => employeeFormRef,
   () => {
     validate()
   },

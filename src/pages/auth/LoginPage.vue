@@ -3,7 +3,7 @@
     <q-form
       ref="refLoginForm"
       @reset="reset"
-      @submit.prevent="storeAuth.onLogin(currentAuthForm)"
+      @submit.prevent="storeAuth.onLogin(currentAuthFormRef)"
     >
       <EssentialForm
         card-style="min-width: 300px; max-width: 700px;"
@@ -12,7 +12,7 @@
       >
         <template #fields>
           <q-input
-            v-for="field in currentAuthForm"
+            v-for="field in currentAuthFormRef"
             :key="field.id"
             v-model="field.model"
             :debounce="field.debounce"
@@ -104,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, type Ref, computed, nextTick, } from 'vue'
+import { ref, watch, type Ref, nextTick, } from 'vue'
 
 import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from '@/types/enums'
 import type { FormField, } from '@/types/models'
@@ -120,11 +120,11 @@ const storeAuth = useStoreAuth()
 
 const refLoginForm: Ref = ref(null)
 
-const currentAuthForm = computed(() => getCurrentAuthForm(AUTH_TYPE.LOGIN_EMAIL))
+const currentAuthFormRef = ref(getCurrentAuthForm(AUTH_TYPE.LOGIN_EMAIL))
 
 const reset = async () => {
   if (refLoginForm.value) {
-    currentAuthForm.value.forEach((item: FormField) => {
+    currentAuthFormRef.value.forEach((item: FormField) => {
       item.model = ''
 
       return item
@@ -141,7 +141,7 @@ const validate = async () => {
 }
 
 watch(
-  () => currentAuthForm,
+  () => currentAuthFormRef,
   () => {
     validate()
   },
