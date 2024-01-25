@@ -1,4 +1,4 @@
-import type { Form, Loading, Valid, } from './models'
+import type { Loading, Valid, } from './models'
 
 export type TNewEmployee = {
   id: string
@@ -10,6 +10,4 @@ export type TNewEmployee = {
   rate: number
 }
 
-export type TNewEmployeeState = {
-  formEmployee: Form
-} & Loading & Valid
+export type TNewEmployeeState = Loading & Valid

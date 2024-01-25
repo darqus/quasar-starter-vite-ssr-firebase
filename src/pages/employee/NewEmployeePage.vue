@@ -88,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, type Ref, } from 'vue'
+import { ref, watch, type Ref, nextTick, } from 'vue'
 
 import { BUTTON_TYPE, FORM_FIELD_TYPE, } from '@/types/enums'
 
@@ -103,11 +103,16 @@ const storeNewEmployee = useStoreNewEmployee()
 
 const refForm: Ref = ref(null)
 
+const validate = async () => {
+  await nextTick()
+  refForm.value?.validate()
+    .then((success: boolean) => (storeNewEmployee.valid = success))
+}
+
 watch(
   () => newEmployeeForm,
   () => {
-    refForm.value?.validate()
-      .then((success: boolean) => (storeNewEmployee.valid = success))
+    validate()
   },
   { deep: true, }
 )

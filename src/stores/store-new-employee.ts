@@ -6,12 +6,9 @@ import type { TNewEmployeeState, } from '@/types/new-employee'
 
 import { createNotify, } from '@/utils/notify'
 
-import { NEW_EMPLOYEE_FORM, } from './employeeForms'
-
 import { addDoc, } from '@/boot/firebase'
 
 const getDefaultUserState = (): TNewEmployeeState => ({
-  formEmployee: NEW_EMPLOYEE_FORM(),
   loading: false,
   valid: false,
 })
