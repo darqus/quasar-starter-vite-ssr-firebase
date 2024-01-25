@@ -3,7 +3,7 @@
     <q-form
       ref="refForm"
       @reset="reset"
-      @submit.prevent="storeNewEmployee.add(employeeFormRef)"
+      @submit.prevent="add"
     >
       <EssentialForm
         card-style="min-width: 300px; max-width: 700px;"
@@ -61,7 +61,7 @@
         <template #buttons>
           <div class="row justify-between q-mt-md">
             <q-btn
-              :disable="storeNewEmployee.loading"
+              :disable="loading"
               :type="BUTTON_TYPE.RESET"
               color="primary"
               label="Сбросить"
@@ -70,8 +70,8 @@
               rounded
             />
             <q-btn
-              :disable="storeNewEmployee.disabledSubmitButton"
-              :loading="storeNewEmployee.loading"
+              :disable="disabledSubmitButton"
+              :loading="loading"
               :type="BUTTON_TYPE.SUBMIT"
               class="col-grow"
               color="primary"
@@ -88,22 +88,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, type Ref, nextTick, } from 'vue'
+import { ref, watch, type Ref, nextTick, computed, } from 'vue'
 
 import { BUTTON_TYPE, FORM_FIELD_TYPE, } from '@/types/enums'
 import type { FormField, } from '@/types/models'
 
 import { newEmployeeForm, } from '@/stores/employeeForms'
-import { useStoreNewEmployee, } from '@/stores/store-new-employee'
 
 import { INPUT_REQUIRED, } from '@/utils/constants'
+import { createNotify, } from '@/utils/notify'
 
 import EssentialForm from '@/components/form/EssentialForm.vue'
 
-const storeNewEmployee = useStoreNewEmployee()
+import { addDoc, } from '@/boot/firebase'
 
+const loading = ref(false)
+const valid = ref(false)
 const refForm: Ref = ref(null)
-const employeeFormRef: Ref = ref(newEmployeeForm)
+const employeeFormRef = ref(newEmployeeForm)
+
+const toggleLoading = () => {
+  loading.value = !loading.value
+}
+
+const disabledSubmitButton = computed(() => !valid.value)
 
 const reset = async () => {
   if (refForm.value) {
@@ -120,7 +128,29 @@ const reset = async () => {
 const validate = async () => {
   await nextTick()
   refForm.value?.validate()
-    .then((success: boolean) => (storeNewEmployee.valid = success))
+    .then((success: boolean) => (valid.value = success))
+}
+
+const add = () => {
+  toggleLoading()
+  addDoc('employees', {
+    name: employeeFormRef.value[0].model,
+    email: employeeFormRef.value[1].model,
+    position: employeeFormRef.value[2].model,
+    level: employeeFormRef.value[3].model,
+    rate: employeeFormRef.value[4].model,
+    description: employeeFormRef.value[5].model,
+  })
+    .then(() => {
+      createNotify(`Сотрудник "${employeeFormRef.value[0].model}" добавлен`, 'green-4', 'how_to_reg')
+      reset()
+    })
+    .catch((error) => {
+      createNotify(error)
+    })
+    .finally(() => {
+      toggleLoading()
+    })
 }
 
 watch(
