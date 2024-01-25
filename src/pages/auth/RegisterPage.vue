@@ -98,6 +98,7 @@
 import { ref, watch, type Ref, onUnmounted, computed, nextTick, } from 'vue'
 
 import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from '@/types/enums'
+import type { FormField, } from '@/types/models'
 
 import { getCurrentAuthForm, } from '@/stores/authForms'
 import { useStoreAuth, } from '@/stores/store-auth'
@@ -112,8 +113,14 @@ const refRegisterForm: Ref = ref(null)
 
 const currentAuthForm = computed(() => getCurrentAuthForm(AUTH_TYPE.REGISTER))
 
-const reset = () => {
+const reset = async () => {
   if (refRegisterForm.value) {
+    currentAuthForm.value.forEach((item: FormField) => {
+      item.model = ''
+
+      return item
+    })
+    await nextTick()
     refRegisterForm.value.resetValidation()
   }
 }
