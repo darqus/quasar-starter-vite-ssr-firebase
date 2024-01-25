@@ -3,13 +3,11 @@ import { defineStore, } from 'pinia'
 import type { AuthError, } from 'firebase/auth'
 import {
   onAuthStateChanged,
-  sendPasswordResetEmail, // updateProfile,
   signOut,
 } from 'firebase/auth'
 
 import type { TAuthLinks, TAuthState, CurrentUser, } from '@/types/auth'
 import { INPUT_TYPE, PASSWORD_VISIBILITY_ICON_MAP, ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE, STORE_TYPES, } from '@/types/enums'
-import { type Form, } from '@/types/models'
 
 import { createNotify, } from '@/utils/notify'
 
@@ -116,21 +114,10 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
           this.toggleLoading()
         })
     },
-    onForgot (currentAuthForm: Form) {
-      this.toggleLoading()
-      sendPasswordResetEmail(auth, currentAuthForm[0].model)
-        .then(() => {
-          this.router.push({ path: ROUTE_TYPE.LOGIN, }).then(() => {
-            createNotify('Проверьте почту и перейдите по ссылке для восстановления пароля', 'green-4', 'cloud_done')
-            currentAuthForm[0].model = ''
-          })
-        })
-        .catch((error) => {
-          this.createErrorMessage(error)
-        })
-        .finally(() => {
-          this.toggleLoading()
-        })
+    onForgotSuccess () {
+      this.router.push({ path: ROUTE_TYPE.LOGIN, }).then(() => {
+        createNotify('Проверьте почту и перейдите по ссылке для восстановления пароля', 'green-4', 'cloud_done')
+      })
     },
     onPostLogout () {
       createNotify('Вы вышли из системы', 'green-4', 'cloud_done')
