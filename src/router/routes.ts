@@ -2,7 +2,7 @@ import { type RouteRecordRaw, } from 'vue-router'
 
 import { ROUTE_TYPE, } from '@/types/enums'
 
-const { VITE_ROUTER_BASE, } = import.meta.env
+const { VITE_ROUTER_BASE: BASE, } = import.meta.env
 
 const {
   REGISTER,
@@ -14,11 +14,11 @@ const {
 
 const routes: RouteRecordRaw[] = [
   {
-    path: VITE_ROUTER_BASE,
+    path: BASE,
     component: async () => await import('layouts/MainLayout.vue'),
     children: [
       {
-        path: VITE_ROUTER_BASE,
+        path: BASE,
         component: async () => await import('pages/home/HomePage.vue'),
       },
       {

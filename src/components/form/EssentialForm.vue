@@ -25,7 +25,7 @@
           <div class="row">
             <div class="col-12 text-subtitle1">
               <router-link
-                :to="VITE_ROUTER_BASE"
+                :to="BASE"
                 class="text-primary"
               >
                 На Главную
@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-const { VITE_ROUTER_BASE, } = import.meta.env
+const { VITE_ROUTER_BASE: BASE, } = import.meta.env
 
 type Form = {
   cardStyle: string

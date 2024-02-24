@@ -13,7 +13,7 @@
 
         <q-toolbar-title>
           <router-link
-            :to="VITE_ROUTER_BASE"
+            :to="BASE"
             class="text-white text-decoration-none"
           >
             {{ APP_NAME }}
@@ -45,7 +45,7 @@ import { TITLE, } from '@/utils/meta'
 
 import SidebarDrawer from '@/components/SidebarDrawer.vue'
 
-const { VITE_ROUTER_BASE, } = import.meta.env
+const { VITE_ROUTER_BASE: BASE, } = import.meta.env
 const leftDrawerOpen = ref(false)
 const title = ref(TITLE)
 const APP_NAME = import.meta.env.VITE_NAME_FULL
