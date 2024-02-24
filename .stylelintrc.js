@@ -10,7 +10,6 @@ module.exports = {
     'annotation-no-unknown': [true, { ignoreAnnotations: [ "default"] }],
     'scss/at-rule-no-unknown': [true],
     'alpha-value-notation': 'number',
-    'string-quotes': 'double',
     'string-no-newline': null,
     'selector-max-universal': 1,
     'selector-max-type': [0, { ignore: ['child', 'descendant', 'compounded'] }],
