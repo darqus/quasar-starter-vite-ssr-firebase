@@ -3,50 +3,96 @@
 /* stylelint-disable number-max-precision */
 $typography-font-family         : "Roboto", "-apple-system", "Helvetica Neue", helvetica, arial, sans-serif !default;
 
-$h1:        (size: 6rem,     line-height: 6rem,     letter-spacing: -.01562em, weight: 300) !default;
-$h2:        (size: 3.75rem,  line-height: 3.75rem,  letter-spacing: -.00833em, weight: 300) !default;
-$h3:        (size: 3rem,     line-height: 3.125rem, letter-spacing: normal,    weight: 400) !default;
-$h4:        (size: 2.125rem, line-height: 2.5rem,   letter-spacing: .00735em,  weight: 400) !default;
-$h5:        (size: 1.5rem,   line-height: 2rem,     letter-spacing: normal,    weight: 400) !default;
-$h6:        (size: 1.25rem,  line-height: 2rem,     letter-spacing: .0125em,   weight: 500) !default;
-$subtitle1: (size: 1rem,     line-height: 1.75rem,  letter-spacing: .00937em,  weight: 400) !default;
-$subtitle2: (size: .875rem,  line-height: 1.375rem, letter-spacing: .00714em,  weight: 500) !default;
-$body1:     (size: 1rem,     line-height: 1.5rem,   letter-spacing: .03125em,  weight: 400) !default;
-$body2:     (size: .875rem,  line-height: 1.25rem,  letter-spacing: .01786em,  weight: 400) !default;
-$overline:  (size: .75rem,   line-height: 2rem,     letter-spacing: .16667em,  weight: 500) !default;
-$caption:   (size: .75rem,   line-height: 1.25rem,  letter-spacing: .03333em,  weight: 400) !default;
-
-$headings: (
-  "h1": $h1,
-  "h2": $h2,
-  "h3": $h3,
-  "h4": $h4,
-  "h5": $h5,
-  "h6": $h6,
-  "subtitle1": $subtitle1,
-  "subtitle2": $subtitle2,
-  "body1": $body1,
-  "body2": $body2,
-  "overline": $overline,
-  "caption": $caption,
+$font-sizes: (
+ "h1": 6rem,
+ "h2": 3.75rem,
+ "h3": 3rem,
+ "h4": 2.125rem,
+ "h5": 1.5rem,
+ "h6": 1.25rem,
+ "subtitle1": 1rem,
+ "subtitle2": .875rem,
+ "body1": 1rem,
+ "body2": .875rem,
+ "overline": .75rem,
+ "caption": .75rem,
 ) !default;
 
-$h-tags: (
-  h1: map-get($headings, "h1"),
-  h2: map-get($headings, "h2"),
-  h3: map-get($headings, "h3"),
-  h4: map-get($headings, "h4"),
-  h5: map-get($headings, "h5"),
-  h6: map-get($headings, "h6"),
+$font-line-heihgts: (
+ "h1": 6rem,
+ "h2": 3.75rem,
+ "h3": 3.125rem,
+ "h4": 2.5rem,
+ "h5": 2rem,
+ "h6": 2rem,
+ "subtitle1": 1.75rem,
+ "subtitle2": 1.375rem,
+ "body1": 1.5rem,
+ "body2": 1.25rem,
+ "overline": 2rem,
+ "caption": 1.25rem,
+) !default;
+
+$font-letter-spacings: (
+ "h1": -.01562em,
+ "h2": -.00833em,
+ "h3": normal,
+ "h4": .00735em,
+ "h5": normal,
+ "h6": .0125em,
+ "subtitle1": .00937em,
+ "subtitle2": .00714em,
+ "body1": .03125em,
+ "body2": .01786em,
+ "overline": .16667em,
+ "caption": .03333em,
 ) !default;
 
 $text-weights: (
-  thin: 100,
-  light: 300,
-  regular: 400,
-  medium: 500,
-  bold: 700,
-  bolder: 900,
+ thin: 100,
+ light: 300,
+ regular: 400,
+ medium: 500,
+ bold: 700,
+ strong: 800,
+ bolder: 900,
+) !default;
+
+$h1: (size: map-get($font-sizes, h1), line-height: map-get($font-line-heihgts, h1), letter-spacing: map-get($font-letter-spacings, h1), weight: map-get($text-weights, light)) !default;
+$h2: (size: map-get($font-sizes, h2), line-height: map-get($font-line-heihgts, h2), letter-spacing: map-get($font-letter-spacings, h2), weight: map-get($text-weights, light)) !default;
+$h3: (size: map-get($font-sizes, h3), line-height: map-get($font-line-heihgts, h3), letter-spacing: map-get($font-letter-spacings, h3), weight: map-get($text-weights, regular)) !default;
+$h4: (size: map-get($font-sizes, h4), line-height: map-get($font-line-heihgts, h4), letter-spacing: map-get($font-letter-spacings, h4), weight: map-get($text-weights, regular)) !default;
+$h5: (size: map-get($font-sizes, h5), line-height: map-get($font-line-heihgts, h5), letter-spacing: map-get($font-letter-spacings, h5), weight: map-get($text-weights, regular)) !default;
+$h6: (size: map-get($font-sizes, h6), line-height: map-get($font-line-heihgts, h6), letter-spacing: map-get($font-letter-spacings, h6), weight: map-get($text-weights, medium)) !default;
+$subtitle1: (size: map-get($font-sizes, subtitle1), line-height: map-get($font-line-heihgts, subtitle1), letter-spacing: map-get($font-letter-spacings, subtitle1), weight: map-get($text-weights, regular)) !default;
+$subtitle2: (size: map-get($font-sizes, subtitle2), line-height: map-get($font-line-heihgts, subtitle2), letter-spacing: map-get($font-letter-spacings, subtitle2), weight: map-get($text-weights, medium)) !default;
+$body1: (size: map-get($font-sizes, body1), line-height: map-get($font-line-heihgts, body1), letter-spacing: map-get($font-letter-spacings, body1), weight: map-get($text-weights, regular)) !default;
+$body2: (size: map-get($font-sizes, body2), line-height: map-get($font-line-heihgts, body2), letter-spacing: map-get($font-letter-spacings, body2), weight: map-get($text-weights, regular)) !default;
+$overline: (size: map-get($font-sizes, overline), line-height: map-get($font-line-heihgts, overline), letter-spacing: map-get($font-letter-spacings, overline), weight: map-get($text-weights, medium)) !default;
+$caption: (size: map-get($font-sizes, caption), line-height: map-get($font-line-heihgts, caption), letter-spacing: map-get($font-letter-spacings, caption), weight: map-get($text-weights, regular)) !default;
+
+$headings: (
+ "h1": $h1,
+ "h2": $h2,
+ "h3": $h3,
+ "h4": $h4,
+ "h5": $h5,
+ "h6": $h6,
+ "subtitle1": $subtitle1,
+ "subtitle2": $subtitle2,
+ "body1": $body1,
+ "body2": $body2,
+ "overline": $overline,
+ "caption": $caption,
+) !default;
+
+$h-tags: (
+ h1: map-get($headings, "h1"),
+ h2: map-get($headings, "h2"),
+ h3: map-get($headings, "h3"),
+ h4: map-get($headings, "h4"),
+ h5: map-get($headings, "h5"),
+ h6: map-get($headings, "h6"),
 ) !default;
 
 // https://quasar.dev/style/typography/#css-helper-classes
