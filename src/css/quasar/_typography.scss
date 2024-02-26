@@ -95,7 +95,7 @@ $h-tags: (
  h6: map-get($headings, "h6"),
 ) !default;
 
-// https://quasar.dev/style/typography/#css-helper-classes
+/* https://quasar.dev/style/typography/#css-helper-classes */
 
 .text-decoration-none {
   text-decoration: none !important;

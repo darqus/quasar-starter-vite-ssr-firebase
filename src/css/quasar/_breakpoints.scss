@@ -3,13 +3,15 @@
 /* stylelint-disable at-rule-no-unknown */
 /* stylelint-disable scss/no-global-function-names */
 /* stylelint-disable function-no-unknown */
-// Max width at which point
-// current size ends
+
+/* Max width at which point
+current size ends */
+
 $breakpoint-xs: 599px !default;
 $breakpoint-sm: 1023px !default;
 $breakpoint-md: 1439px !default;
 $breakpoint-lg: 1919px !default;
-// $breakpoint-xl: 2399px !default;
+/* $breakpoint-xl: 2399px !default; */
 
 $sizes: (
   "xs": 0,
