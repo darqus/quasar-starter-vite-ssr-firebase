@@ -1,11 +1,5 @@
 /* eslint-disable */
 
-declare namespace NodeJS {
-  interface ProcessEnv {
-    NODE_ENV: string
-  }
-}
-
 interface ImportMetaEnv {
   readonly VITE_NAME_FULL: string
   readonly VITE_NAME_SHORT: string
