@@ -8,7 +8,7 @@ module.exports = {
   ],
   rules: {
     'annotation-no-unknown': [true, { ignoreAnnotations: [ "default"] }],
-    'scss/at-rule-no-unknown': [true],
+    'at-rule-no-unknown': [ true, { ignoreAtRules: ['include', 'mixin', 'function', 'if', 'else', 'each' ] } ],
     'alpha-value-notation': 'number',
     'string-no-newline': null,
     'selector-max-universal': 1,

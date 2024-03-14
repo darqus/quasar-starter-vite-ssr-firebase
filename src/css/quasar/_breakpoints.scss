@@ -1,6 +1,5 @@
 /* stylelint-disable scss/operator-no-unspaced */
 /* stylelint-disable media-query-no-invalid */
-/* stylelint-disable at-rule-no-unknown */
 /* stylelint-disable scss/no-global-function-names */
 /* stylelint-disable function-no-unknown */
 
@@ -11,6 +10,7 @@ $breakpoint-xs: 599px !default;
 $breakpoint-sm: 1023px !default;
 $breakpoint-md: 1439px !default;
 $breakpoint-lg: 1919px !default;
+
 /* $breakpoint-xl: 2399px !default; */
 
 $sizes: (
