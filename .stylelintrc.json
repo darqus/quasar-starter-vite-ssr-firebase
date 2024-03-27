@@ -4,7 +4,7 @@
     "stylelint-config-recommended-scss",
     "stylelint-config-recommended-vue/scss",
     "stylelint-config-recess-order",
-    "stylelint-config-standard"
+    "stylelint-config-standard-scss"
   ],
   "overrides": [
     {
@@ -13,22 +13,7 @@
         "src/**/*.vue",
         "src/*.scss",
         "src/**/*.scss"
-      ],
-      "rules": {
-        "rule-empty-line-before": "always-multi-line",
-        "unit-allowed-list": [
-          "em",
-          "rem",
-          "ms",
-          "s",
-          "%",
-          "px",
-          "fr",
-          "vw",
-          "vh",
-          "deg"
-        ]
-      }
+      ]
     }
   ],
   "rules": {
@@ -93,6 +78,17 @@
         ]
       }
     ],
-    "string-no-newline": null
+    "unit-allowed-list": [
+      "em",
+      "rem",
+      "ms",
+      "s",
+      "%",
+      "px",
+      "fr",
+      "vw",
+      "vh",
+      "deg"
+    ]
   }
 }
