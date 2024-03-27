@@ -20,18 +20,13 @@ $sizes: (
   "lg": ($breakpoint-md + 1),
   "xl": ($breakpoint-lg + 1)
 ) !default;
-
 $breakpoint-xs-max: (map-get($sizes, "sm") - 0.02) !default;
-
 $breakpoint-sm-min: map-get($sizes, "sm") !default;
 $breakpoint-sm-max: (map-get($sizes, "md") - 0.02) !default;
-
 $breakpoint-md-min: map-get($sizes, "md") !default;
 $breakpoint-md-max: (map-get($sizes, "lg") - 0.02) !default;
-
 $breakpoint-lg-min: map-get($sizes, "lg") !default;
 $breakpoint-lg-max: (map-get($sizes, "xl") - 0.02) !default;
-
 $breakpoint-xl-min: map-get($sizes, "xl") !default;
 
 @mixin media-down($media) {
@@ -39,21 +34,15 @@ $breakpoint-xl-min: map-get($sizes, "xl") !default;
     @media only screen and (max-width: $breakpoint-xs) {
       @content;
     }
-  }
-
- @else if $media==sm {
+  } @else if $media==sm {
     @media only screen and (max-width: $breakpoint-sm) {
       @content;
     }
-  }
-
- @else if $media==md {
+  } @else if $media==md {
     @media only screen and (max-width: $breakpoint-md) {
       @content;
     }
-  }
-
- @else if $media==lg {
+  } @else if $media==lg {
     @media only screen and (max-width: $breakpoint-lg) {
       @content;
     }
@@ -65,21 +54,15 @@ $breakpoint-xl-min: map-get($sizes, "xl") !default;
     @media only screen and (min-width: $breakpoint-xs + 1) {
       @content;
     }
-  }
-
- @else if $media==sm {
+  } @else if $media==sm {
     @media only screen and (min-width: $breakpoint-sm + 1) {
       @content;
     }
-  }
-
- @else if $media==md {
+  } @else if $media==md {
     @media only screen and (min-width: $breakpoint-md + 1) {
       @content;
     }
-  }
-
- @else if $media==lg {
+  } @else if $media==lg {
     @media only screen and (min-width: $breakpoint-lg + 1) {
       @content;
     }

@@ -1,10 +1,9 @@
-$flex-cols      : 12 !default;
-$flex-gutter-xs : ($space-base * .25) !default;
-$flex-gutter-sm : ($space-base * .5) !default;
-$flex-gutter-md : $space-base !default;
-$flex-gutter-lg : ($space-base * 1.5) !default;
-$flex-gutter-xl : ($space-base * 3) !default;
-
+$flex-cols: 12 !default;
+$flex-gutter-xs: ($space-base * .25) !default;
+$flex-gutter-sm: ($space-base * .5) !default;
+$flex-gutter-md: $space-base !default;
+$flex-gutter-lg: ($space-base * 1.5) !default;
+$flex-gutter-xl: ($space-base * 3) !default;
 $flex-gutter: (
   "none": 0,
   "xs": $flex-gutter-xs,
