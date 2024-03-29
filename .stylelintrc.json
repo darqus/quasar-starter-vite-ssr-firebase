@@ -1,83 +1,27 @@
 {
   "extends": [
-    "stylelint-config-html",
-    "stylelint-config-recommended-scss",
-    "stylelint-config-recommended-vue/scss",
-    "stylelint-config-recess-order",
-    "stylelint-config-standard"
+    "stylelint-config-standard-scss",
+    "stylelint-config-recess-order"
   ],
   "overrides": [
     {
       "files": [
-        "src/*.vue",
-        "src/**/*.vue",
         "src/*.scss",
         "src/**/*.scss"
       ]
     }
   ],
   "rules": {
-    "alpha-value-notation": "number",
-    "annotation-no-unknown": [
-      true,
-      {
-        "ignoreAnnotations": [
-          "default"
-        ]
-      }
-    ],
-    "at-rule-no-unknown": [
-      true,
-      {
-        "ignoreAtRules": [
-          "include",
-          "mixin",
-          "if",
-          "else",
-          "each",
-          "error",
-          "function",
-          "return",
-          "warn"
-        ]
-      }
-    ],
-    "import-notation": "string",
-    "max-nesting-depth": [
-      7,
-      {
-        "ignore": [
-          "pseudo-classes",
-          "blockless-at-rules"
-        ],
-        "ignoreAtRules": [
-          "media"
-        ]
-      }
-    ],
-    "selector-class-pattern": "",
-    "selector-max-type": [
-      0,
-      {
-        "ignore": [
-          "child",
-          "descendant",
-          "compounded"
-        ]
-      }
-    ],
-    "selector-max-universal": 1,
-    "selector-pseudo-class-no-unknown": [
-      true,
-      {
-        "ignorePseudoClasses": [
-          "global",
-          "export",
-          "import",
-          "local"
-        ]
-      }
-    ],
+    "scss/at-each-key-value-single-line": true,
+    "scss/at-if-no-null": null,
+    "scss/comment-no-empty": null,
+    "scss/comment-no-loud": null,
+    "scss/dollar-variable-empty-line-before": null,
+    "scss/dollar-variable-pattern": null,
+    "scss/double-slash-comment-empty-line-before": "never",
+    "scss/no-global-function-names": null,
+    "scss/operator-no-unspaced": true,
+    "scss/selector-nest-combinators": "always",
     "unit-allowed-list": [
       "em",
       "rem",

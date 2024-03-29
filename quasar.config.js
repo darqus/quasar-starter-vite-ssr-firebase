@@ -101,14 +101,22 @@ module.exports = configure((/* ctx */) => ({
     }, */
     // viteVuePluginOptions: {},
 
-    // vitePlugins: [
-    //   [ 'package-name', { ..options.. } ]
-    // ]
+    vitePlugins: [
+      [ 'vite-plugin-checker', {
+        vueTsc: {
+          tsconfigPath: 'tsconfig.vue-tsc.json',
+        },
+        eslint: {
+          lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
+        },
+      }, { server: false, }, ],
+    ],
   },
 
   // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
   devServer: {
     // https: true,
+    vueDevtools: mode === 'development',
     // opens browser window automatically
     open: true,
   },

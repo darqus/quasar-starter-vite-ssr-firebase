@@ -2,11 +2,12 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
-    "vue.volar",
+    "johnsoncodehk.volarjs-labs",
     "wayou.vscode-todo-highlight",
     "stylelint.vscode-stylelint"
   ],
   "unwantedRecommendations": [
+    "vue.volar",
     "octref.vetur",
     "hookyqr.beautify",
     "dbaeumer.jshint",

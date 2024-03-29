@@ -8,7 +8,8 @@
   },
   "[html]": {
     "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit"
+      "source.fixAll": "explicit",
+      "source.fixAll.stylelint": "never"
     },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.formatOnSave": true
@@ -17,7 +18,8 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
       "source.fixAll.eslint": "explicit",
-      "source.organizeImports": "never",
+      "source.fixAll.stylelint": "never",
+      "source.organizeImports": "never"
     },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint", // eslint
     "editor.formatOnSave": true
@@ -33,7 +35,8 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
       "source.fixAll.eslint": "explicit",
-      "source.organizeImports": "never",
+      "source.fixAll.stylelint": "never",
+      "source.organizeImports": "never"
     },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint", // eslint
     "editor.formatOnSave": true
@@ -42,6 +45,7 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
       "source.fixAll.eslint": "explicit",
+      "source.fixAll.stylelint": "never",
       "source.organizeImports": "never"
     },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint", // eslint
@@ -51,6 +55,7 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
       "source.fixAll.eslint": "explicit",
+      "source.fixAll.stylelint": "never",
       "source.organizeImports": "never"
     },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint", // eslint
@@ -70,12 +75,11 @@
     "vue"
   ],
   "scss.validate": false,
+  "stylelint.packageManager": "yarn",
   "stylelint.validate": [
     "html",
-    "css",
-    "scss",
-    "postcss",
-    "vue"
+    "scss"
   ],
+  "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib"
 }
