@@ -36,8 +36,6 @@ module.exports = {
     'tsconfig.json',
     'package.json',
     'package-lock.json',
-    'quasar.testing.json',
-    'quasar.extensions.json',
   ],
 
   plugins: [
