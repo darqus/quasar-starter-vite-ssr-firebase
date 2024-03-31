@@ -12,7 +12,7 @@ const path = require('node:path')
 
 const { configure, } = require('quasar/wrappers')
 
-module.exports = configure((/* ctx */) => ({
+module.exports = configure(({ mode, }) => ({
   supportTS: {
     tsCheckerConfig: {
       eslint: {
@@ -101,16 +101,16 @@ module.exports = configure((/* ctx */) => ({
     }, */
     // viteVuePluginOptions: {},
 
-    vitePlugins: [
-      [ 'vite-plugin-checker', {
-        vueTsc: {
-          tsconfigPath: 'tsconfig.vue-tsc.json',
-        },
-        eslint: {
-          lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
-        },
-      }, { server: false, }, ],
-    ],
+    // vitePlugins: [
+    //   [ 'vite-plugin-checker', {
+    //     vueTsc: {
+    //       tsconfigPath: 'tsconfig.vue-tsc.json',
+    //     },
+    //     eslint: {
+    //       lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
+    //     },
+    //   }, { server: false, }, ],
+    // ],
   },
 
   // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
