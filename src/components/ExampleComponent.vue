@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { computed, ref, } from 'vue'
 
-import type { Todo, Meta, } from '@/types/models'
+import type { Todo, Meta, } from 'src/types/models'
 
 type Props = {
   title: string

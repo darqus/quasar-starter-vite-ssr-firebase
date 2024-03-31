@@ -6,12 +6,12 @@ import {
   signOut,
 } from 'firebase/auth'
 
-import type { TAuthLinks, TAuthState, CurrentUser, } from '@/types/auth'
-import { INPUT_TYPE, PASSWORD_VISIBILITY_ICON_MAP, ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE, STORE_TYPES, } from '@/types/enums'
+import type { TAuthLinks, TAuthState, CurrentUser, } from 'src/types/auth'
+import { INPUT_TYPE, PASSWORD_VISIBILITY_ICON_MAP, ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE, STORE_TYPES, } from 'src/types/enums'
 
-import { createNotify, } from '@/utils/notify'
+import { createNotify, } from 'src/utils/notify'
 
-import { auth, } from '@/boot/firebase'
+import { auth, } from 'src/boot/firebase'
 
 const getDefaultAuthState = (): TAuthState => ({
   currentUser: null,

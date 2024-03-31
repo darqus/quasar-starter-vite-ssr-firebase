@@ -1,4 +1,4 @@
-import { toggleLoading, } from '@/utils/constants'
+import { toggleLoading, } from 'src/utils/constants'
 
 import { describe, expect, it, } from 'vitest'
 

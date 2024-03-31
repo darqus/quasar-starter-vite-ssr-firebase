@@ -21,9 +21,9 @@
 </template>
 
 <script setup lang="ts">
-import { useStoreAuth, } from '@/stores/store-auth'
+import { useStoreAuth, } from 'src/stores/store-auth'
 
-import EssentialForm from '@/components/form/EssentialForm.vue'
+import EssentialForm from 'src/components/form/EssentialForm.vue'
 
 const storeAuth = useStoreAuth()
 </script>

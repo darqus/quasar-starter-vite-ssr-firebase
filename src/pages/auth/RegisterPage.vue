@@ -99,17 +99,17 @@ import { ref, watch, type Ref, nextTick, } from 'vue'
 
 import { createUserWithEmailAndPassword, } from 'firebase/auth'
 
-import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from '@/types/enums'
-import type { FormField, } from '@/types/models'
+import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from 'src/types/enums'
+import type { FormField, } from 'src/types/models'
 
-import { getCurrentAuthForm, } from '@/stores/authForms'
-import { useStoreAuth, } from '@/stores/store-auth'
+import { getCurrentAuthForm, } from 'src/stores/authForms'
+import { useStoreAuth, } from 'src/stores/store-auth'
 
-import { INPUT_REQUIRED, } from '@/utils/constants'
+import { INPUT_REQUIRED, } from 'src/utils/constants'
 
-import EssentialForm from '@/components/form/EssentialForm.vue'
+import EssentialForm from 'src/components/form/EssentialForm.vue'
 
-import { auth, } from '@/boot/firebase'
+import { auth, } from 'src/boot/firebase'
 
 const storeAuth = useStoreAuth()
 

@@ -90,17 +90,17 @@
 <script setup lang="ts">
 import { ref, watch, type Ref, nextTick, computed, } from 'vue'
 
-import { BUTTON_TYPE, FORM_FIELD_TYPE, } from '@/types/enums'
-import type { FormField, } from '@/types/models'
+import { BUTTON_TYPE, FORM_FIELD_TYPE, } from 'src/types/enums'
+import type { FormField, } from 'src/types/models'
 
-import { newEmployeeForm, } from '@/stores/employeeForms'
+import { newEmployeeForm, } from 'src/stores/employeeForms'
 
-import { INPUT_REQUIRED, } from '@/utils/constants'
-import { createNotify, } from '@/utils/notify'
+import { INPUT_REQUIRED, } from 'src/utils/constants'
+import { createNotify, } from 'src/utils/notify'
 
-import EssentialForm from '@/components/form/EssentialForm.vue'
+import EssentialForm from 'src/components/form/EssentialForm.vue'
 
-import { addDoc, } from '@/boot/firebase'
+import { addDoc, } from 'src/boot/firebase'
 
 const loading = ref(false)
 const valid = ref(false)

@@ -1,4 +1,4 @@
-import { getTodayYesterdayDate, formatISOToInternationalDateTime, subtractDays, convertDateTimeToISO, } from '@/utils/datetime'
+import { getTodayYesterdayDate, formatISOToInternationalDateTime, subtractDays, convertDateTimeToISO, } from 'src/utils/datetime'
 
 import { describe, expect, it, } from 'vitest'
 

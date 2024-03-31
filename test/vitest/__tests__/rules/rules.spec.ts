@@ -1,4 +1,4 @@
-import { REGEXP, } from '@/utils/rules'
+import { REGEXP, } from 'src/utils/rules'
 
 import { describe, expect, it, } from 'vitest'
 

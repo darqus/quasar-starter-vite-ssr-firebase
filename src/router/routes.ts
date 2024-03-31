@@ -1,6 +1,6 @@
 import { type RouteRecordRaw, } from 'vue-router'
 
-import { ROUTE_TYPE, } from '@/types/enums'
+import { ROUTE_TYPE, } from 'src/types/enums'
 
 const { VITE_ROUTER_BASE: BASE, } = import.meta.env
 

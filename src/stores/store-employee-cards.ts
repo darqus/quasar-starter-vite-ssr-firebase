@@ -1,11 +1,11 @@
 import { defineStore, } from 'pinia'
 
-import { LEVELS_MAP, } from '@/types/emloyee-card'
-import type { TEmployeeCardsState, } from '@/types/emloyee-card'
-import { STORE_TYPES, } from '@/types/enums'
-import type { TNewEmployee, } from '@/types/new-employee'
+import { LEVELS_MAP, } from 'src/types/emloyee-card'
+import type { TEmployeeCardsState, } from 'src/types/emloyee-card'
+import { STORE_TYPES, } from 'src/types/enums'
+import type { TNewEmployee, } from 'src/types/new-employee'
 
-import { getCollection, } from '@/boot/firebase'
+import { getCollection, } from 'src/boot/firebase'
 
 export const useStoreEmployeeCards = defineStore(STORE_TYPES.EMPLOYEE_CARDS, {
   state: (): TEmployeeCardsState => ({

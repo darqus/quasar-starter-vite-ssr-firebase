@@ -1,9 +1,9 @@
-import { FORM_FIELD_TYPE, INPUT_TYPE, } from '@/types/enums'
-import { type Form, } from '@/types/models'
+import { FORM_FIELD_TYPE, INPUT_TYPE, } from 'src/types/enums'
+import { type Form, } from 'src/types/models'
 
-import { DEBOUNCE, } from '@/utils/constants'
-import { generateId, } from '@/utils/generator'
-import rules from '@/utils/rules'
+import { DEBOUNCE, } from 'src/utils/constants'
+import { generateId, } from 'src/utils/generator'
+import rules from 'src/utils/rules'
 
 export const NEW_EMPLOYEE_FORM = (): Form => [
   {

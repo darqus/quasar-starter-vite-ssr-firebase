@@ -12,5 +12,5 @@
 </template>
 
 <script setup lang="ts">
-import { LEVELS_MAP, } from '@/types/emloyee-card'
+import { LEVELS_MAP, } from 'src/types/emloyee-card'
 </script>

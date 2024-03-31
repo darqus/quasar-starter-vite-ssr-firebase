@@ -1,4 +1,4 @@
-import { createUniqueArray, findIndexInArray, insertToArray, removeFromArray, } from '@/utils/array'
+import { createUniqueArray, findIndexInArray, insertToArray, removeFromArray, } from 'src/utils/array'
 
 import { describe, expect, it, } from 'vitest'
 

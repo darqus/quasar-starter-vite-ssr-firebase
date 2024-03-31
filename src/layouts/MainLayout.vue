@@ -41,9 +41,9 @@
 <script setup lang="ts">
 import { ref, } from 'vue'
 
-import { TITLE, } from '@/utils/meta'
+import { TITLE, } from 'src/utils/meta'
 
-import SidebarDrawer from '@/components/SidebarDrawer.vue'
+import SidebarDrawer from 'src/components/SidebarDrawer.vue'
 
 const { VITE_ROUTER_BASE: BASE, } = import.meta.env
 const leftDrawerOpen = ref(false)
