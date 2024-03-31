@@ -38,7 +38,6 @@ module.exports = {
     'package-lock.json',
     'quasar.testing.json',
     'quasar.extensions.json',
-    'src/types/api/resolvers-types.ts',
   ],
 
   plugins: [
