@@ -22,12 +22,8 @@ FILE_PAGE='src/pages/'$PAGE_LC'/'$PAGE_PC'Page.vue'
 mkdir -p 'src/pages/'$PAGE_LC
 
 echo '<template>
-  <q-page
-    class="row items-center justify-evenly page-'$PAGE_LC'"
-  >
-    <div
-      class="container"
-    >
+  <q-page class="row items-center justify-evenly page-'$PAGE_LC'">
+    <div class="container">
       '$PAGE_PC' Page
     </div>
   </q-page>
