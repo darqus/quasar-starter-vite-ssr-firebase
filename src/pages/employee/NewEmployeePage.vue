@@ -26,7 +26,6 @@
                 :type="field.inputType"
                 class="q-mb-sm"
                 label-slot
-                outlined
               >
                 <template #label>
                   <span>{{ field.label }}</span>
@@ -44,7 +43,6 @@
                 :required="field.required"
                 :rules="field.rule"
                 label-slot
-                outlined
               >
                 <template #label>
                   <span>{{ field.label }}</span>

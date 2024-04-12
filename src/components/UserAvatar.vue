@@ -10,7 +10,6 @@
     <q-input
       :model-value="userEmail"
       label="Ваш Email"
-      outlined
       readonly
     />
   </div>

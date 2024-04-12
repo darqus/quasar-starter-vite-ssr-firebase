@@ -16,7 +16,6 @@
         label="По уровню"
         style="width: 200px"
         clearable
-        outlined
       />
       <div class="q-mr-md" />
       <q-select
@@ -26,17 +25,15 @@
         label="По должности"
         style="width: 200px"
         clearable
-        outlined
       />
       <div class="q-mr-md" />
       <q-select
         v-model="storeEmployeeCards.selectedFromRating"
         :options="storeEmployeeCards.optionsEmployeeRating"
         class="q-mb-md"
-        label="По рэйтингу"
+        label="По рейтингу"
         style="width: 160px"
         clearable
-        outlined
       />
     </template>
   </div>

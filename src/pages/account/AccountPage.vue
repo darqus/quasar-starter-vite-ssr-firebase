@@ -11,7 +11,6 @@
           label="Email"
           dense
           disable
-          outlined
         />
       </template>
 
