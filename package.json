@@ -30,6 +30,7 @@
     "firebase": "^10.11.0",
     "pinia": "^2.1.7",
     "quasar": "^2.15.3",
+    "register-service-worker": "^1.0.0",
     "vue": "3.4.23",
     "vue-router": "^4.3.2"
   },
