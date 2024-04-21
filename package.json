@@ -4,6 +4,7 @@
   "description": "quasar-starter-vite-ssr-firebase",
   "productName": "quasar-starter-vite-ssr-firebase",
   "author": "darqus <voladores@inbox.ru>",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "quasar dev",
