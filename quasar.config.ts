@@ -69,15 +69,15 @@ export default configure(() => ({
     // viteVuePluginOptions: {},
 
     // vitePlugins: [
-    //   ['vite-plugin-checker', {
+    //   [ 'vite-plugin-checker', {
     //     vueTsc: {
-    //       tsconfigPath: 'tsconfig.vue-tsc.json'
+    //       tsconfigPath: 'tsconfig.vue-tsc.json',
     //     },
     //     eslint: {
-    //       lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"'
-    //     }
-    //   }, { server: false }]
-    // ]
+    //       lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
+    //     },
+    //   }, { server: false, }, ],
+    // ],
   },
 
   // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer

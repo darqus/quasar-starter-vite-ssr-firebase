@@ -53,9 +53,11 @@ export const create = ssrCreate((/* { ... } */) => {
  * For production, you can instead export your
  * handler for serverless use or whatever else fits your needs.
  */
-export const listen = ssrListen(async ({ app, port, isReady }) => {
+// notice devHttpsApp param which will be a Node httpsServer (on DEV only) and if https is enabled
+export const listen = ssrListen(async ({ app, devHttpsApp, port, isReady }) => {
   await isReady();
-  return app.listen(port, () => {
+  const server = devHttpsApp || app;
+  return server.listen(port, () => {
     if (process.env.PROD) {
       console.log('Server listening at port ' + port);
     }
@@ -96,6 +98,8 @@ const woff2RE = /\.woff2$/;
 const gifRE = /\.gif$/;
 const jpgRE = /\.jpe?g$/;
 const pngRE = /\.png$/;
+const webpRE = /\.webp$/;
+const svgRE = /\.svg$/;
 
 /**
  * Should return a String with HTML output
@@ -128,6 +132,14 @@ export const renderPreloadTag = ssrRenderPreloadTag((file) => {
 
   if (pngRE.test(file) === true) {
     return `<link rel="preload" href="${file}" as="image" type="image/png">`;
+  }
+
+  if (webpRE.test(file) === true) {
+    return `<link rel="preload" href="${file}" as="image" type="image/webp">`;
+  }
+
+  if (svgRE.test(file) === true) {
+    return `<link rel="preload" href="${file}" as="image" type="image/svg">`;
   }
 
   return '';
