@@ -35,7 +35,7 @@ module.exports = {
     'node_modules',
     'tsconfig.json',
     'package.json',
-    'package-lock.json',
+    'yarn.lock',
   ],
 
   plugins: [
