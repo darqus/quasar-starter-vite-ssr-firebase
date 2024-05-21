@@ -99,6 +99,8 @@ import { ref, watch, type Ref, nextTick, } from 'vue'
 
 import { createUserWithEmailAndPassword, } from 'firebase/auth'
 
+import { Loading, } from 'quasar'
+
 import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from 'src/types/enums'
 import type { FormField, } from 'src/types/models'
 
@@ -136,7 +138,7 @@ const validate = async () => {
 }
 
 const onRegister = () => {
-  storeAuth.toggleLoading()
+  Loading.show()
   createUserWithEmailAndPassword(auth, currentAuthFormRef.value[0].model, currentAuthFormRef.value[1].model)
     .then(({ user, }) => {
       const { uid, email, } = user
@@ -150,7 +152,7 @@ const onRegister = () => {
       storeAuth.createErrorMessage(error)
     })
     .finally(() => {
-      storeAuth.toggleLoading()
+      Loading.hide()
     })
 }
 

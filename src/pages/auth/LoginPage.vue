@@ -108,6 +108,8 @@ import { ref, watch, type Ref, nextTick, } from 'vue'
 
 import { signInWithEmailAndPassword, } from 'firebase/auth'
 
+import { Loading, } from 'quasar'
+
 import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from 'src/types/enums'
 import type { FormField, } from 'src/types/models'
 
@@ -145,7 +147,7 @@ const validate = async () => {
 }
 
 const onLogin = () => {
-  storeAuth.toggleLoading()
+  Loading.show()
   signInWithEmailAndPassword(
     auth,
     currentAuthFormRef.value[0].model,
@@ -159,7 +161,7 @@ const onLogin = () => {
       storeAuth.createErrorMessage(error)
     })
     .finally(() => {
-      storeAuth.toggleLoading()
+      Loading.hide()
     })
 }
 

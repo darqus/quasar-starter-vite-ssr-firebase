@@ -6,6 +6,8 @@ import {
   signOut,
 } from 'firebase/auth'
 
+import { Loading, } from 'quasar'
+
 import type { TAuthLinks, TAuthState, CurrentUser, } from 'src/types/auth'
 import { INPUT_TYPE, PASSWORD_VISIBILITY_ICON_MAP, ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE, STORE_TYPES, } from 'src/types/enums'
 
@@ -74,9 +76,6 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
     },
   },
   actions: {
-    toggleLoading () {
-      this.loading = !this.loading
-    },
     togglePasswordVisible () {
       this.passwordVisibility = !this.passwordVisibility
     },
@@ -97,7 +96,7 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
       this.router.push({ path: ROUTE_TYPE.ACCOUNT, })
     },
     onLogout (goToLogin?: boolean) {
-      this.toggleLoading()
+      Loading.show()
       signOut(auth)
         .then(() => {
           goToLogin
@@ -111,7 +110,7 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
           this.createErrorMessage(error)
         })
         .finally(() => {
-          this.toggleLoading()
+          Loading.hide()
         })
     },
     onForgotSuccess () {

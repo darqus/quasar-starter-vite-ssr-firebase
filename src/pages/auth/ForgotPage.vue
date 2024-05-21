@@ -64,6 +64,8 @@ import { ref, watch, type Ref, nextTick, } from 'vue'
 
 import { sendPasswordResetEmail, } from 'firebase/auth'
 
+import { Loading, } from 'quasar'
+
 import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, } from 'src/types/enums'
 import type { FormField, } from 'src/types/models'
 
@@ -101,7 +103,7 @@ const validate = async () => {
 }
 
 const onForgot = () => {
-  storeAuth.toggleLoading()
+  Loading.show()
   sendPasswordResetEmail(auth, currentAuthFormRef.value[0].model)
     .then(() => {
       storeAuth.onForgotSuccess()
@@ -111,7 +113,7 @@ const onForgot = () => {
       storeAuth.createErrorMessage(error)
     })
     .finally(() => {
-      storeAuth.toggleLoading()
+      Loading.hide()
     })
 }
 

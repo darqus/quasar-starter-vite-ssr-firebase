@@ -88,6 +88,8 @@
 <script setup lang="ts">
 import { ref, watch, type Ref, nextTick, computed, } from 'vue'
 
+import { Loading, } from 'quasar'
+
 import { BUTTON_TYPE, FORM_FIELD_TYPE, } from 'src/types/enums'
 import type { FormField, } from 'src/types/models'
 
@@ -131,6 +133,7 @@ const validate = async () => {
 
 const add = () => {
   toggleLoading()
+  Loading.show()
   addDoc('employees', {
     name: employeeFormRef.value[0].model,
     email: employeeFormRef.value[1].model,
@@ -148,6 +151,7 @@ const add = () => {
     })
     .finally(() => {
       toggleLoading()
+      Loading.hide()
     })
 }
 

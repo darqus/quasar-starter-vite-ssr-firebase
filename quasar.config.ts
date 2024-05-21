@@ -104,6 +104,7 @@ export default configure(() => ({
 
     // Quasar plugins
     plugins: [
+      'Loading',
       'Notify',
       'Meta',
       'LocalStorage',
