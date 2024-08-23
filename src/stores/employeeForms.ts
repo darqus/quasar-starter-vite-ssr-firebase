@@ -3,7 +3,7 @@ import { type Form, } from 'src/types/models'
 
 import { DEBOUNCE, } from 'src/utils/constants'
 import { generateId, } from 'src/utils/generator'
-import rules from 'src/utils/rules'
+import { email, requiredInput, requiredSelect, word, } from 'src/utils/rules'
 
 export const NEW_EMPLOYEE_FORM = (): Form => [
   {
@@ -16,7 +16,7 @@ export const NEW_EMPLOYEE_FORM = (): Form => [
     model: '',
     required: true,
     iconPrepend: 'person',
-    rule: [ ...rules.requiredInput, ...rules.word, ],
+    rule: [ ...requiredInput, ...word, ],
   },
   {
     id: generateId(),
@@ -28,7 +28,7 @@ export const NEW_EMPLOYEE_FORM = (): Form => [
     model: '',
     required: true,
     iconPrepend: 'email',
-    rule: [ ...rules.requiredInput, ...rules.email, ],
+    rule: [ ...requiredInput, ...email, ],
   },
   {
     id: generateId(),
@@ -40,7 +40,7 @@ export const NEW_EMPLOYEE_FORM = (): Form => [
     model: '',
     required: true,
     iconPrepend: 'person',
-    rule: [ ...rules.requiredInput, ...rules.word, ],
+    rule: [ ...requiredInput, ...word, ],
   },
   {
     id: generateId(),
@@ -55,7 +55,7 @@ export const NEW_EMPLOYEE_FORM = (): Form => [
       'Джедай',
       'Ситх',
     ],
-    rule: [ ...rules.requiredSelect, ],
+    rule: [ ...requiredSelect, ],
   },
   {
     id: generateId(),
@@ -72,7 +72,7 @@ export const NEW_EMPLOYEE_FORM = (): Form => [
       4,
       5,
     ],
-    rule: [ ...rules.requiredSelect, ],
+    rule: [ ...requiredSelect, ],
   },
   {
     id: generateId(),

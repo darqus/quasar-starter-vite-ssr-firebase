@@ -14,7 +14,7 @@
           <q-input
             v-for="field in currentAuthFormRef"
             :key="field.id"
-            v-model="field.model"
+            v-model.trim="field.model"
             :debounce="field.debounce"
             :mask="field.mask"
             :name="field.name"

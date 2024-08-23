@@ -1,3 +1,5 @@
+import { isCorrectDate, } from './datetime'
+
 const EMAIL_RE_PART = {
   USERNAME: /[^\s@]/,
   AT: '+@',
@@ -31,43 +33,59 @@ const RE_PASSWORD = new RegExp(
 const MESSAGES = {
   requiredInput: 'Обязательно для заполнения',
   requiredSelect: 'Выберите значение из списка',
+  notTrailingSpaces: 'Здесь не должно быть пробелов в начале и конце строки',
   onlyWord: 'Здесь должно быть слово',
   fewLetters: 'Слово должно состоять хотя бы из 2 букв',
-  limitInput: 'Превышен лимит данного поля',
+  overflowLimit: 'Превышен лимит данного поля',
   email: 'Формат username@domain.zone',
   password: `${PASSWORD_DETAILS.SPC_CHAR}, цифра, заглавная буква: [${PASSWORD_DETAILS.MIN_LENGTH}÷${PASSWORD_DETAILS.MAX_LENGTH}] симв.`,
   phone: 'Неверный формат телефона',
+  dateFormat: 'Введите дату в формате ДД.ММ.ГГГГ',
+  dateCorrect: 'Введите корректную дату',
 }
 
 export const REGEXP = {
-  required: /^.{0,255}$/,
-  word: /[A-Za-zА-Яа-яЁё]+/,
-  fewLetters: /[A-Za-zА-Яа-яЁё]{2}/,
+  required: /^.+$/,
+  overfowLimit: /^.{0,255}$/,
+  string: /^[^\s].*[^\s]+$/,
+  word: /^[A-Za-zА-Яа-яЁё]+$/,
+  fewLetters: /[A-Za-zА-Яа-яЁё]{2,}/,
   email: RE_EMAIL,
   password: RE_PASSWORD,
   phone: /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+  date: /^\d{2}.\d{2}.\d{4}$/,
 }
 
-export default {
-  requiredInput: [
-    (v: string) => v !== '' || MESSAGES.requiredInput,
-    (v: string) => REGEXP.required.test(v) || MESSAGES.limitInput,
-  ],
-  requiredSelect: [
-    (v: string) => v !== '' || MESSAGES.requiredSelect,
-    (v: string) => REGEXP.required.test(v) || MESSAGES.limitInput,
-  ],
-  word: [
-    (v: string) => REGEXP.fewLetters.test(v) || MESSAGES.fewLetters,
-    (v: string) => REGEXP.word.test(v) || MESSAGES.onlyWord,
-  ],
-  email: [
-    (v: string) => REGEXP.email.test(v) || MESSAGES.email,
-  ],
-  password: [
-    (v: string) => REGEXP.password.test(v) || MESSAGES.password,
-  ],
-  phone: [
-    (v: string) => REGEXP.phone.test(v) || MESSAGES.phone,
-  ],
-}
+export const requiredInput = [
+  (v: string) => REGEXP.required.test(v) || MESSAGES.requiredInput,
+  (v: string) => REGEXP.string.test(v) || MESSAGES.notTrailingSpaces,
+  (v: string) => REGEXP.overfowLimit.test(v) || MESSAGES.overflowLimit,
+]
+
+export const requiredSelect = [
+  (v: string) => REGEXP.required.test(v) || MESSAGES.requiredSelect,
+  (v: string) => REGEXP.string.test(v) || MESSAGES.notTrailingSpaces,
+  (v: string) => REGEXP.overfowLimit.test(v) || MESSAGES.overflowLimit,
+]
+
+export const word = [
+  (v: string) => REGEXP.fewLetters.test(v) || MESSAGES.fewLetters,
+  (v: string) => REGEXP.word.test(v) || MESSAGES.onlyWord,
+]
+
+export const email = [
+  (v: string) => REGEXP.email.test(v) || MESSAGES.email,
+]
+
+export const password = [
+  (v: string) => REGEXP.password.test(v) || MESSAGES.password,
+]
+
+export const phone = [
+  (v: string) => REGEXP.phone.test(v) || MESSAGES.phone,
+]
+
+export const date = [
+  (v: string) => REGEXP.date.test(v) || MESSAGES.dateFormat,
+  (v: string) => isCorrectDate(v) || MESSAGES.dateCorrect,
+]

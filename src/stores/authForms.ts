@@ -3,7 +3,7 @@ import { type Form, } from 'src/types/models'
 
 import { DEBOUNCE, } from 'src/utils/constants'
 import { generateId, } from 'src/utils/generator'
-import rules from 'src/utils/rules'
+import { email, password, requiredInput, } from 'src/utils/rules'
 
 const FORM_LOGIN_EMAIL = (): Form => [
   {
@@ -16,7 +16,7 @@ const FORM_LOGIN_EMAIL = (): Form => [
     model: '',
     required: true,
     iconPrepend: 'email',
-    rule: [ ...rules.requiredInput, ...rules.email, ],
+    rule: [ ...requiredInput, ...email, ],
   },
   {
     id: generateId(),
@@ -28,7 +28,7 @@ const FORM_LOGIN_EMAIL = (): Form => [
     model: '',
     required: true,
     iconPrepend: 'lock',
-    rule: [ ...rules.requiredInput, ...rules.password, ],
+    rule: [ ...requiredInput, ...password, ],
   },
 ]
 
@@ -43,7 +43,7 @@ const FORM_REGISTER = (): Form => [
     model: '',
     required: true,
     iconPrepend: 'email',
-    rule: [ ...rules.requiredInput, ...rules.email, ],
+    rule: [ ...requiredInput, ...email, ],
   },
   {
     id: generateId(),
@@ -55,7 +55,7 @@ const FORM_REGISTER = (): Form => [
     model: '',
     required: true,
     iconPrepend: 'lock',
-    rule: [ ...rules.requiredInput, ...rules.password, ],
+    rule: [ ...requiredInput, ...password, ],
   },
 ]
 
@@ -70,7 +70,7 @@ const FORM_FORGOT_PASSWORD = (): Form => [
     model: '',
     required: true,
     iconPrepend: 'email',
-    rule: [ ...rules.requiredInput, ...rules.email, ],
+    rule: [ ...requiredInput, ...email, ],
   },
 ]
 

@@ -17,7 +17,7 @@
           >
             <template v-if="field.formFieldType === FORM_FIELD_TYPE.INPUT">
               <q-input
-                v-model="field.model"
+                v-model.trim="field.model"
                 :debounce="field.debounce"
                 :mask="field.mask"
                 :name="field.name"
@@ -38,7 +38,7 @@
             </template>
             <template v-if="field.formFieldType === FORM_FIELD_TYPE.SELECT">
               <q-select
-                v-model="field.model"
+                v-model.trim="field.model"
                 :options="field.options"
                 :required="field.required"
                 :rules="field.rule"
