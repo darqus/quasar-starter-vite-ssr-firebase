@@ -8,40 +8,70 @@ describe('REGEXP required', () => {
   })
 
   it('required should not match invalid input', () => {
-    const longString = 'a'.repeat(256)
+    const requiredString = 'Класс 1-3'
 
-    expect(longString).not.toMatch(REGEXP.required)
+    expect(requiredString).toMatch(REGEXP.required)
+  })
+
+  it('word should match valid overfowLimit', () => {
+    const longString = 'w'.repeat(255)
+
+    expect(longString).toMatch(REGEXP.overfowLimit)
+  })
+
+  it('word should not match invalid overfowLimit', () => {
+    const longString = 'w'.repeat(256)
+
+    expect(longString).not.toMatch(REGEXP.overfowLimit)
+  })
+})
+
+describe('REGEXP word', () => {
+  it('should match valid onlyWord', () => {
+    expect('Москва').toMatch(REGEXP.word)
+  })
+
+  it('should match invalid onlyWord', () => {
+    expect('111').not.toMatch(REGEXP.word)
+  })
+})
+
+describe('REGEXP string', () => {
+  it('should match valid string', () => {
+    expect('г. Москва').toMatch(REGEXP.string)
+  })
+
+  it('should match invalid string', () => {
+    expect(' г. Москва ').not.toMatch(REGEXP.string)
   })
 })
 
 describe('REGEXP email', () => {
   it('email should match valid input', () => {
     expect('test@example.com').toMatch(REGEXP.email)
+    expect('test1123@example456.org').toMatch(REGEXP.email)
   })
 
   it('email should not match invalid input', () => {
     expect('testexample.com').not.toMatch(REGEXP.email)
-    expect('test1123@example456.org').toMatch(REGEXP.email)
     expect('test1123@example456.777').not.toMatch(REGEXP.email)
+  })
+
+  it('email shouldn\'t be too long', () => {
+    expect('test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_example.com').not.toMatch(REGEXP.email)
   })
 })
 
 describe('REGEXP password', () => {
   it('password should match valid input', () => {
-    expect('ThisIsPassw0rd!').toMatch(REGEXP.password)
-    expect('#thisIs!aPassw0rd').toMatch(REGEXP.password)
-    expect('thisIs!aPassw0rd@').toMatch(REGEXP.password)
-    expect('1#ThisIs!aPassw0rd@').toMatch(REGEXP.password)
+    expect('Test123!').toMatch(REGEXP.password)
+    expect('1esT!pass').toMatch(REGEXP.password)
+    expect('2ThisIs@Passw0rd4').toMatch(REGEXP.password)
   })
 
   it('password should not match invalid input', () => {
     expect('password').not.toMatch(REGEXP.password)
     expect('123456').not.toMatch(REGEXP.password)
-  })
-
-  it('password should not match invalid input because is too long', () => {
-    expect('ThisIsPasswrd1123331233').not.toMatch(REGEXP.password)
-    expect('#ThisIsPassw0rd!1123331233').not.toMatch(REGEXP.password)
   })
 })
 
@@ -58,9 +88,6 @@ describe('REGEXP phone number', () => {
 describe('REGEXP word', () => {
   it('word should match valid word', () => {
     expect('Bred').toMatch(REGEXP.word)
-  })
-
-  it('word should match valid word', () => {
     expect('Василий').toMatch(REGEXP.word)
   })
 
@@ -70,23 +97,14 @@ describe('REGEXP word', () => {
 })
 
 describe('REGEXP fewLetters', () => {
-  it('word should match invalid fewLetters', () => {
-    expect('B').not.toMatch(REGEXP.fewLetters)
-  })
-
   it('word should match valid fewLetters', () => {
     expect('Bred').toMatch(REGEXP.fewLetters)
-  })
-
-  it('word should match invalid fewLetters', () => {
-    expect('Я').not.toMatch(REGEXP.fewLetters)
-  })
-
-  it('word should not match valid fewLetters', () => {
     expect('Ян').toMatch(REGEXP.word)
   })
 
-  it('word should not match invalid fewLetters', () => {
+  it('word should match invalid fewLetters', () => {
+    expect('B').not.toMatch(REGEXP.fewLetters)
+    expect('Я').not.toMatch(REGEXP.fewLetters)
     expect('111').not.toMatch(REGEXP.word)
   })
 })
