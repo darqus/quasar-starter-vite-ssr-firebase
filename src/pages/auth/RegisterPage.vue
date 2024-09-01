@@ -11,41 +11,7 @@
         title="Регистрация"
       >
         <template #fields>
-          <q-input
-            v-for="field in currentAuthFormRef"
-            :key="field.id"
-            v-model.trim="field.model"
-            :debounce="field.debounce"
-            :mask="field.mask"
-            :name="field.name"
-            :required="field.required"
-            :rules="field.rule"
-            :type="field.inputType === INPUT_TYPE.PASSWORD ? storeAuth.currentInputType : field.inputType"
-            class="q-mb-sm"
-            label-slot
-          >
-            <template #prepend>
-              <q-icon
-                :name="field.iconPrepend"
-                class="cursor-pointer"
-              />
-            </template>
-            <template #append>
-              <q-icon
-                v-if="field.inputType === INPUT_TYPE.PASSWORD"
-                :name="storeAuth.iconPassword"
-                class="cursor-pointer"
-                @click="storeAuth.togglePasswordVisible"
-              />
-            </template>
-            <template #label>
-              <span>{{ field.label }}</span>
-              <sup
-                v-if="field.required"
-                class="text-red"
-              >{{ INPUT_REQUIRED }}</sup>
-            </template>
-          </q-input>
+          <FormFields :fields="currentAuthFormRef" />
         </template>
 
         <template #buttons>
@@ -101,15 +67,14 @@ import { createUserWithEmailAndPassword, } from 'firebase/auth'
 
 import { Loading, } from 'quasar'
 
-import { AUTH_TYPE, BUTTON_TYPE, INPUT_TYPE, ROUTE_TYPE, } from 'src/types/enums'
-import type { FormField, } from 'src/types/models'
+import { AUTH_TYPE, BUTTON_TYPE, } from 'src/types/form'
+import { ROUTE_TYPE, } from 'src/types/route'
 
 import { getCurrentAuthForm, } from 'src/stores/authForms'
 import { useStoreAuth, } from 'src/stores/store-auth'
 
-import { INPUT_REQUIRED, } from 'src/utils/constants'
-
 import EssentialForm from 'src/components/form/EssentialForm.vue'
+import FormFields from 'src/components/form-fields/FormFields.vue'
 
 import { auth, } from 'src/boot/firebase'
 
@@ -121,7 +86,7 @@ const currentAuthFormRef = ref(getCurrentAuthForm(AUTH_TYPE.REGISTER))
 
 const reset = async () => {
   if (refRegisterForm.value) {
-    currentAuthFormRef.value.forEach((item: FormField) => {
+    currentAuthFormRef.value.forEach((item) => {
       item.model = ''
 
       return item
@@ -139,12 +104,12 @@ const validate = async () => {
 
 const onRegister = () => {
   Loading.show()
-  createUserWithEmailAndPassword(auth, currentAuthFormRef.value[0].model, currentAuthFormRef.value[1].model)
+  createUserWithEmailAndPassword(auth, currentAuthFormRef.value[0].model ?? '', currentAuthFormRef.value[1].model ?? '')
     .then(({ user, }) => {
       const { uid, email, } = user
 
       if (currentAuthFormRef.value[0].model === email && uid) {
-        storeAuth.onRegisterSuccess(uid, email)
+        storeAuth.onRegisterSuccess(uid, email ?? '')
         reset()
       }
     })

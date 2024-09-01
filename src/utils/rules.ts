@@ -1,5 +1,9 @@
 import { isCorrectDate, } from './datetime'
 
+const INPUT_LIMIT = 255
+
+const RE_OVERFLOW_LIMIT = new RegExp(`^.{0,${INPUT_LIMIT}}$`)
+
 const EMAIL_RE_PART = {
   USERNAME: /[^\s@]/,
   AT: '+@',
@@ -36,9 +40,9 @@ const MESSAGES = {
   notTrailingSpaces: 'Здесь не должно быть пробелов в начале и конце строки',
   onlyWord: 'Здесь должно быть слово',
   fewLetters: 'Слово должно состоять хотя бы из 2 букв',
-  overflowLimit: 'Превышен лимит данного поля',
+  overflowLimit: `Превышен лимит данного поля ${INPUT_LIMIT} символов`,
   email: 'Формат username@domain.zone',
-  password: `${PASSWORD_DETAILS.SPC_CHAR}, цифра, заглавная буква: [${PASSWORD_DETAILS.MIN_LENGTH}÷${PASSWORD_DETAILS.MAX_LENGTH}] симв.`,
+  password: `[${PASSWORD_DETAILS.MIN_LENGTH}÷${PASSWORD_DETAILS.MAX_LENGTH}] символов, 1 цифра и 1 заглавная буква`,
   phone: 'Неверный формат телефона',
   dateFormat: 'Введите дату в формате ДД.ММ.ГГГГ',
   dateCorrect: 'Введите корректную дату',
@@ -46,7 +50,7 @@ const MESSAGES = {
 
 export const REGEXP = {
   required: /^.+$/,
-  overfowLimit: /^.{0,255}$/,
+  overfowLimit: RE_OVERFLOW_LIMIT,
   string: /^[^\s].*[^\s]+$/,
   word: /^[A-Za-zА-Яа-яЁё]+$/,
   fewLetters: /[A-Za-zА-Яа-яЁё]{2,}/,

@@ -11,49 +11,7 @@
         title="Новый сотрудник"
       >
         <template #fields>
-          <template
-            v-for="field in employeeFormRef"
-            :key="field.id"
-          >
-            <template v-if="field.formFieldType === FORM_FIELD_TYPE.INPUT">
-              <q-input
-                v-model.trim="field.model"
-                :debounce="field.debounce"
-                :mask="field.mask"
-                :name="field.name"
-                :required="field.required"
-                :rules="field.rule"
-                :type="field.inputType"
-                class="q-mb-sm"
-                label-slot
-              >
-                <template #label>
-                  <span>{{ field.label }}</span>
-                  <sup
-                    v-if="field.required"
-                    class="text-red"
-                  >{{ INPUT_REQUIRED }}</sup>
-                </template>
-              </q-input>
-            </template>
-            <template v-if="field.formFieldType === FORM_FIELD_TYPE.SELECT">
-              <q-select
-                v-model.trim="field.model"
-                :options="field.options"
-                :required="field.required"
-                :rules="field.rule"
-                label-slot
-              >
-                <template #label>
-                  <span>{{ field.label }}</span>
-                  <sup
-                    v-if="field.required"
-                    class="text-red"
-                  >{{ INPUT_REQUIRED }}</sup>
-                </template>
-              </q-select>
-            </template>
-          </template>
+          <FormFields :fields="employeeFormRef" />
         </template>
 
         <template #buttons>
@@ -90,15 +48,14 @@ import { ref, watch, type Ref, nextTick, computed, } from 'vue'
 
 import { Loading, } from 'quasar'
 
-import { BUTTON_TYPE, FORM_FIELD_TYPE, } from 'src/types/enums'
-import type { FormField, } from 'src/types/models'
+import { BUTTON_TYPE, } from 'src/types/form'
 
 import { newEmployeeForm, } from 'src/stores/employeeForms'
 
-import { INPUT_REQUIRED, } from 'src/utils/constants'
 import { createNotify, } from 'src/utils/notify'
 
 import EssentialForm from 'src/components/form/EssentialForm.vue'
+import FormFields from 'src/components/form-fields/FormFields.vue'
 
 import { addDoc, } from 'src/boot/firebase'
 
@@ -115,7 +72,7 @@ const disabledSubmitButton = computed(() => !valid.value)
 
 const reset = async () => {
   if (refForm.value) {
-    employeeFormRef.value.forEach((item: FormField) => {
+    employeeFormRef.value.forEach((item) => {
       item.model = ''
 
       return item

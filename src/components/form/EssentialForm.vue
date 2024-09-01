@@ -7,16 +7,16 @@
       <q-card class="col-sm-5 bg-blue-8 xs-hide text-right">
         <div class="bg-blue-6 text-white q-pa-md">
           <div
-            class="text-h6 text-white"
+            class="text-h6 text-white q-px-md"
             style="min-width: 220px"
-          >
-            Добро пожаловать
-          </div>
+            v-text="'Добро пожаловать'"
+          />
         </div>
         <div class="bg-blue-5 text-white q-pa-md">
-          <div class="text-white q-my-sm text-subtitle1">
-            {{ description }}
-          </div>
+          <div
+            class="text-white q-my-sm text-subtitle1"
+            v-text="description"
+          />
         </div>
       </q-card>
 
@@ -33,9 +33,10 @@
             </div>
             <div class="col-12">
               <div class="flex justify-center">
-                <div class="text-h5 q-my-lg text-weight-bold text-primary">
-                  {{ title }}
-                </div>
+                <div
+                  class="text-h5 q-my-lg text-weight-bold text-primary"
+                  v-text="title"
+                />
               </div>
 
               <slot name="fields" />

@@ -9,7 +9,9 @@ import {
 import { Loading, } from 'quasar'
 
 import type { TAuthLinks, TAuthState, CurrentUser, } from 'src/types/auth'
-import { INPUT_TYPE, PASSWORD_VISIBILITY_ICON_MAP, ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE, STORE_TYPES, } from 'src/types/enums'
+import { INPUT_TYPE, PASSWORD_VISIBILITY_ICON, } from 'src/types/form'
+import { ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE, } from 'src/types/route'
+import { STORE_TYPES, } from 'src/types/store'
 
 import { createNotify, } from 'src/utils/notify'
 
@@ -29,8 +31,8 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
   getters: {
     disabledSubmitButton: (state) => !state.valid,
     iconPassword: (state) => state.passwordVisibility
-      ? PASSWORD_VISIBILITY_ICON_MAP.ON
-      : PASSWORD_VISIBILITY_ICON_MAP.OFF,
+      ? PASSWORD_VISIBILITY_ICON.ON
+      : PASSWORD_VISIBILITY_ICON.OFF,
     currentInputType: (state) => state.passwordVisibility
       ? INPUT_TYPE.TEXT
       : INPUT_TYPE.PASSWORD,

@@ -2,8 +2,8 @@ import { defineStore, } from 'pinia'
 
 import { LEVELS_MAP, } from 'src/types/emloyee-card'
 import type { TEmployeeCardsState, } from 'src/types/emloyee-card'
-import { STORE_TYPES, } from 'src/types/enums'
 import type { TNewEmployee, } from 'src/types/new-employee'
+import { STORE_TYPES, } from 'src/types/store'
 
 import { getCollection, } from 'src/boot/firebase'
 

@@ -1,14 +1,14 @@
-import { AUTH_TYPE, FORM_FIELD_TYPE, INPUT_TYPE, } from 'src/types/enums'
-import { type Form, } from 'src/types/models'
+import { AUTH_TYPE, FIELD_TYPE, INPUT_TYPE, } from 'src/types/form'
+import { type Fields, } from 'src/types/form'
 
 import { DEBOUNCE, } from 'src/utils/constants'
 import { generateId, } from 'src/utils/generator'
 import { email, password, requiredInput, } from 'src/utils/rules'
 
-const FORM_LOGIN_EMAIL = (): Form => [
+const FORM_LOGIN_EMAIL = (): Fields => [
   {
     id: generateId(),
-    formFieldType: FORM_FIELD_TYPE.INPUT,
+    fieldType: FIELD_TYPE.INPUT,
     debounce: DEBOUNCE,
     label: 'Email',
     name: 'login',
@@ -20,7 +20,7 @@ const FORM_LOGIN_EMAIL = (): Form => [
   },
   {
     id: generateId(),
-    formFieldType: FORM_FIELD_TYPE.INPUT,
+    fieldType: FIELD_TYPE.INPUT,
     debounce: DEBOUNCE,
     label: 'Пароль',
     name: 'password',
@@ -32,10 +32,10 @@ const FORM_LOGIN_EMAIL = (): Form => [
   },
 ]
 
-const FORM_REGISTER = (): Form => [
+const FORM_REGISTER = (): Fields => [
   {
     id: generateId(),
-    formFieldType: FORM_FIELD_TYPE.INPUT,
+    fieldType: FIELD_TYPE.INPUT,
     debounce: DEBOUNCE,
     label: 'Email',
     name: 'login',
@@ -47,7 +47,7 @@ const FORM_REGISTER = (): Form => [
   },
   {
     id: generateId(),
-    formFieldType: FORM_FIELD_TYPE.INPUT,
+    fieldType: FIELD_TYPE.INPUT,
     debounce: DEBOUNCE,
     label: 'Пароль',
     name: 'password',
@@ -59,10 +59,10 @@ const FORM_REGISTER = (): Form => [
   },
 ]
 
-const FORM_FORGOT_PASSWORD = (): Form => [
+const FORM_FORGOT_PASSWORD = (): Fields => [
   {
     id: generateId(),
-    formFieldType: FORM_FIELD_TYPE.INPUT,
+    fieldType: FIELD_TYPE.INPUT,
     debounce: DEBOUNCE,
     label: 'Email',
     name: 'login',
