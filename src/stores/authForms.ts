@@ -80,4 +80,4 @@ const formsAuth = {
   [AUTH_TYPE.FORGOT_PASSWORD]: FORGOT_PASSWORD_FIELDS(),
 }
 
-export const getCurrentAuthForm = (currentAuthFormType: AUTH_TYPE) => formsAuth[currentAuthFormType]
+export const getCurrentAuthFields = (currentAuthFormType: AUTH_TYPE) => formsAuth[currentAuthFormType]

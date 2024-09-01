@@ -87,4 +87,4 @@ export const NEW_EMPLOYEE_FIELDS = (): Fields => [
   },
 ]
 
-export const newEmployeeForm = NEW_EMPLOYEE_FIELDS()
+export const getNewEmployeeFields = NEW_EMPLOYEE_FIELDS()

@@ -50,7 +50,7 @@ import { Loading, } from 'quasar'
 
 import { BUTTON_TYPE, } from 'src/types/form'
 
-import { newEmployeeForm, } from 'src/stores/employeeForms'
+import { getNewEmployeeFields, } from 'src/stores/employeeForms'
 
 import { createNotify, } from 'src/utils/notify'
 
@@ -62,7 +62,7 @@ import { addDoc, } from 'src/boot/firebase'
 const loading = ref(false)
 const valid = ref(false)
 const refForm: Ref = ref(null)
-const employeeFormRef = ref(newEmployeeForm)
+const employeeFormRef = ref(getNewEmployeeFields)
 
 const toggleLoading = () => {
   loading.value = !loading.value

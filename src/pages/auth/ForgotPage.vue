@@ -42,7 +42,7 @@ import { Loading, } from 'quasar'
 
 import { AUTH_TYPE, BUTTON_TYPE, } from 'src/types/form'
 
-import { getCurrentAuthForm, } from 'src/stores/authForms'
+import { getCurrentAuthFields, } from 'src/stores/authForms'
 import { useStoreAuth, } from 'src/stores/store-auth'
 
 import EssentialForm from 'src/components/form/EssentialForm.vue'
@@ -54,7 +54,7 @@ const storeAuth = useStoreAuth()
 
 const refForgotForm: Ref = ref(null)
 
-const currentAuthFormRef = ref(getCurrentAuthForm(AUTH_TYPE.FORGOT_PASSWORD))
+const currentAuthFormRef = ref(getCurrentAuthFields(AUTH_TYPE.FORGOT_PASSWORD))
 
 const reset = async () => {
   if (refForgotForm.value) {
