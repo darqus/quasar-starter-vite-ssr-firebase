@@ -76,7 +76,7 @@ const validate = async () => {
 
 const onForgot = () => {
   Loading.show()
-  sendPasswordResetEmail(auth, currentAuthFormRef.value[0].model)
+  sendPasswordResetEmail(auth, currentAuthFormRef.value[0].model ?? '')
     .then(() => {
       storeAuth.onForgotSuccess()
       reset()
