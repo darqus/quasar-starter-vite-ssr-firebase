@@ -5,7 +5,7 @@ import { DEBOUNCE, } from 'src/utils/constants'
 import { generateId, } from 'src/utils/generator'
 import { email, password, requiredInput, } from 'src/utils/rules'
 
-const FORM_LOGIN_EMAIL = (): Fields => [
+const LOGIN_EMAIL_FIELDS = (): Fields => [
   {
     id: generateId(),
     fieldType: FIELD_TYPE.INPUT,
@@ -32,7 +32,7 @@ const FORM_LOGIN_EMAIL = (): Fields => [
   },
 ]
 
-const FORM_REGISTER = (): Fields => [
+const REGISTER_FIELDS = (): Fields => [
   {
     id: generateId(),
     fieldType: FIELD_TYPE.INPUT,
@@ -59,7 +59,7 @@ const FORM_REGISTER = (): Fields => [
   },
 ]
 
-const FORM_FORGOT_PASSWORD = (): Fields => [
+const FORGOT_PASSWORD_FIELDS = (): Fields => [
   {
     id: generateId(),
     fieldType: FIELD_TYPE.INPUT,
@@ -75,9 +75,9 @@ const FORM_FORGOT_PASSWORD = (): Fields => [
 ]
 
 const formsAuth = {
-  [AUTH_TYPE.LOGIN_EMAIL]: FORM_LOGIN_EMAIL(),
-  [AUTH_TYPE.REGISTER]: FORM_REGISTER(),
-  [AUTH_TYPE.FORGOT_PASSWORD]: FORM_FORGOT_PASSWORD(),
+  [AUTH_TYPE.LOGIN_EMAIL]: LOGIN_EMAIL_FIELDS(),
+  [AUTH_TYPE.REGISTER]: REGISTER_FIELDS(),
+  [AUTH_TYPE.FORGOT_PASSWORD]: FORGOT_PASSWORD_FIELDS(),
 }
 
 export const getCurrentAuthForm = (currentAuthFormType: AUTH_TYPE) => formsAuth[currentAuthFormType]

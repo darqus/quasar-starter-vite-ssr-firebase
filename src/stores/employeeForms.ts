@@ -4,7 +4,7 @@ import { DEBOUNCE, } from 'src/utils/constants'
 import { generateId, } from 'src/utils/generator'
 import { email, requiredInput, requiredSelect, word, } from 'src/utils/rules'
 
-export const NEW_EMPLOYEE_FORM = (): Fields => [
+export const NEW_EMPLOYEE_FIELDS = (): Fields => [
   {
     id: generateId(),
     fieldType: FIELD_TYPE.INPUT,
@@ -87,4 +87,4 @@ export const NEW_EMPLOYEE_FORM = (): Fields => [
   },
 ]
 
-export const newEmployeeForm = NEW_EMPLOYEE_FORM()
+export const newEmployeeForm = NEW_EMPLOYEE_FIELDS()
