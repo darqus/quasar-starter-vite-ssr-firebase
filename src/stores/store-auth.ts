@@ -101,13 +101,13 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
       Loading.show()
       signOut(auth)
         .then(() => {
-          goToLogin
-            ? this.router.push({ path: ROUTE_TYPE.LOGIN, }).then(() => {
-              this.onPostLogout()
-            })
-            : this.onPostLogout()
-        }
-        )
+          if (goToLogin) {
+            this.router.push({ path: ROUTE_TYPE.LOGIN, })
+              .then(this.onPostLogout)
+          } else {
+            this.onPostLogout()
+          }
+        })
         .catch((error) => {
           this.createErrorMessage(error)
         })
