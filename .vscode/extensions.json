@@ -2,9 +2,10 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
-    "johnsoncodehk.volarjs-labs",
-    "wayou.vscode-todo-highlight",
-    "stylelint.vscode-stylelint"
+    "stylelint.vscode-stylelint",
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-russian",
+    "vitest.explorer"
   ],
   "unwantedRecommendations": [
     "vue.volar",
