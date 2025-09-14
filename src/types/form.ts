@@ -107,7 +107,7 @@ export type DatePickerFormField = {
   rule: QInputProps['rules']
 } & BaseFormField
 
-export type FormFeild<T extends FIELD_TYPE> = T extends FIELD_TYPE.INPUT
+export type FormField<T extends FIELD_TYPE> = T extends FIELD_TYPE.INPUT
   ? InputFormField
   : T extends FIELD_TYPE.TEXTAREA
     ? TextareaFormField
@@ -117,4 +117,4 @@ export type FormFeild<T extends FIELD_TYPE> = T extends FIELD_TYPE.INPUT
         ? DatePickerFormField
         : never
 
-export type Fields = FormFeild<FIELD_TYPE>[]
+export type Fields = FormField<FIELD_TYPE>[]
