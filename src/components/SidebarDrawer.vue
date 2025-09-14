@@ -13,7 +13,7 @@ const storeAuth = useStoreAuth()
 
     <UserAvatar
       v-if="storeAuth.loggedIn"
-      :user-email="storeAuth.currentUser?.email"
+      :user-email="storeAuth.currentUser?.email ?? null"
     />
 
     <RouterMenuLink
