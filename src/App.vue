@@ -1,7 +1,3 @@
-<template>
-  <router-view />
-</template>
-
 <script setup lang="ts">
 import { useMeta } from 'quasar'
 
@@ -13,3 +9,7 @@ defineOptions({
 
 useMeta(meta)
 </script>
+
+<template>
+  <router-view />
+</template>
