@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { useQuasar } from 'quasar'
+import { LocalStorage, useQuasar } from 'quasar'
+
+import { StorageKey } from 'src/types/storage'
 
 const $q = useQuasar()
-
-$q.dark.set(import.meta.env.VITE_DARK)
 
 const isThemeDark = ref($q.dark.isActive)
 
 const toggleTheme = () => {
   $q.dark.toggle()
+  isThemeDark.value = $q.dark.isActive
+  LocalStorage.set(StorageKey.ThemeDark, isThemeDark.value)
 }
 </script>
 

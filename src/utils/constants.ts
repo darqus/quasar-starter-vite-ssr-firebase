@@ -2,11 +2,11 @@ export const HEADER_STYLE_LINE_BREAK = 'white-space: unset;'
 
 export const DEBOUNCE = 1000
 
-export const DATE_PICKER_DELIMETER = ' '
+export const DATE_PICKER_DELIMITER = ' '
 
 export const INPUT_REQUIRED = ' *'
 
-export const RANGE_PICKER_DELIMETER = ' - '
+export const RANGE_PICKER_DELIMITER = ' - '
 
 export const OFFSET_POPUP_PROXY = [0, 5]
 
