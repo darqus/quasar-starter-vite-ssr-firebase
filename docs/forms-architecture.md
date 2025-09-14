@@ -14,24 +14,24 @@
 
 ```typescript
 const {
-  fields,        // Реактивные поля формы
-  formRef,       // Ссылка на QForm компонент
-  isValid,       // Состояние валидации
-  isSubmitting,  // Состояние отправки
-  validate,      // Валидация формы
-  reset,         // Сброс формы
-  submit,        // Отправка формы
+  fields, // Реактивные поля формы
+  formRef, // Ссылка на QForm компонент
+  isValid, // Состояние валидации
+  isSubmitting, // Состояние отправки
+  validate, // Валидация формы
+  reset, // Сброс формы
+  submit, // Отправка формы
   setFieldValue, // Установка значения поля
   getFieldValue, // Получение значения поля
-  getFormData,   // Получение всех данных формы
-  updateField,   // Обновление поля
-  addField,      // Добавление поля
-  removeField    // Удаление поля
+  getFormData, // Получение всех данных формы
+  updateField, // Обновление поля
+  addField, // Добавление поля
+  removeField, // Удаление поля
 } = useForm({
   fields: formFields,
   onSubmit: handleSubmit,
   onReset: handleReset,
-  validateOnChange: true
+  validateOnChange: true,
 })
 ```
 
@@ -100,8 +100,8 @@ const formFields: Fields = [
     model: '',
     required: true,
     iconPrepend: 'email',
-    rule: [...requiredInput, ...email]
-  }
+    rule: [...requiredInput, ...email],
+  },
 ]
 ```
 
@@ -157,11 +157,7 @@ const formFields: Fields = [
 
 ```vue
 <!-- Лаконичный и гибкий -->
-<BaseForm
-  :fields="formFields"
-  :on-submit="handleSubmit"
-  title="Форма"
-/>
+<BaseForm :fields="formFields" :on-submit="handleSubmit" title="Форма" />
 ```
 
 ## Примеры использования
@@ -200,15 +196,11 @@ const handleLogin = async (formData) => {
     :on-submit="handleRegister"
   >
     <template #before-fields>
-      <q-banner class="text-primary">
-        Добро пожаловать!
-      </q-banner>
+      <q-banner class="text-primary">Добро пожаловать!</q-banner>
     </template>
 
     <template #after-fields>
-      <q-checkbox v-model="agreeTerms">
-        Согласен с условиями
-      </q-checkbox>
+      <q-checkbox v-model="agreeTerms">Согласен с условиями</q-checkbox>
     </template>
 
     <template #actions="{ form }">
@@ -230,7 +222,7 @@ const handleLogin = async (formData) => {
 <script setup>
 const form = useForm({
   fields: myFields,
-  onSubmit: handleSubmit
+  onSubmit: handleSubmit,
 })
 
 // Программное заполнение
@@ -245,7 +237,7 @@ form.addField({
   fieldType: FIELD_TYPE.INPUT,
   name: 'phone',
   label: 'Телефон',
-  model: ''
+  model: '',
 })
 
 // Валидация

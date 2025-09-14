@@ -4,13 +4,13 @@ import type { Fields } from 'src/types/form'
 
 // Get underlying array from Ref or plain array
 function unwrapFields(fields: Ref<Fields> | Fields): Fields {
-  return (isRef(fields) ? fields.value : fields)
+  return isRef(fields) ? fields.value : fields
 }
 
 // Returns raw model value by field name (could be string | number | null)
 export function getFieldModel(fields: Ref<Fields> | Fields, name: string) {
   const list = unwrapFields(fields)
-  const field = list.find(f => f.name === name)
+  const field = list.find((f) => f.name === name)
   return field?.model ?? null
 }
 
@@ -45,12 +45,17 @@ export function getFieldString(
 }
 
 // Convert fields to a name -> value map
-export function toFormDataMap(fields: Ref<Fields> | Fields): Record<string, unknown> {
+export function toFormDataMap(
+  fields: Ref<Fields> | Fields
+): Record<string, unknown> {
   const list = unwrapFields(fields)
-  return list.reduce((acc, f) => {
-    const name = typeof f.name === 'string' ? f.name.trim() : ''
-    if (!name) return acc
-    acc[name] = f.model
-    return acc
-  }, {} as Record<string, unknown>)
+  return list.reduce(
+    (acc, f) => {
+      const name = typeof f.name === 'string' ? f.name.trim() : ''
+      if (!name) return acc
+      acc[name] = f.model
+      return acc
+    },
+    {} as Record<string, unknown>
+  )
 }

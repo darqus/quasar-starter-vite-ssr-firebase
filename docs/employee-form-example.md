@@ -66,7 +66,9 @@ function buildNewEmployeeDTO(fields: Ref<Fields> | Fields): NewEmployeeDTO {
 }
 
 // вариант 2: собрать карту и маппить ключи (удобно при большом числе полей)
-function buildNewEmployeeDTOviaMap(fields: Ref<Fields> | Fields): NewEmployeeDTO {
+function buildNewEmployeeDTOviaMap(
+  fields: Ref<Fields> | Fields
+): NewEmployeeDTO {
   const m = toFormDataMap(fields)
   return {
     name: String(m.fio ?? ''),

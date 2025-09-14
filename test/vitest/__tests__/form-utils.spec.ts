@@ -15,7 +15,7 @@ function makeFields(): Fields {
       inputType: INPUT_TYPE.TEXT,
       model: 'Иванов Иван',
       required: true,
-      rule: undefined
+      rule: undefined,
     },
     {
       id: '2',
@@ -25,7 +25,7 @@ function makeFields(): Fields {
       inputType: INPUT_TYPE.EMAIL,
       model: 'user@example.com',
       required: true,
-      rule: undefined
+      rule: undefined,
     },
     {
       id: '3',
@@ -35,7 +35,7 @@ function makeFields(): Fields {
       model: 'Джедай',
       options: ['Падаван', 'Джедай', 'Ситх'],
       required: true,
-      rule: undefined
+      rule: undefined,
     },
     {
       id: '4',
@@ -43,9 +43,9 @@ function makeFields(): Fields {
       label: 'Рейтинг',
       name: 'rate',
       model: 5,
-      options: ['1','2','3','4','5'],
+      options: ['1', '2', '3', '4', '5'],
       required: true,
-      rule: undefined
+      rule: undefined,
     },
     {
       id: '5',
@@ -55,8 +55,8 @@ function makeFields(): Fields {
       inputType: INPUT_TYPE.TEXT,
       model: '',
       required: false,
-      rule: undefined
-    }
+      rule: undefined,
+    },
   ]
 }
 
@@ -87,7 +87,7 @@ describe('utils/form', () => {
       login: 'user@example.com',
       level: 'Джедай',
       rate: 5,
-      description: ''
+      description: '',
     })
   })
 

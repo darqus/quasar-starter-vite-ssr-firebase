@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
-import { formatNumberToCurrency, formatNumberWithSpaces, incline, INCLINE, toCapitalCase } from 'src/utils/format'
+import {
+  formatNumberToCurrency,
+  formatNumberWithSpaces,
+  incline,
+  INCLINE,
+  toCapitalCase,
+} from 'src/utils/format'
 
 describe('utils/format', () => {
   it('incline basic cases', () => {

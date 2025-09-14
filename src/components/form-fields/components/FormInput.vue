@@ -28,7 +28,7 @@ const currentInputType = computed(() =>
 // Вычисляемое свойство для v-model
 const modelValue = computed({
   get: () => props.field.model,
-  set: (value: string) => emit('update:model', value)
+  set: (value: string) => emit('update:model', value),
 })
 </script>
 

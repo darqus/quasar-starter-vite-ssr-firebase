@@ -6,7 +6,7 @@ export const AUTH_FIELD = {
   PASSWORD: 'password',
 } as const
 
-export type AuthFieldName = typeof AUTH_FIELD[keyof typeof AUTH_FIELD]
+export type AuthFieldName = (typeof AUTH_FIELD)[keyof typeof AUTH_FIELD]
 
 export const EMPLOYEE_FIELD = {
   FIO: 'fio',
@@ -17,4 +17,5 @@ export const EMPLOYEE_FIELD = {
   DESCRIPTION: 'description',
 } as const
 
-export type EmployeeFieldName = typeof EMPLOYEE_FIELD[keyof typeof EMPLOYEE_FIELD]
+export type EmployeeFieldName =
+  (typeof EMPLOYEE_FIELD)[keyof typeof EMPLOYEE_FIELD]

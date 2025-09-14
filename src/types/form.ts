@@ -71,6 +71,10 @@ export type BaseFormField = {
   clearable?: boolean
   disable?: boolean
   rounded?: boolean
+  // Новые доп. возможности
+  defaultValue?: unknown
+  // Условная видимость поля: true/false или функция от текущих значений формы
+  visible?: boolean | ((ctx: { values: Record<string, unknown> }) => boolean)
 }
 
 export type InputFormField = {
@@ -141,5 +145,5 @@ export type FieldName<F extends readonly AnyFormField[]> = F[number]['name']
 // Тип модели по имени для заданного списка полей
 export type FieldModelByName<
   F extends readonly AnyFormField[],
-  N extends FieldName<F>
+  N extends FieldName<F>,
 > = Extract<F[number], { name: N }>['model']

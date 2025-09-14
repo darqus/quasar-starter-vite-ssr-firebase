@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toRefs, watchEffect } from 'vue'
+import { computed, toRefs, watchEffect } from 'vue'
 
 import type { QForm } from 'quasar'
 
@@ -7,7 +7,11 @@ import FormDatePicker from 'src/components/form-fields/components/FormDatePicker
 import FormInput from 'src/components/form-fields/components/FormInput.vue'
 import FormSelect from 'src/components/form-fields/components/FormSelect.vue'
 import FormTextArea from 'src/components/form-fields/components/FormTextArea.vue'
-import { useForm, type UseFormOptions } from 'src/composables/useForm'
+import {
+  setupValidateOnChange,
+  useForm,
+  type UseFormOptions,
+} from 'src/composables/useForm'
 import { FIELD_TYPE } from 'src/types/form'
 
 export type BaseFormProps = {
@@ -44,7 +48,7 @@ const props = withDefaults(defineProps<BaseFormProps>(), {
   actionsAlign: 'right',
   submitButtonLabel: 'Отправить',
   submitButtonColor: 'primary',
-  resetButtonLabel: 'Сбросить'
+  resetButtonLabel: 'Сбросить',
 })
 
 const emit = defineEmits<{
@@ -67,7 +71,7 @@ const {
   getFormData,
   updateField,
   addField,
-  removeField
+  removeField,
 } = useForm({
   fields: props.fields,
   onSubmit: async (formData) => {
@@ -82,8 +86,26 @@ const {
       await props.onReset()
     }
   },
-  validateOnChange: props.validateOnChange
+  validateOnChange: props.validateOnChange,
 })
+
+// Подключаем реактивную валидацию при изменении значений
+setupValidateOnChange(formRef, fields, isValid, props.validateOnChange)
+
+// Фильтруем поля по условной видимости
+const visibleFields = computed(() =>
+  fields.value.filter((f) => {
+    const cond =
+      typeof f.visible === 'function'
+        ? f.visible({
+            values: Object.fromEntries(
+              fields.value.map((x) => [x.name, x.model])
+            ),
+          })
+        : f.visible
+    return cond !== false
+  })
+)
 
 // Expose refs for parent access
 const { formRef: internalFormRef } = toRefs({ formRef })
@@ -105,7 +127,7 @@ const formMethods = {
   addField,
   removeField,
   isValid,
-  isSubmitting
+  isSubmitting,
 }
 
 // Form event handlers
@@ -120,7 +142,7 @@ const handleReset = () => {
 // Expose methods for parent component
 defineExpose({
   ...formMethods,
-  formRef: internalFormRef
+  formRef: internalFormRef,
 })
 </script>
 
@@ -133,17 +155,36 @@ defineExpose({
       @reset="handleReset"
       @submit="handleSubmit"
     >
-      <q-card v-if="showCard" :class="cardClass">
+      <q-card
+        v-if="showCard"
+        :class="cardClass"
+      >
         <q-card-section v-if="title || subtitle">
-          <div v-if="title" class="text-h6">{{ title }}</div>
-          <div v-if="subtitle" class="text-subtitle2 text-grey-6">{{ subtitle }}</div>
+          <div
+            v-if="title"
+            class="text-h6"
+          >
+            {{ title }}
+          </div>
+          <div
+            v-if="subtitle"
+            class="text-subtitle2 text-grey-6"
+          >
+            {{ subtitle }}
+          </div>
         </q-card-section>
 
         <q-card-section>
-          <div :class="fieldsClass" class="form-fields">
+          <div
+            :class="fieldsClass"
+            class="form-fields"
+          >
             <slot name="before-fields" />
 
-            <template v-for="field in fields" :key="field.id">
+            <template
+              v-for="field in visibleFields"
+              :key="field.id"
+            >
               <FormInput
                 v-if="field.fieldType === FIELD_TYPE.INPUT"
                 v-model="field.model"
@@ -151,8 +192,8 @@ defineExpose({
               />
               <FormSelect
                 v-else-if="field.fieldType === FIELD_TYPE.SELECT"
-                v-model="field.model"
-                :field="field"
+                v-model="(field as any).model"
+                :field="field as any"
               />
               <FormTextArea
                 v-else-if="field.fieldType === FIELD_TYPE.TEXTAREA"
@@ -170,8 +211,14 @@ defineExpose({
           </div>
         </q-card-section>
 
-        <q-card-actions v-if="showActions" :align="actionsAlign">
-          <slot :form="formMethods" name="actions">
+        <q-card-actions
+          v-if="showActions"
+          :align="actionsAlign"
+        >
+          <slot
+            :form="formMethods"
+            name="actions"
+          >
             <q-btn
               v-if="showResetButton"
               :disable="isSubmitting"
@@ -193,15 +240,34 @@ defineExpose({
 
       <!-- Form without card wrapper -->
       <template v-else>
-        <div v-if="title || subtitle" class="form-header q-mb-md">
-          <div v-if="title" class="text-h6">{{ title }}</div>
-          <div v-if="subtitle" class="text-subtitle2 text-grey-6">{{ subtitle }}</div>
+        <div
+          v-if="title || subtitle"
+          class="form-header q-mb-md"
+        >
+          <div
+            v-if="title"
+            class="text-h6"
+          >
+            {{ title }}
+          </div>
+          <div
+            v-if="subtitle"
+            class="text-subtitle2 text-grey-6"
+          >
+            {{ subtitle }}
+          </div>
         </div>
 
-        <div :class="fieldsClass" class="form-fields">
+        <div
+          :class="fieldsClass"
+          class="form-fields"
+        >
           <slot name="before-fields" />
 
-          <template v-for="field in fields" :key="field.id">
+          <template
+            v-for="field in visibleFields"
+            :key="field.id"
+          >
             <FormInput
               v-if="field.fieldType === FIELD_TYPE.INPUT"
               v-model="field.model"
@@ -209,8 +275,8 @@ defineExpose({
             />
             <FormSelect
               v-else-if="field.fieldType === FIELD_TYPE.SELECT"
-              v-model="field.model"
-              :field="field"
+              v-model="(field as any).model"
+              :field="field as any"
             />
             <FormTextArea
               v-else-if="field.fieldType === FIELD_TYPE.TEXTAREA"
@@ -227,8 +293,15 @@ defineExpose({
           <slot name="after-fields" />
         </div>
 
-        <div v-if="showActions" :class="`text-${actionsAlign}`" class="form-actions q-mt-md">
-          <slot :form="formMethods" name="actions">
+        <div
+          v-if="showActions"
+          :class="`text-${actionsAlign}`"
+          class="form-actions q-mt-md"
+        >
+          <slot
+            :form="formMethods"
+            name="actions"
+          >
             <q-btn
               v-if="showResetButton"
               :disable="isSubmitting"

@@ -16,7 +16,10 @@ export type RegisterDTO = {
   password: string
 }
 
-export function getAuthString(fields: Ref<Fields> | Fields, name: AuthFieldName) {
+export function getAuthString(
+  fields: Ref<Fields> | Fields,
+  name: AuthFieldName
+) {
   return getFieldString(fields, name)
 }
 
@@ -44,7 +47,9 @@ export type NewEmployeeDTO = {
   description: string
 }
 
-export function buildNewEmployeeDTO(fields: Ref<Fields> | Fields): NewEmployeeDTO {
+export function buildNewEmployeeDTO(
+  fields: Ref<Fields> | Fields
+): NewEmployeeDTO {
   return {
     name: getFieldString(fields, EMPLOYEE_FIELD.FIO),
     email: getFieldString(fields, EMPLOYEE_FIELD.LOGIN),

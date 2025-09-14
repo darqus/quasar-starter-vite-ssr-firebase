@@ -1,101 +1,62 @@
 <script setup lang="ts">
-import { computed, nextTick, type Ref, ref, watch } from 'vue'
+import { computed } from 'vue'
 
 import { Loading } from 'quasar'
 
 import { addDoc } from 'src/boot/firebase'
 import EssentialForm from 'src/components/form/EssentialForm.vue'
 import FormFields from 'src/components/form-fields/FormFields.vue'
+import { useForm } from 'src/composables/useForm'
 import { getNewEmployeeFields } from 'src/stores/employeeForms'
 import { EMPLOYEE_FIELD } from 'src/types'
 import { BUTTON_TYPE } from 'src/types/form'
 import { getFieldString } from 'src/utils/form'
 import { createNotify } from 'src/utils/notify'
+import { newEmployeeSchema } from 'src/validation/schemas'
 
-const loading = ref(false)
-const valid = ref(false)
-const refForm: Ref = ref(null)
-const employeeFormRef = ref(getNewEmployeeFields)
+// Variant A: useForm with Zod schema for New Employee
+const { fields, formRef, reset, submit, isValid, isSubmitting } = useForm({
+  fields: getNewEmployeeFields,
+  schema: newEmployeeSchema,
+  onSubmit: async () => {
+    Loading.show()
+    const name = getFieldString(fields, EMPLOYEE_FIELD.FIO)
+    const email = getFieldString(fields, EMPLOYEE_FIELD.LOGIN)
+    const position = getFieldString(fields, EMPLOYEE_FIELD.POSITION)
+    const level = getFieldString(fields, EMPLOYEE_FIELD.LEVEL)
+    const rate = getFieldString(fields, EMPLOYEE_FIELD.RATE)
+    const description = getFieldString(fields, EMPLOYEE_FIELD.DESCRIPTION)
 
-const toggleLoading = () => {
-  loading.value = !loading.value
-}
-
-const disabledSubmitButton = computed(() => !valid.value)
-
-const reset = async () => {
-  if (refForm.value) {
-    employeeFormRef.value.forEach((item) => {
-      item.model = ''
-
-      return item
+    return addDoc('employees', {
+      name,
+      email,
+      position,
+      level,
+      rate,
+      description,
     })
-    await nextTick()
-    refForm.value.resetValidation()
-  }
-}
-
-const validate = async () => {
-  if (refForm.value) {
-    await nextTick()
-    const isValid = await refForm.value.validate()
-    valid.value = isValid
-    return isValid
-  }
-  return false
-}
-
-const add = async () => {
-  const isValid = await validate()
-  if (!isValid) {
-    return
-  }
-
-  toggleLoading()
-  Loading.show()
-  const name = getFieldString(employeeFormRef, EMPLOYEE_FIELD.FIO)
-  const email = getFieldString(employeeFormRef, EMPLOYEE_FIELD.LOGIN)
-  const position = getFieldString(employeeFormRef, EMPLOYEE_FIELD.POSITION)
-  const level = getFieldString(employeeFormRef, EMPLOYEE_FIELD.LEVEL)
-  const rate = getFieldString(employeeFormRef, EMPLOYEE_FIELD.RATE)
-  const description = getFieldString(employeeFormRef, EMPLOYEE_FIELD.DESCRIPTION)
-
-  addDoc('employees', {
-    name,
-    email,
-    position,
-    level,
-    rate,
-    description,
-  })
-    .then(() => {
-      createNotify(`Сотрудник "${name}" добавлен`, 'green-4', 'how_to_reg')
-      void reset()
-    })
-    .catch((error) => {
-      createNotify(error)
-    })
-    .finally(() => {
-      toggleLoading()
-      Loading.hide()
-    })
-}
-
-watch(
-  () => employeeFormRef,
-  () => {
-    void validate()
+      .then(async () => {
+        createNotify(`Сотрудник "${name}" добавлен`, 'green-4', 'how_to_reg')
+        await reset()
+      })
+      .catch((error) => {
+        createNotify(error)
+      })
+      .finally(() => {
+        Loading.hide()
+      })
   },
-  { deep: true }
-)
+})
+
+const disabledSubmitButton = computed(() => !isValid.value)
 </script>
 
 <template>
   <q-page class="row items-center justify-evenly">
     <q-form
-      ref="refForm"
+      ref="formRef"
       @reset="reset"
-      @submit.prevent="add"
+      @submit.prevent="submit"
     >
       <EssentialForm
         card-style="min-width: 300px; max-width: 700px;"
@@ -103,13 +64,13 @@ watch(
         title="Новый сотрудник"
       >
         <template #fields>
-          <FormFields :fields="employeeFormRef" />
+          <FormFields :fields="fields" />
         </template>
 
         <template #buttons>
           <div class="row justify-between q-mt-md">
             <q-btn
-              :disable="loading"
+              :disable="isSubmitting"
               :type="BUTTON_TYPE.RESET"
               color="primary"
               label="Сбросить"
@@ -119,7 +80,7 @@ watch(
             />
             <q-btn
               :disable="disabledSubmitButton"
-              :loading="loading"
+              :loading="isSubmitting"
               :type="BUTTON_TYPE.SUBMIT"
               class="col-grow"
               color="primary"

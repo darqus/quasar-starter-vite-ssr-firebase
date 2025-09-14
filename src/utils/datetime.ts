@@ -146,7 +146,8 @@ export const formatISOToInternationalDateTime = (
 ): string => {
   // Create a new Date object from the ISO string
   const date = new Date(isoDate)
-  const formatOptions = options ?? DATE_TIME_OPTIONS_PRESET.formattedDateAndTimeMonthShort
+  const formatOptions =
+    options ?? DATE_TIME_OPTIONS_PRESET.formattedDateAndTimeMonthShort
 
   // Return the formatted date using Intl.DateTimeFormat
   return new Intl.DateTimeFormat(ZONE, formatOptions).format(date)

@@ -21,7 +21,7 @@ defineExpose({
   },
   resetValidation: () => {
     // This will be handled by the parent component's QForm ref
-  }
+  },
 })
 </script>
 

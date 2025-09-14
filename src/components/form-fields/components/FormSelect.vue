@@ -5,17 +5,17 @@ import type { SelectFormField } from 'src/types/form'
 import { INPUT_REQUIRED } from 'src/utils/constants'
 
 const emit = defineEmits<{
-  'update:model': [value: string | number | null]
+  'update:model': [value: unknown]
 }>()
 
 const props = defineProps<{
-  field: SelectFormField
+  field: SelectFormField<unknown>
 }>()
 
 // Вычисляемое свойство для v-model
 const modelValue = computed({
   get: () => props.field.model,
-  set: (value: string | number | null) => emit('update:model', value)
+  set: (value: unknown) => emit('update:model', value),
 })
 </script>
 

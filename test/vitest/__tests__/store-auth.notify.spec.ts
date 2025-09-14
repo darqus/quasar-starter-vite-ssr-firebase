@@ -27,14 +27,19 @@ describe('store-auth notify behavior', () => {
     const router = createRouter({
       history: createWebHistory(),
       routes: [
-        { path: `/${ROUTE_TYPE.ACCOUNT}`, component: { template: '<div>ok</div>' } },
+        {
+          path: `/${ROUTE_TYPE.ACCOUNT}`,
+          component: { template: '<div>ok</div>' },
+        },
       ],
     })
 
     // Notify plugin is globally registered in test setup; just spy on it
 
     const store = useStoreAuth()
-    const pushSpy = vi.spyOn(router, 'push').mockResolvedValue(undefined as unknown as never)
+    const pushSpy = vi
+      .spyOn(router, 'push')
+      .mockResolvedValue(undefined as unknown as never)
 
     // Ensure Notify.create exists and is spy-able in this runtime
     if (!(Notify as unknown as { create?: unknown }).create) {
@@ -51,7 +56,11 @@ describe('store-auth notify behavior', () => {
 
     expect(pushSpy).toHaveBeenCalledWith({ path: ROUTE_TYPE.ACCOUNT })
     expect(notifySpy).toHaveBeenCalled()
-    const args = notifySpy.mock.calls[0]?.[0] as { message: string; icon: string; color: string }
+    const args = notifySpy.mock.calls[0]?.[0] as {
+      message: string
+      icon: string
+      color: string
+    }
     expect(args).toBeTruthy()
     expect(args.color).toBe('green-4')
     expect(args.icon).toBe('cloud_done')
@@ -63,12 +72,17 @@ describe('store-auth notify behavior', () => {
     const router = createRouter({
       history: createWebHistory(),
       routes: [
-        { path: `/${ROUTE_TYPE.LOGIN}`, component: { template: '<div>login</div>' } },
+        {
+          path: `/${ROUTE_TYPE.LOGIN}`,
+          component: { template: '<div>login</div>' },
+        },
       ],
     })
 
     const store = useStoreAuth()
-    const pushSpy = vi.spyOn(router, 'push').mockResolvedValue(undefined as unknown as never)
+    const pushSpy = vi
+      .spyOn(router, 'push')
+      .mockResolvedValue(undefined as unknown as never)
     if (!(Notify as unknown as { create?: unknown }).create) {
       // @ts-expect-error augment for test
       Notify.create = () => {}
@@ -76,10 +90,15 @@ describe('store-auth notify behavior', () => {
     const notifySpy = vi.spyOn(Notify, 'create')
 
     store.onForgotSuccess(router)
-    await Promise.resolve(); await Promise.resolve()
+    await Promise.resolve()
+    await Promise.resolve()
 
     expect(pushSpy).toHaveBeenCalledWith({ path: ROUTE_TYPE.LOGIN })
-    const args = notifySpy.mock.calls[0]?.[0] as { message: string; icon: string; color: string }
+    const args = notifySpy.mock.calls[0]?.[0] as {
+      message: string
+      icon: string
+      color: string
+    }
     expect(args).toBeTruthy()
     expect(args.color).toBe('green-4')
     expect(args.icon).toBe('cloud_done')
@@ -91,12 +110,17 @@ describe('store-auth notify behavior', () => {
     const router = createRouter({
       history: createWebHistory(),
       routes: [
-        { path: `/${ROUTE_TYPE.LOGIN}`, component: { template: '<div>login</div>' } },
+        {
+          path: `/${ROUTE_TYPE.LOGIN}`,
+          component: { template: '<div>login</div>' },
+        },
       ],
     })
 
     const store = useStoreAuth()
-    const pushSpy = vi.spyOn(router, 'push').mockResolvedValue(undefined as unknown as never)
+    const pushSpy = vi
+      .spyOn(router, 'push')
+      .mockResolvedValue(undefined as unknown as never)
     if (!(Notify as unknown as { create?: unknown }).create) {
       // @ts-expect-error augment for test
       Notify.create = () => {}
@@ -104,10 +128,15 @@ describe('store-auth notify behavior', () => {
     const notifySpy = vi.spyOn(Notify, 'create')
 
     store.onLogout(router, true)
-    await Promise.resolve(); await Promise.resolve()
+    await Promise.resolve()
+    await Promise.resolve()
 
     expect(pushSpy).toHaveBeenCalledWith({ path: ROUTE_TYPE.LOGIN })
-    const args = notifySpy.mock.calls.at(-1)?.[0] as { message: string; icon: string; color: string }
+    const args = notifySpy.mock.calls.at(-1)?.[0] as {
+      message: string
+      icon: string
+      color: string
+    }
     expect(args).toBeTruthy()
     expect(args.color).toBe('green-4')
     expect(args.icon).toBe('cloud_done')

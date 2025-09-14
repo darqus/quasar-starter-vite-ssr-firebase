@@ -5,27 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import { createPinia } from 'pinia'
 
-
-import FormFields from 'src/components/form-fields/FormFields.vue'
-import LoginPage from 'src/pages/auth/LoginPage.vue'
-import RegisterPage from 'src/pages/auth/RegisterPage.vue'
-import { ROUTE_TYPE } from 'src/types/route'
-
-// Minimal router for pages
-function makeRouter() {
-  return createRouter({
-    history: createWebHistory(),
-    routes: [
-      { path: `/${ROUTE_TYPE.LOGIN}`, component: LoginPage },
-      { path: `/${ROUTE_TYPE.REGISTER}`, component: RegisterPage },
-      { path: '/', component: { template: '<div>home</div>' } },
-      { path: `/${ROUTE_TYPE.FORGOT}`, component: { template: '<div>forgot</div>' } },
-  { path: `/${ROUTE_TYPE.ACCOUNT}`, component: { template: '<div>account</div>' } },
-    ],
-  })
-}
-
-// Mock store-auth actions used in pages to avoid Firebase calls
+// Hoist and apply mocks BEFORE importing components
 const onLoginSuccessSpy = vi.fn()
 const onRegisterSuccessSpy = vi.fn()
 const createErrorMessageSpy = vi.fn()
@@ -52,7 +32,6 @@ vi.mock('src/stores/store-auth', () => ({
   }),
 }))
 
-// Simulate Firebase auth functions used in pages (hoisted to allow per-test overrides)
 const authMocks = vi.hoisted(() => ({
   getAuth: vi.fn(() => ({})),
   signInWithEmailAndPassword: vi.fn(() => Promise.resolve({})),
@@ -66,10 +45,43 @@ vi.mock('firebase/auth', () => ({
   createUserWithEmailAndPassword: authMocks.createUserWithEmailAndPassword,
 }))
 
-function setFieldModel(wrapper: ReturnType<typeof mount>, name: string, value: unknown) {
+import FormFields from 'src/components/form-fields/FormFields.vue'
+import LoginPage from 'src/pages/auth/LoginPage.vue'
+import RegisterPage from 'src/pages/auth/RegisterPage.vue'
+import { ROUTE_TYPE } from 'src/types/route'
+
+// Minimal router for pages
+function makeRouter() {
+  return createRouter({
+    history: createWebHistory(),
+    routes: [
+      { path: `/${ROUTE_TYPE.LOGIN}`, component: LoginPage },
+      { path: `/${ROUTE_TYPE.REGISTER}`, component: RegisterPage },
+      { path: '/', component: { template: '<div>home</div>' } },
+      {
+        path: `/${ROUTE_TYPE.FORGOT}`,
+        component: { template: '<div>forgot</div>' },
+      },
+      {
+        path: `/${ROUTE_TYPE.ACCOUNT}`,
+        component: { template: '<div>account</div>' },
+      },
+    ],
+  })
+}
+
+// (mocks moved above imports to guarantee application before component load)
+
+function setFieldModel(
+  wrapper: ReturnType<typeof mount>,
+  name: string,
+  value: unknown
+) {
   const formFields = wrapper.findComponent(FormFields)
   if (!formFields.exists()) throw new Error('FormFields component not found')
-  const props = formFields.props() as { fields: Array<{ name: string; model: unknown }> }
+  const props = formFields.props() as {
+    fields: Array<{ name: string; model: unknown }>
+  }
   const f = props.fields.find((x) => x.name === name)
   if (!f) throw new Error(`Field ${name} not found`)
   f.model = value
@@ -98,7 +110,7 @@ function emitFormSubmit(wrapper: ReturnType<typeof mount>) {
 
 describe('Auth pages happy path', () => {
   it('LoginPage submits and calls success handler', async () => {
-  const pinia = createPinia()
+    const pinia = createPinia()
     const router = makeRouter()
     const pushSpy = vi.spyOn(router, 'push')
 
@@ -109,7 +121,8 @@ describe('Auth pages happy path', () => {
           QPage: { template: '<div><slot /></div>' },
           QForm: {
             name: 'QForm',
-            template: '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
+            template:
+              '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
             methods: { resetValidation() {}, validate: () => true },
             expose: ['resetValidation', 'validate'],
           },
@@ -122,9 +135,9 @@ describe('Auth pages happy path', () => {
     setFieldModel(wrapper, 'login', 'user@example.com')
     setFieldModel(wrapper, 'password', '123456')
 
-  emitFormSubmit(wrapper)
-  await flushPromises()
-  await flushPromises()
+    emitFormSubmit(wrapper)
+    await flushPromises()
+    await flushPromises()
 
     // ensure no crash and page rendered
     expect(wrapper.html()).toContain('Вход')
@@ -133,13 +146,15 @@ describe('Auth pages happy path', () => {
 
     // reset called: models cleared
     const formFields = wrapper.findComponent(FormFields)
-    const props = formFields.props() as { fields: Array<{ name: string; model: unknown }> }
+    const props = formFields.props() as {
+      fields: Array<{ name: string; model: unknown }>
+    }
     expect(props.fields.find((f) => f.name === 'login')?.model).toBe('')
     expect(props.fields.find((f) => f.name === 'password')?.model).toBe('')
   })
 
   it('RegisterPage submits and calls success handler', async () => {
-  const pinia = createPinia()
+    const pinia = createPinia()
     const router = makeRouter()
     const pushSpy = vi.spyOn(router, 'push')
 
@@ -150,7 +165,8 @@ describe('Auth pages happy path', () => {
           QPage: { template: '<div><slot /></div>' },
           QForm: {
             name: 'QForm',
-            template: '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
+            template:
+              '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
             methods: { resetValidation() {}, validate: () => true },
             expose: ['resetValidation', 'validate'],
           },
@@ -163,9 +179,9 @@ describe('Auth pages happy path', () => {
     setFieldModel(wrapper, 'login', 'user@example.com')
     setFieldModel(wrapper, 'password', '123456')
 
-  emitFormSubmit(wrapper)
-  await flushPromises()
-  await flushPromises()
+    emitFormSubmit(wrapper)
+    await flushPromises()
+    await flushPromises()
 
     expect(wrapper.html()).toContain('Регистрация')
     expect(onRegisterSuccessSpy).toHaveBeenCalled()
@@ -173,7 +189,9 @@ describe('Auth pages happy path', () => {
 
     // reset called: models cleared
     const formFields = wrapper.findComponent(FormFields)
-    const props = formFields.props() as { fields: Array<{ name: string; model: unknown }> }
+    const props = formFields.props() as {
+      fields: Array<{ name: string; model: unknown }>
+    }
     expect(props.fields.find((f) => f.name === 'login')?.model).toBe('')
     expect(props.fields.find((f) => f.name === 'password')?.model).toBe('')
   })
@@ -190,7 +208,8 @@ describe('Auth pages happy path', () => {
           // Stub QForm with validate() returning false
           QForm: {
             name: 'QForm',
-            template: '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
+            template:
+              '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
             methods: { resetValidation() {}, validate: () => false },
             expose: ['resetValidation', 'validate'],
           },
@@ -241,10 +260,10 @@ describe('Auth pages happy path', () => {
       new Error('auth/wrong-password')
     )
 
-  // submit
-  emitFormSubmit(wrapper)
-  await flushPromises()
-  await flushPromises()
+    // submit
+    emitFormSubmit(wrapper)
+    await flushPromises()
+    await flushPromises()
 
     expect(authMocks.signInWithEmailAndPassword).toHaveBeenCalled()
     expect(onLoginSuccessSpy).not.toHaveBeenCalled()

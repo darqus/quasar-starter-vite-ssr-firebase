@@ -1,4 +1,4 @@
-import { isCorrectDate } from './datetime'
+import { isCorrectDate } from '../utils/datetime'
 
 const INPUT_LIMIT = 255
 
@@ -44,7 +44,7 @@ const RE_PASSWORD = new RegExp(
   `^${PASSWORD_RE_PART.HAS_CAPITAL_LETTER.source}${PASSWORD_RE_PART.HAS_DIGIT.source}${PASSWORD_RE_PART.HAS_SPECIAL_CHAR.source}${PASSWORD_RE_PART.IS_VALID.source}$`
 )
 
-const MESSAGES = {
+export const MESSAGES = {
   requiredInput: 'Обязательно для заполнения',
   requiredSelect: 'Выберите значение из списка',
   notTrailingSpaces: 'Здесь не должно быть пробелов в начале и конце строки',
@@ -60,7 +60,7 @@ const MESSAGES = {
 
 export const REGEXP = {
   required: /^.+$/,
-  overfowLimit: RE_OVERFLOW_LIMIT,
+  overflowLimit: RE_OVERFLOW_LIMIT,
   string: /^[^\s].*[^\s]+$/,
   word: /^[A-Za-zА-Яа-яЁё]+$/,
   fewLetters: /[A-Za-zА-Яа-яЁё]{2,}/,
@@ -73,13 +73,13 @@ export const REGEXP = {
 export const requiredInput = [
   (v: string) => REGEXP.required.test(v) || MESSAGES.requiredInput,
   (v: string) => REGEXP.string.test(v) || MESSAGES.notTrailingSpaces,
-  (v: string) => REGEXP.overfowLimit.test(v) || MESSAGES.overflowLimit,
+  (v: string) => REGEXP.overflowLimit.test(v) || MESSAGES.overflowLimit,
 ]
 
 export const requiredSelect = [
   (v: string) => REGEXP.required.test(v) || MESSAGES.requiredSelect,
   (v: string) => REGEXP.string.test(v) || MESSAGES.notTrailingSpaces,
-  (v: string) => REGEXP.overfowLimit.test(v) || MESSAGES.overflowLimit,
+  (v: string) => REGEXP.overflowLimit.test(v) || MESSAGES.overflowLimit,
 ]
 
 export const word = [
