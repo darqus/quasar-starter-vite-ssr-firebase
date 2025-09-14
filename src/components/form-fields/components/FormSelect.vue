@@ -33,7 +33,6 @@ const modelValue = computed({
     bottom-slots
     emit-value
     label-slot
-    lazy-rules
     map-options
   >
     <template #prepend>

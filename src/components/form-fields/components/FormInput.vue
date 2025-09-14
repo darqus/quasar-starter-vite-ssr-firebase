@@ -51,7 +51,6 @@ const modelValue = computed({
     "
     bottom-slots
     label-slot
-    lazy-rules
   >
     <template #prepend>
       <q-icon :name="field.iconPrepend" />

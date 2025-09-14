@@ -35,7 +35,6 @@ const modelValue = computed({
     autogrow
     bottom-slots
     label-slot
-    lazy-rules
   >
     <template #prepend>
       <q-icon :name="field.iconPrepend" />
