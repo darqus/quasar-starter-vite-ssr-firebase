@@ -2,6 +2,10 @@
 
 quasar-starter-vite-ssr-firebase
 
+## Demo
+
+Live: [https://skill-flash.web.app](https://skill-flash.web.app)
+
 ## Documentation
 
 - Forms: named access pattern — see `docs/employee-form-example.md`
