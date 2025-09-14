@@ -89,21 +89,21 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
     },
     // https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0#create_a_password-based_account
     onRegisterSuccess (uid: string, email: string) {
-      this.router.push({ path: ROUTE_TYPE.ACCOUNT, }).then(() =>
+      void this.router.push({ path: ROUTE_TYPE.ACCOUNT, }).then(() =>
         createNotify(`Пользователь c id ${uid} зарегистрирован на email ${email}`, 'green-4', 'cloud_done')
       )
     },
     // https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0#sign_in_a_user_with_an_email_address_and_password
     onLoginSuccess () {
-      this.router.push({ path: ROUTE_TYPE.ACCOUNT, })
+      void this.router.push({ path: ROUTE_TYPE.ACCOUNT, })
     },
     onLogout (goToLogin?: boolean) {
       Loading.show()
       signOut(auth)
         .then(() => {
           if (goToLogin) {
-            this.router.push({ path: ROUTE_TYPE.LOGIN, })
-              .then(this.onPostLogout)
+            void this.router.push({ path: ROUTE_TYPE.LOGIN, })
+              .then(() => this.onPostLogout())
           } else {
             this.onPostLogout()
           }
@@ -116,7 +116,7 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
         })
     },
     onForgotSuccess () {
-      this.router.push({ path: ROUTE_TYPE.LOGIN, }).then(() => {
+      void this.router.push({ path: ROUTE_TYPE.LOGIN, }).then(() => {
         createNotify('Проверьте почту и перейдите по ссылке для восстановления пароля', 'green-4', 'cloud_done')
       })
     },
