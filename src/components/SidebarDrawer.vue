@@ -14,10 +14,7 @@ const router = useRouter()
   <q-list>
     <q-item-label header>Главное меню</q-item-label>
 
-    <UserAvatar
-      v-if="storeAuth.loggedIn"
-      :user-email="storeAuth.currentUser?.email ?? null"
-    />
+    <UserAvatar v-if="storeAuth.loggedIn" />
 
     <RouterMenuLink
       v-for="link in storeAuth.routerMenuLinks"
