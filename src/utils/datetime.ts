@@ -142,13 +142,14 @@ export const DATE_TIME_OPTIONS_PRESET: Record<string, TOptions> = {
  */
 export const formatISOToInternationalDateTime = (
   isoDate: string,
-  options: Intl.DateTimeFormatOptions = DATE_TIME_OPTIONS_PRESET.formattedDateAndTimeMonthShort ?? {}
+  options?: Intl.DateTimeFormatOptions
 ): string => {
   // Create a new Date object from the ISO string
   const date = new Date(isoDate)
+  const formatOptions = options ?? DATE_TIME_OPTIONS_PRESET.formattedDateAndTimeMonthShort
 
   // Return the formatted date using Intl.DateTimeFormat
-  return new Intl.DateTimeFormat(ZONE, options).format(date)
+  return new Intl.DateTimeFormat(ZONE, formatOptions).format(date)
 }
 
 /**
@@ -320,7 +321,8 @@ export const getCurrentIsoDateTime = (
 
   const today = updatedTIme
 
-  return onlyDate ? (today.toISOString().split('T')[0] ?? '') : today.toISOString()
+  const isoString = today.toISOString()
+  return onlyDate ? (isoString.split('T')[0] ?? '') : isoString
 }
 
 export const getIsoDateFromIsoDateAndMinutes = (
