@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import {
   zEmail,
+  zPasswordStrict,
   zRequiredInputString,
   zRequiredSelect,
 } from 'src/validation/zod-helpers'
@@ -9,8 +10,7 @@ import {
 // Auth
 export const loginSchema = z.object({
   login: zEmail(),
-  // Auth flows in tests expect simple password validation (min length 6)
-  password: z.string().min(6),
+  password: zPasswordStrict(),
 })
 export type LoginDTO = z.infer<typeof loginSchema>
 

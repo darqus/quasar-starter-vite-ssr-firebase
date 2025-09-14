@@ -133,7 +133,8 @@ describe('Auth pages happy path', () => {
     await router.isReady()
 
     setFieldModel(wrapper, 'login', 'user@example.com')
-    setFieldModel(wrapper, 'password', '123456')
+    // Strong password to satisfy zPasswordStrict: length, digit, uppercase, special char
+    setFieldModel(wrapper, 'password', 'Qwe123!@')
 
     emitFormSubmit(wrapper)
     await flushPromises()
@@ -177,7 +178,7 @@ describe('Auth pages happy path', () => {
     await router.isReady()
 
     setFieldModel(wrapper, 'login', 'user@example.com')
-    setFieldModel(wrapper, 'password', '123456')
+    setFieldModel(wrapper, 'password', 'Qwe123!@')
 
     emitFormSubmit(wrapper)
     await flushPromises()
@@ -253,7 +254,8 @@ describe('Auth pages happy path', () => {
     await router.isReady()
 
     setFieldModel(wrapper, 'login', 'user@example.com')
-    setFieldModel(wrapper, 'password', 'badpass')
+    // Use a strong-ish password too; the failure will be triggered by mocked reject
+    setFieldModel(wrapper, 'password', 'Qwe123!@')
 
     // cause auth failure
     authMocks.signInWithEmailAndPassword.mockRejectedValueOnce(
@@ -293,7 +295,7 @@ describe('Auth pages happy path', () => {
     await router.isReady()
 
     setFieldModel(wrapper, 'login', 'user@example.com')
-    setFieldModel(wrapper, 'password', 'badpass')
+    setFieldModel(wrapper, 'password', 'Qwe123!@')
 
     // cause auth failure
     authMocks.createUserWithEmailAndPassword.mockRejectedValueOnce(
