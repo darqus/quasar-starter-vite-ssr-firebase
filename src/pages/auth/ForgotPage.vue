@@ -39,10 +39,10 @@ const validate = async () => {
 
 const onForgot = () => {
   Loading.show()
-  sendPasswordResetEmail(auth, currentAuthFormRef.value[0].model ?? '')
+  sendPasswordResetEmail(auth, currentAuthFormRef.value[0]?.model ?? '')
     .then(() => {
       storeAuth.onForgotSuccess()
-      reset()
+      void reset()
     })
     .catch((error) => {
       storeAuth.createErrorMessage(error)
@@ -55,7 +55,7 @@ const onForgot = () => {
 watch(
   () => currentAuthFormRef,
   () => {
-    validate()
+    void validate()
   },
   { deep: true }
 )
