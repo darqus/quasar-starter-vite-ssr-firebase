@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+import UserCardList from 'src/components/UserCardList.vue'
+import UserSkillList from 'src/components/UserSkillList.vue'
+
+const tab = ref('UserCardList')
+</script>
+
 <template>
   <q-page class="q-pa-md">
     <q-tabs
@@ -31,12 +40,3 @@
     </q-tab-panels>
   </q-page>
 </template>
-
-<script setup lang="ts">
-import { ref, } from 'vue'
-
-import UserCardList from 'src/components/UserCardList.vue'
-import UserSkillList from 'src/components/UserSkillList.vue'
-
-const tab = ref('UserCardList')
-</script>

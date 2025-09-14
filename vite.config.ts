@@ -1,4 +1,4 @@
-import { defineConfig, } from 'vitest/config'
+import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   // this rule set correct path in working project on subdomain/dir

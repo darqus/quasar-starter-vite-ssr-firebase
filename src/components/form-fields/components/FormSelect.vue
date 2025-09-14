@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+import type { SelectFormField } from 'src/types/form'
+import { INPUT_REQUIRED } from 'src/utils/constants'
+
+defineEmits(['update:model'])
+
+const props = defineProps<{
+  field: SelectFormField
+}>()
+
+const localModel = ref(props.field.model)
+</script>
+
 <template>
   <q-select
     v-model.trim="localModel"
@@ -26,19 +41,3 @@
     </template>
   </q-select>
 </template>
-
-<script setup lang="ts">
-import { ref, } from 'vue'
-
-import type { SelectFormField, } from 'src/types/form'
-
-import { INPUT_REQUIRED, } from 'src/utils/constants'
-
-defineEmits([ 'update:model', ])
-
-const props = defineProps<{
-  field: SelectFormField
-}>()
-
-const localModel = ref(props.field.model)
-</script>

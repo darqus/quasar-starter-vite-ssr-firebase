@@ -1,5 +1,7 @@
-import { boot, } from 'quasar/wrappers'
+import { boot } from 'quasar/wrappers'
 
-import { useStoreAuth, } from 'src/stores/store-auth'
+import { useStoreAuth } from 'src/stores/store-auth'
 
-export default boot(({ store, }) => { useStoreAuth(store).watchAuthStateChanged() })
+export default boot(({ store }) => {
+  useStoreAuth(store).watchAuthStateChanged()
+})

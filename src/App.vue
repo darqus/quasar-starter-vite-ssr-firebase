@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import { useMeta, } from 'quasar'
+import { useMeta } from 'quasar'
 
-import { meta, } from 'src/utils/meta'
+import { meta } from 'src/utils/meta'
 
 defineOptions({
   name: 'App',

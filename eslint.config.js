@@ -1,9 +1,17 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import pluginVue from 'eslint-plugin-vue';
-import pluginQuasar from '@quasar/app-vite/eslint';
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
-import prettierSkipFormatting from '@vue/eslint-config-prettier/skip-formatting';
+import prettierSkipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from '@vue/eslint-config-typescript'
+
+import js from '@eslint/js'
+import pluginImport from 'eslint-plugin-import'
+import pluginVue from 'eslint-plugin-vue'
+import globals from 'globals'
+
+import pluginQuasar from '@quasar/app-vite/eslint'
+
+import { rules } from './.config/eslint-rules/index.js'
 
 export default defineConfigWithVueTs(
   {
@@ -15,7 +23,15 @@ export default defineConfigWithVueTs(
      *
      * ESLint requires "ignores" key to be the only one in this object
      */
-    // ignores: []
+    ignores: [
+      'dist',
+      'src-capacitor',
+      'src-cordova',
+      'src-ssr',
+      '.quasar',
+      'node_modules',
+      'quasar.config.*.temporary.compiled*',
+    ],
   },
 
   pluginQuasar.configs.recommended(),
@@ -38,7 +54,10 @@ export default defineConfigWithVueTs(
   {
     files: ['**/*.ts', '**/*.vue'],
     rules: {
-      '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports' },
+      ],
     },
   },
   // https://github.com/vuejs/eslint-config-typescript
@@ -60,14 +79,12 @@ export default defineConfigWithVueTs(
         browser: 'readonly', // BEX related
       },
     },
+    // In flat config, plugins must be provided as an object map
+    // where keys match the rule prefix (e.g., 'import/order').
+    plugins: { import: pluginImport },
 
     // add your custom rules here
-    rules: {
-      'prefer-promise-reject-errors': 'off',
-
-      // allow debugger during development only
-      'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    },
+    rules,
   },
 
   {
@@ -79,5 +96,5 @@ export default defineConfigWithVueTs(
     },
   },
 
-  prettierSkipFormatting,
-);
+  prettierSkipFormatting
+)

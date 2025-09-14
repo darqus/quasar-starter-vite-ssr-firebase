@@ -2,7 +2,13 @@
   "editor.formatOnSave": true,
   // Let Prettier handle formatting; ESLint handles code-quality/organize imports
   "eslint.format.enable": false,
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
   "eslint.codeActionsOnSave.mode": "problems",
   "stylelint.validate": ["css", "scss", "vue"],
   "[javascript]": {

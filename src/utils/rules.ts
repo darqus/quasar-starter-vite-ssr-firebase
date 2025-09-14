@@ -1,4 +1,4 @@
-import { isCorrectDate, } from './datetime'
+import { isCorrectDate } from './datetime'
 
 const INPUT_LIMIT = 255
 
@@ -12,7 +12,9 @@ const EMAIL_RE_PART = {
   ZONE: /[A-Za-z]{2,4}/,
 }
 
-const RE_EMAIL = new RegExp(`^${EMAIL_RE_PART.USERNAME.source}${EMAIL_RE_PART.AT}${EMAIL_RE_PART.DOMAIN.source}${EMAIL_RE_PART.DOT}${EMAIL_RE_PART.ZONE.source}$`)
+const RE_EMAIL = new RegExp(
+  `^${EMAIL_RE_PART.USERNAME.source}${EMAIL_RE_PART.AT}${EMAIL_RE_PART.DOMAIN.source}${EMAIL_RE_PART.DOT}${EMAIL_RE_PART.ZONE.source}$`
+)
 
 const PASSWORD_DETAILS = {
   MIN_LENGTH: 8,
@@ -24,10 +26,18 @@ const PASSWORD_DETAILS = {
 }
 
 const PASSWORD_RE_PART = {
-  HAS_CAPITAL_LETTER: new RegExp(`(?=.*[A-Z]){${PASSWORD_DETAILS.CAPITAL_LETTER_LENGTH},${PASSWORD_DETAILS.MAX_LENGTH}}`),
-  HAS_DIGIT: new RegExp(`(?=.*\\d){${PASSWORD_DETAILS.DIGIT_LENGTH},${PASSWORD_DETAILS.MAX_LENGTH}}`),
-  HAS_SPECIAL_CHAR: new RegExp(`(?=.*[${PASSWORD_DETAILS.SPC_CHAR}]){${PASSWORD_DETAILS.SPC_LENGTH},${PASSWORD_DETAILS.MAX_LENGTH}}`),
-  IS_VALID: new RegExp(`[A-Za-z\\d${PASSWORD_DETAILS.SPC_CHAR}]{${PASSWORD_DETAILS.MIN_LENGTH},${PASSWORD_DETAILS.MAX_LENGTH}}`),
+  HAS_CAPITAL_LETTER: new RegExp(
+    `(?=.*[A-Z]){${PASSWORD_DETAILS.CAPITAL_LETTER_LENGTH},${PASSWORD_DETAILS.MAX_LENGTH}}`
+  ),
+  HAS_DIGIT: new RegExp(
+    `(?=.*\\d){${PASSWORD_DETAILS.DIGIT_LENGTH},${PASSWORD_DETAILS.MAX_LENGTH}}`
+  ),
+  HAS_SPECIAL_CHAR: new RegExp(
+    `(?=.*[${PASSWORD_DETAILS.SPC_CHAR}]){${PASSWORD_DETAILS.SPC_LENGTH},${PASSWORD_DETAILS.MAX_LENGTH}}`
+  ),
+  IS_VALID: new RegExp(
+    `[A-Za-z\\d${PASSWORD_DETAILS.SPC_CHAR}]{${PASSWORD_DETAILS.MIN_LENGTH},${PASSWORD_DETAILS.MAX_LENGTH}}`
+  ),
 }
 
 const RE_PASSWORD = new RegExp(
@@ -77,17 +87,13 @@ export const word = [
   (v: string) => REGEXP.word.test(v) || MESSAGES.onlyWord,
 ]
 
-export const email = [
-  (v: string) => REGEXP.email.test(v) || MESSAGES.email,
-]
+export const email = [(v: string) => REGEXP.email.test(v) || MESSAGES.email]
 
 export const password = [
   (v: string) => REGEXP.password.test(v) || MESSAGES.password,
 ]
 
-export const phone = [
-  (v: string) => REGEXP.phone.test(v) || MESSAGES.phone,
-]
+export const phone = [(v: string) => REGEXP.phone.test(v) || MESSAGES.phone]
 
 export const date = [
   (v: string) => REGEXP.date.test(v) || MESSAGES.dateFormat,

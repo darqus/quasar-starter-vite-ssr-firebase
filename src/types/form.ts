@@ -1,4 +1,4 @@
-import type { QInputProps, QSelectProps, } from 'quasar'
+import type { QInputProps, QSelectProps } from 'quasar'
 
 export enum INPUT_TYPE {
   TEXT = 'text',
@@ -11,7 +11,7 @@ export enum INPUT_TYPE {
   FILE = 'file',
   URL = 'url',
   TIME = 'time',
-  DATE = 'date'
+  DATE = 'date',
 }
 
 export const PHONE_MASK = '+7 (###) ###-##-##'

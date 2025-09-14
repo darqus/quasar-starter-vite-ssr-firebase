@@ -1,3 +1,19 @@
+<script setup lang="ts">
+const { VITE_ROUTER_BASE: BASE } = import.meta.env
+
+type Form = {
+  cardStyle: string
+  title: string
+  description: string
+}
+
+withDefaults(defineProps<Form>(), {
+  cardStyle: '',
+  title: '',
+  description: '',
+})
+</script>
+
 <template>
   <q-card
     :style="cardStyle"
@@ -49,19 +65,3 @@
     </div>
   </q-card>
 </template>
-
-<script setup lang="ts">
-const { VITE_ROUTER_BASE: BASE, } = import.meta.env
-
-type Form = {
-  cardStyle: string
-  title: string
-  description: string
-}
-
-withDefaults(defineProps<Form>(), {
-  cardStyle: '',
-  title: '',
-  description: '',
-})
-</script>

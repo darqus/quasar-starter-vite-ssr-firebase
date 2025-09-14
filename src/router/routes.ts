@@ -1,16 +1,10 @@
-import { type RouteRecordRaw, } from 'vue-router'
+import { type RouteRecordRaw } from 'vue-router'
 
-import { ROUTE_TYPE, } from 'src/types/route'
+import { ROUTE_TYPE } from 'src/types/route'
 
-const { VITE_ROUTER_BASE: BASE, } = import.meta.env
+const { VITE_ROUTER_BASE: BASE } = import.meta.env
 
-const {
-  REGISTER,
-  LOGIN,
-  FORGOT,
-  ACCOUNT,
-  NEW_EMPLOYEE,
-} = ROUTE_TYPE
+const { REGISTER, LOGIN, FORGOT, ACCOUNT, NEW_EMPLOYEE } = ROUTE_TYPE
 
 const routes: RouteRecordRaw[] = [
   {
@@ -39,7 +33,8 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: NEW_EMPLOYEE,
-        component: async () => await import('pages/employee/NewEmployeePage.vue'),
+        component: async () =>
+          await import('pages/employee/NewEmployeePage.vue'),
       },
     ],
   },

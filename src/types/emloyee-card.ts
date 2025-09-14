@@ -1,4 +1,4 @@
-import type { TNewEmployee, } from './new-employee'
+import type { TNewEmployee } from './new-employee'
 
 type TLevel = {
   key: string
@@ -26,8 +26,8 @@ export const LEVELS_MAP: TLevel[] = [
 
 export type TEmployeeCardsState = {
   isFilterVisible: boolean
-  employeeList: TNewEmployee[],
-  selectedFromLevel: TNewEmployee | null,
-  selectedFromPosition: TNewEmployee | null,
-  selectedFromRating: TNewEmployee | null,
+  employeeList: TNewEmployee[]
+  selectedFromLevel: TNewEmployee | null
+  selectedFromPosition: TNewEmployee | null
+  selectedFromRating: TNewEmployee | null
 }

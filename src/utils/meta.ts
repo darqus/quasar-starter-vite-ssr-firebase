@@ -1,4 +1,4 @@
-const { VITE_NAME_FULL, VITE_VERSION, VITE_BUILD_DATE, VITE_DESCRIPTION, } =
+const { VITE_NAME_FULL, VITE_VERSION, VITE_BUILD_DATE, VITE_DESCRIPTION } =
   import.meta.env
 
 export const TITLE = `${VITE_NAME_FULL}: ${VITE_VERSION} build: ${VITE_BUILD_DATE}`
@@ -16,7 +16,7 @@ export const meta = {
       name: 'description',
       content: VITE_DESCRIPTION,
     },
-    keywords: { name: 'keywords', content: VITE_DESCRIPTION, },
+    keywords: { name: 'keywords', content: VITE_DESCRIPTION },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

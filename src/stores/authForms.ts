@@ -1,9 +1,8 @@
-import { AUTH_TYPE, FIELD_TYPE, INPUT_TYPE, } from 'src/types/form'
-import { type Fields, } from 'src/types/form'
-
-import { DEBOUNCE, } from 'src/utils/constants'
-import { generateId, } from 'src/utils/generator'
-import { email, password, requiredInput, } from 'src/utils/rules'
+import { AUTH_TYPE, FIELD_TYPE, INPUT_TYPE } from 'src/types/form'
+import { type Fields } from 'src/types/form'
+import { DEBOUNCE } from 'src/utils/constants'
+import { generateId } from 'src/utils/generator'
+import { email, password, requiredInput } from 'src/utils/rules'
 
 const LOGIN_EMAIL_FIELDS = (): Fields => [
   {
@@ -16,7 +15,7 @@ const LOGIN_EMAIL_FIELDS = (): Fields => [
     model: '',
     required: true,
     iconPrepend: 'email',
-    rule: [ ...requiredInput, ...email, ],
+    rule: [...requiredInput, ...email],
   },
   {
     id: generateId(),
@@ -28,7 +27,7 @@ const LOGIN_EMAIL_FIELDS = (): Fields => [
     model: '',
     required: true,
     iconPrepend: 'lock',
-    rule: [ ...requiredInput, ...password, ],
+    rule: [...requiredInput, ...password],
   },
 ]
 
@@ -43,7 +42,7 @@ const REGISTER_FIELDS = (): Fields => [
     model: '',
     required: true,
     iconPrepend: 'email',
-    rule: [ ...requiredInput, ...email, ],
+    rule: [...requiredInput, ...email],
   },
   {
     id: generateId(),
@@ -55,7 +54,7 @@ const REGISTER_FIELDS = (): Fields => [
     model: '',
     required: true,
     iconPrepend: 'lock',
-    rule: [ ...requiredInput, ...password, ],
+    rule: [...requiredInput, ...password],
   },
 ]
 
@@ -70,7 +69,7 @@ const FORGOT_PASSWORD_FIELDS = (): Fields => [
     model: '',
     required: true,
     iconPrepend: 'email',
-    rule: [ ...requiredInput, ...email, ],
+    rule: [...requiredInput, ...email],
   },
 ]
 
@@ -80,4 +79,5 @@ const formsAuth = {
   [AUTH_TYPE.FORGOT_PASSWORD]: FORGOT_PASSWORD_FIELDS(),
 }
 
-export const getCurrentAuthFields = (currentAuthFormType: AUTH_TYPE) => formsAuth[currentAuthFormType]
+export const getCurrentAuthFields = (currentAuthFormType: AUTH_TYPE) =>
+  formsAuth[currentAuthFormType]

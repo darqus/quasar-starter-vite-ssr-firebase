@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import type { Fields } from 'src/types/form'
+import { FIELD_TYPE } from 'src/types/form'
+
+import FormDatePicker from './components/FormDatePicker.vue'
+import FormInput from './components/FormInput.vue'
+import FormSelect from './components/FormSelect.vue'
+import FormTextArea from './components/FormTextArea.vue'
+
+defineProps<{
+  fields: Fields
+}>()
+</script>
+
 <template>
   <template
     v-for="field in fields"
@@ -25,17 +39,3 @@
     />
   </template>
 </template>
-
-<script setup lang="ts">
-import type { Fields, } from 'src/types/form'
-import { FIELD_TYPE, } from 'src/types/form'
-
-import FormDatePicker from './components/FormDatePicker.vue'
-import FormInput from './components/FormInput.vue'
-import FormSelect from './components/FormSelect.vue'
-import FormTextArea from './components/FormTextArea.vue'
-
-defineProps<{
-  fields: Fields
-}>()
-</script>

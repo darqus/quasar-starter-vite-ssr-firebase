@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import { useStoreEmployeeCards } from 'src/stores/store-employee-cards'
+
+const storeEmployeeCards = useStoreEmployeeCards()
+
+storeEmployeeCards.getEmployeeList()
+</script>
+
 <template>
   <div class="row">
     <q-toggle
@@ -54,7 +62,7 @@
         position,
         level,
         description,
-        rate
+        rate,
       } in storeEmployeeCards.filteredEmployeeList"
       :key="id"
       bordered
@@ -90,7 +98,7 @@
 
       <q-card-section
         class="q-pt-none"
-        style="height: 70px; overflow-y: auto;"
+        style="height: 70px; overflow-y: auto"
       >
         {{ description }}
       </q-card-section>
@@ -98,14 +106,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useStoreEmployeeCards, } from 'src/stores/store-employee-cards'
-
-const storeEmployeeCards = useStoreEmployeeCards()
-
-storeEmployeeCards.getEmployeeList()
-</script>
-
 <style lang="scss">
-@import "./scss/user-card-list";
+@import './scss/user-card-list';
 </style>

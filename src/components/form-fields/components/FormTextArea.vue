@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+import type { TextareaFormField } from 'src/types/form'
+import { INPUT_REQUIRED } from 'src/utils/constants'
+
+defineEmits(['update:model'])
+
+const props = defineProps<{
+  field: TextareaFormField
+}>()
+
+const localModel = ref(props.field.model)
+</script>
+
 <template>
   <div>
     <q-input
@@ -33,19 +48,3 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref, } from 'vue'
-
-import type { TextareaFormField, } from 'src/types/form'
-
-import { INPUT_REQUIRED, } from 'src/utils/constants'
-
-defineEmits([ 'update:model', ])
-
-const props = defineProps<{
-  field: TextareaFormField
-}>()
-
-const localModel = ref(props.field.model)
-</script>

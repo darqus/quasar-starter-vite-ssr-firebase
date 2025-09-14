@@ -1,3 +1,71 @@
+<script setup lang="ts">
+import { nextTick, type Ref, ref, watch } from 'vue'
+
+import { signInWithEmailAndPassword } from 'firebase/auth'
+
+import { Loading } from 'quasar'
+
+import { auth } from 'src/boot/firebase'
+import EssentialForm from 'src/components/form/EssentialForm.vue'
+import FormFields from 'src/components/form-fields/FormFields.vue'
+import { getCurrentAuthFields } from 'src/stores/authForms'
+import { useStoreAuth } from 'src/stores/store-auth'
+import { AUTH_TYPE, BUTTON_TYPE } from 'src/types/form'
+import { ROUTE_TYPE } from 'src/types/route'
+
+const storeAuth = useStoreAuth()
+
+const refLoginForm: Ref = ref(null)
+
+const currentAuthFormRef = ref(getCurrentAuthFields(AUTH_TYPE.LOGIN_EMAIL))
+
+const reset = async () => {
+  if (refLoginForm.value) {
+    currentAuthFormRef.value.forEach((item) => {
+      item.model = ''
+
+      return item
+    })
+    await nextTick()
+    refLoginForm.value.resetValidation()
+  }
+}
+
+const validate = async () => {
+  await nextTick()
+  refLoginForm.value
+    ?.validate()
+    .then((success: boolean) => (storeAuth.valid = success))
+}
+
+const onLogin = () => {
+  Loading.show()
+  signInWithEmailAndPassword(
+    auth,
+    currentAuthFormRef.value[0]?.model ?? '',
+    currentAuthFormRef.value[1]?.model ?? ''
+  )
+    .then(() => {
+      void reset()
+      storeAuth.onLoginSuccess()
+    })
+    .catch((error) => {
+      storeAuth.createErrorMessage(error)
+    })
+    .finally(() => {
+      Loading.hide()
+    })
+}
+
+watch(
+  () => currentAuthFormRef,
+  () => {
+    void validate()
+  },
+  { deep: true }
+)
+</script>
+
 <template>
   <q-page class="row items-center justify-evenly">
     <q-form
@@ -32,7 +100,7 @@
               class="col-grow"
               color="primary"
               label="Войти"
-              style="margin-left: 15px;"
+              style="margin-left: 15px"
               no-caps
               rounded
             />
@@ -68,73 +136,3 @@
     </q-form>
   </q-page>
 </template>
-
-<script setup lang="ts">
-import { ref, watch, type Ref, nextTick, } from 'vue'
-
-import { signInWithEmailAndPassword, } from 'firebase/auth'
-
-import { Loading, } from 'quasar'
-
-import { AUTH_TYPE, BUTTON_TYPE, } from 'src/types/form'
-import { ROUTE_TYPE, } from 'src/types/route'
-
-import { getCurrentAuthFields, } from 'src/stores/authForms'
-import { useStoreAuth, } from 'src/stores/store-auth'
-
-import EssentialForm from 'src/components/form/EssentialForm.vue'
-import FormFields from 'src/components/form-fields/FormFields.vue'
-
-import { auth, } from 'src/boot/firebase'
-
-const storeAuth = useStoreAuth()
-
-const refLoginForm: Ref = ref(null)
-
-const currentAuthFormRef = ref(getCurrentAuthFields(AUTH_TYPE.LOGIN_EMAIL))
-
-const reset = async () => {
-  if (refLoginForm.value) {
-    currentAuthFormRef.value.forEach((item) => {
-      item.model = ''
-
-      return item
-    })
-    await nextTick()
-    refLoginForm.value.resetValidation()
-  }
-}
-
-const validate = async () => {
-  await nextTick()
-  refLoginForm.value?.validate()
-    .then((success: boolean) => (storeAuth.valid = success))
-}
-
-const onLogin = () => {
-  Loading.show()
-  signInWithEmailAndPassword(
-    auth,
-    currentAuthFormRef.value[0].model ?? '',
-    currentAuthFormRef.value[1].model ?? ''
-  )
-    .then(() => {
-      reset()
-      storeAuth.onLoginSuccess()
-    })
-    .catch((error) => {
-      storeAuth.createErrorMessage(error)
-    })
-    .finally(() => {
-      Loading.hide()
-    })
-}
-
-watch(
-  () => currentAuthFormRef,
-  () => {
-    validate()
-  },
-  { deep: true, }
-)
-</script>

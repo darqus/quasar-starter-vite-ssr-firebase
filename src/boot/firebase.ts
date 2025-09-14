@@ -1,5 +1,5 @@
-import { type FirebaseApp, initializeApp, } from 'firebase/app'
-import { getAuth, } from 'firebase/auth'
+import { type FirebaseApp, initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
 import {
   collection,
   doc,
@@ -24,7 +24,9 @@ const db = getFirestore()
 export const auth = getAuth(firebaseApp)
 
 // get collection data
-export const getCollection = (collectionName: string) => getDocs(collection(db, collectionName))
+export const getCollection = (collectionName: string) =>
+  getDocs(collection(db, collectionName))
 
 // set doc https://firebase.google.com/docs/firestore/query-data/queries?authuser=0&hl=en
-export const addDoc = (collectionName: string, data: unknown) => setDoc(doc(collection(db, collectionName)), data)
+export const addDoc = (collectionName: string, data: unknown) =>
+  setDoc(doc(collection(db, collectionName)), data)

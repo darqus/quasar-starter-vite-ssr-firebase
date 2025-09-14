@@ -1,8 +1,15 @@
+<script setup lang="ts">
+import RouterMenuLink from 'src/components/RouterMenuLink.vue'
+import ThemeToggler from 'src/components/ThemeToggler.vue'
+import UserAvatar from 'src/components/UserAvatar.vue'
+import { useStoreAuth } from 'src/stores/store-auth'
+
+const storeAuth = useStoreAuth()
+</script>
+
 <template>
   <q-list>
-    <q-item-label header>
-      Главное меню
-    </q-item-label>
+    <q-item-label header>Главное меню</q-item-label>
 
     <UserAvatar
       v-if="storeAuth.loggedIn"
@@ -35,13 +42,3 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-import { useStoreAuth, } from 'src/stores/store-auth'
-
-import RouterMenuLink from 'src/components/RouterMenuLink.vue'
-import ThemeToggler from 'src/components/ThemeToggler.vue'
-import UserAvatar from 'src/components/UserAvatar.vue'
-
-const storeAuth = useStoreAuth()
-</script>

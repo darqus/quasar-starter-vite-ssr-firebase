@@ -4,7 +4,8 @@
  * @param itemsToRemove - The items to remove from the array.
  * @returns A new array with the specified items removed.
  */
-export const removeFromArray = <T>(array: T[], ...itemsToRemove: T[]): T[] => array.filter((item) => !itemsToRemove.includes(item))
+export const removeFromArray = <T>(array: T[], ...itemsToRemove: T[]): T[] =>
+  array.filter((item) => !itemsToRemove.includes(item))
 
 /**
  * Creates a new array with unique elements.
@@ -12,7 +13,8 @@ export const removeFromArray = <T>(array: T[], ...itemsToRemove: T[]): T[] => ar
  * @param array The input array.
  * @returns A new array with unique elements.
  */
-export const createUniqueArray = <T>(array: T[]): T[] => Array.from(new Set(array))
+export const createUniqueArray = <T>(array: T[]): T[] =>
+  Array.from(new Set(array))
 
 /**
  * Inserts an item into an array.
@@ -21,7 +23,11 @@ export const createUniqueArray = <T>(array: T[]): T[] => Array.from(new Set(arra
  * @param inBefore Whether to insert the item before the existing elements.
  * @returns The modified array.
  */
-export const insertToArray = <T>(array: T[], item: T, inBefore?: boolean): T[] => inBefore ? [ item, ...array, ] : [ ...array, item, ]
+export const insertToArray = <T>(
+  array: T[],
+  item: T,
+  inBefore?: boolean
+): T[] => (inBefore ? [item, ...array] : [...array, item])
 
 /**
  * Finds the index of an item in an array.

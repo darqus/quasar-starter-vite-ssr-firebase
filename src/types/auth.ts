@@ -1,6 +1,6 @@
-import type { User, } from 'firebase/auth'
+import type { Loading, Valid } from './models'
 
-import type { Loading, Valid, } from './models'
+import type { User } from 'firebase/auth'
 
 export type CurrentUser = User | null
 
@@ -9,12 +9,13 @@ export type TAuthState = {
   loggedIn: boolean
   isCheckedPolicy: boolean
   passwordVisibility: boolean
-} & Loading & Valid
+} & Loading &
+  Valid
 
 type TRouteLink = {
-  title: string,
-  icon: string,
-  path: string,
+  title: string
+  icon: string
+  path: string
   visible: boolean
 }
 

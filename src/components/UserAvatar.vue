@@ -1,3 +1,13 @@
+<script setup lang="ts">
+type UserAvatar = {
+  userEmail?: string | null
+}
+
+withDefaults(defineProps<UserAvatar>(), {
+  userEmail: '',
+})
+</script>
+
 <template>
   <div class="q-pa-md q-gutter-md row justify-center">
     <q-avatar
@@ -14,13 +24,3 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-type UserAvatar = {
-  userEmail?: string | null
-}
-
-withDefaults(defineProps<UserAvatar>(), {
-  userEmail: '',
-})
-</script>

@@ -1,3 +1,17 @@
+<script setup lang="ts">
+export type RouterMenuLinkProps = {
+  title: string
+  path?: string
+  icon?: string
+  visible?: boolean
+}
+
+withDefaults(defineProps<RouterMenuLinkProps>(), {
+  path: '/',
+  icon: '',
+})
+</script>
+
 <template>
   <q-item
     v-if="visible"
@@ -17,17 +31,3 @@
     </q-item-section>
   </q-item>
 </template>
-
-<script setup lang="ts">
-export type RouterMenuLinkProps = {
-  title: string
-  path?: string
-  icon?: string
-  visible?: boolean
-}
-
-withDefaults(defineProps<RouterMenuLinkProps>(), {
-  path: '/',
-  icon: '',
-})
-</script>

@@ -15,10 +15,18 @@ $breakpoint-lg: 1919px !default;
 
 $sizes: (
   "xs": 0,
-  "sm": ($breakpoint-xs + 1),
-  "md": ($breakpoint-sm + 1),
-  "lg": ($breakpoint-md + 1),
-  "xl": ($breakpoint-lg + 1)
+  "sm": (
+    $breakpoint-xs + 1,
+  ),
+  "md": (
+    $breakpoint-sm + 1,
+  ),
+  "lg": (
+    $breakpoint-md + 1,
+  ),
+  "xl": (
+    $breakpoint-lg + 1,
+  ),
 ) !default;
 $breakpoint-xs-max: (map-get($sizes, "sm") - 0.02) !default;
 $breakpoint-sm-min: map-get($sizes, "sm") !default;

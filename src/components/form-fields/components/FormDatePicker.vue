@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+import { DATE_MASK, INPUT_MASK } from 'src/types/form'
+import type { DatePickerFormField } from 'src/types/form'
+import { INPUT_REQUIRED, OFFSET_POPUP_PROXY } from 'src/utils/constants'
+
+defineEmits(['update:model'])
+
+const props = defineProps<{
+  field: DatePickerFormField
+}>()
+
+const localModel = ref(props.field.model)
+</script>
+
 <template>
   <q-input
     v-model.trim="localModel"
@@ -34,20 +50,3 @@
     </q-popup-proxy>
   </q-input>
 </template>
-
-<script setup lang="ts">
-import { ref, } from 'vue'
-
-import { DATE_MASK, INPUT_MASK, } from 'src/types/form'
-import type { DatePickerFormField, } from 'src/types/form'
-
-import { INPUT_REQUIRED, OFFSET_POPUP_PROXY, } from 'src/utils/constants'
-
-defineEmits([ 'update:model', ])
-
-const props = defineProps<{
-  field: DatePickerFormField
-}>()
-
-const localModel = ref(props.field.model)
-</script>

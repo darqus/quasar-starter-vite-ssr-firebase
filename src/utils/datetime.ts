@@ -1,6 +1,6 @@
 // Intl.DateTimeFormat().resolvedOptions()
 
-import { INCLINE, incline, } from './format'
+import { INCLINE, incline } from './format'
 
 /* {
   locale: "ru-RU",
@@ -16,11 +16,11 @@ enum E_OPTIONS_LIST {
   numeric = 'numeric',
   digit = '2-digit',
   short = 'short',
-  long = 'long'
+  long = 'long',
 }
 
 enum E_TIME_ZONE_LIST {
-  RU = 'Europe/Moscow'
+  RU = 'Europe/Moscow',
   // RU = 'Australia/Melbourne'
 }
 
@@ -140,7 +140,10 @@ export const DATE_TIME_OPTIONS_PRESET: Record<string, T_OPTIONS> = {
  * @param {Intl.DateTimeFormatOptions} [options=DATE_TIME_OPTIONS_PRESET.formattedDateAndTimeMonthShort] - The formatting options for the date and time.
  * @returns {string} The formatted date and time string.
  */
-export const formatISOToInternationalDateTime = (isoDate: string, options: Intl.DateTimeFormatOptions = DATE_TIME_OPTIONS_PRESET.formattedDateAndTimeMonthShort): string => {
+export const formatISOToInternationalDateTime = (
+  isoDate: string,
+  options: Intl.DateTimeFormatOptions = DATE_TIME_OPTIONS_PRESET.formattedDateAndTimeMonthShort
+): string => {
   // Create a new Date object from the ISO string
   const date = new Date(isoDate)
 
@@ -167,8 +170,12 @@ export const subtractDays = (date: Date, days: number): Date => {
  * @param {string} isoDateString - An optional ISO date string to calculate today and yesterday from.
  * @return {TTodayYesterdayDate} An object containing today and yesterday's date and time in different formats.
  */
-export const getTodayYesterdayDate = (isoDateString?: string): TTodayYesterdayDate => {
-  const currentTime = isoDateString ? new Date(isoDateString).getTime() : new Date().getTime()
+export const getTodayYesterdayDate = (
+  isoDateString?: string
+): TTodayYesterdayDate => {
+  const currentTime = isoDateString
+    ? new Date(isoDateString).getTime()
+    : new Date().getTime()
 
   const timeZoneOffset = new Date().getTimezoneOffset()
 
@@ -180,8 +187,14 @@ export const getTodayYesterdayDate = (isoDateString?: string): TTodayYesterdayDa
   const todayIso = updatedTIme.toISOString()
   const yesterdayIso = subtractDays(updatedTIme, 1).toISOString()
 
-  const todayShort = new Intl.DateTimeFormat(ZONE, DATE_TIME_OPTIONS_PRESET.short).format(new Date())
-  const yesterdayShort = new Intl.DateTimeFormat(ZONE, DATE_TIME_OPTIONS_PRESET.short).format(subtractDays(new Date(), 1))
+  const todayShort = new Intl.DateTimeFormat(
+    ZONE,
+    DATE_TIME_OPTIONS_PRESET.short
+  ).format(new Date())
+  const yesterdayShort = new Intl.DateTimeFormat(
+    ZONE,
+    DATE_TIME_OPTIONS_PRESET.short
+  ).format(subtractDays(new Date(), 1))
 
   const result = {
     today,
@@ -200,12 +213,14 @@ export const getTodayYesterdayDate = (isoDateString?: string): TTodayYesterdayDa
  * @param {string} customDate - The date in custom format (DD.MM.YYYY)
  * @returns {string | null} - The date in ISO format (YYYY-MM-DD) or null if the input is null
  */
-export const convertCustomFormatToIso = (customDate: string | null): string | null => {
+export const convertCustomFormatToIso = (
+  customDate: string | null
+): string | null => {
   if (customDate === null) {
     return null
   }
 
-  const [ day, month, year, ] = customDate.split('.')
+  const [day, month, year] = customDate.split('.')
 
   return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
 }
@@ -218,7 +233,7 @@ export const convertCustomFormatToIso = (customDate: string | null): string | nu
  */
 export const convertDateToCustomFormat = (date: string): string => {
   // Split the date string into day, month, and year
-  const [ year, month, day, ] = date.split('-')
+  const [year, month, day] = date.split('-')
 
   // Return the date string in custom format
   return `${day}.${month}.${year}`
@@ -232,9 +247,11 @@ export const convertDateToCustomFormat = (date: string): string => {
  * @return {string} The ISO string representation of the combined date and time.
  */
 export const convertDateTimeToISO = (date: string, time: string): string => {
-  const [ day, month, year, ] = date.split('.')
-  const [ hours, minutes, ] = time.split(':')
-  const isoDate = new Date(`${year}-${month}-${day}T${hours}:${minutes}:00.000Z`).toISOString()
+  const [day, month, year] = date.split('.')
+  const [hours, minutes] = time.split(':')
+  const isoDate = new Date(
+    `${year}-${month}-${day}T${hours}:${minutes}:00.000Z`
+  ).toISOString()
 
   return isoDate
 }
@@ -285,10 +302,15 @@ export const getTodayDateRange = (): TDateRange => {
   }
 }
 
-export const getCurrentIsoDateTime = (date?: Date | null, onlyDate = false): string => {
+export const getCurrentIsoDateTime = (
+  date?: Date | null,
+  onlyDate = false
+): string => {
   const currentDate = date ? date.getTime() : new Date().getTime()
 
-  const timeZoneOffset = date ? date.getTimezoneOffset() : new Date().getTimezoneOffset()
+  const timeZoneOffset = date
+    ? date.getTimezoneOffset()
+    : new Date().getTimezoneOffset()
 
   const updatedTIme = new Date(currentDate - timeZoneOffset * 60 * 1000)
 
@@ -297,7 +319,10 @@ export const getCurrentIsoDateTime = (date?: Date | null, onlyDate = false): str
   return onlyDate ? today.toISOString().split('T')[0] : today.toISOString()
 }
 
-export const getIsoDateFromIsoDateAndMinutes = (isoDate: string, minutes: number): string => {
+export const getIsoDateFromIsoDateAndMinutes = (
+  isoDate: string,
+  minutes: number
+): string => {
   const date = new Date(isoDate)
 
   date.setMinutes(date.getMinutes() + minutes)
@@ -307,11 +332,11 @@ export const getIsoDateFromIsoDateAndMinutes = (isoDate: string, minutes: number
 
 export const getCurrentMonthPrepositionalCase = (): string => {
   const date = new Date()
-  const month = new Intl.DateTimeFormat('ru', { month: 'long', }).format(date)
+  const month = new Intl.DateTimeFormat('ru', { month: 'long' }).format(date)
 
-  return [ 'март', 'август', ].includes(month)
-    ? month + 'е'
-    : month.slice(0, -1) + 'е'
+  return ['март', 'август'].includes(month)
+    ? `${month}е`
+    : `${month.slice(0, -1)}е`
 }
 
 /**

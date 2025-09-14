@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import EssentialForm from 'src/components/form/EssentialForm.vue'
+import { useStoreAuth } from 'src/stores/store-auth'
+
+const storeAuth = useStoreAuth()
+</script>
+
 <template>
   <q-page class="row items-center justify-evenly">
     <EssentialForm
@@ -18,11 +25,3 @@
     </EssentialForm>
   </q-page>
 </template>
-
-<script setup lang="ts">
-import { useStoreAuth, } from 'src/stores/store-auth'
-
-import EssentialForm from 'src/components/form/EssentialForm.vue'
-
-const storeAuth = useStoreAuth()
-</script>

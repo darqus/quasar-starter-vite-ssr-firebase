@@ -1,11 +1,10 @@
-import { defineStore, } from 'pinia'
+import { defineStore } from 'pinia'
 
-import { LEVELS_MAP, } from 'src/types/emloyee-card'
-import type { TEmployeeCardsState, } from 'src/types/emloyee-card'
-import type { TNewEmployee, } from 'src/types/new-employee'
-import { STORE_TYPES, } from 'src/types/store'
-
-import { getCollection, } from 'src/boot/firebase'
+import { getCollection } from 'src/boot/firebase'
+import { LEVELS_MAP } from 'src/types/emloyee-card'
+import type { TEmployeeCardsState } from 'src/types/emloyee-card'
+import type { TNewEmployee } from 'src/types/new-employee'
+import { STORE_TYPES } from 'src/types/store'
 
 export const useStoreEmployeeCards = defineStore(STORE_TYPES.EMPLOYEE_CARDS, {
   state: (): TEmployeeCardsState => ({
@@ -27,23 +26,33 @@ export const useStoreEmployeeCards = defineStore(STORE_TYPES.EMPLOYEE_CARDS, {
       isFilterVisible
         ? selectedFromLevel || selectedFromPosition || selectedFromRating
           ? employeeList.filter(
-            ({ level, position, rate, }: { level: string | null, position: string | null, rate: number | null, }): boolean =>
-              level === selectedFromLevel || position === selectedFromPosition || rate === selectedFromRating
-          )
+              ({
+                level,
+                position,
+                rate,
+              }: {
+                level: string | null
+                position: string | null
+                rate: number | null
+              }): boolean =>
+                level === selectedFromLevel ||
+                position === selectedFromPosition ||
+                rate === selectedFromRating
+            )
           : employeeList
         : employeeList,
-    optionsEmployeeLevel: ({ employeeList, }) => [
+    optionsEmployeeLevel: ({ employeeList }) => [
       ...new Set(employeeList.map((employee) => employee?.level)),
     ],
-    optionsEmployeePosition: ({ employeeList, }) => [
+    optionsEmployeePosition: ({ employeeList }) => [
       ...new Set(employeeList.map((employee) => employee?.position)),
     ],
-    optionsEmployeeRating: ({ employeeList, }) => [
+    optionsEmployeeRating: ({ employeeList }) => [
       ...new Set(employeeList.map((employee) => employee?.rate)),
     ],
   },
   actions: {
-    async getEmployeeList () {
+    async getEmployeeList() {
       const employees = await getCollection('employees')
 
       const NEW_EMPLOYEE_LIST: TNewEmployee[] = []
@@ -65,6 +74,6 @@ export const useStoreEmployeeCards = defineStore(STORE_TYPES.EMPLOYEE_CARDS, {
       }
     },
     getColorFromLevel: (level: string) =>
-      LEVELS_MAP.find(({ name, }) => name === level)?.color,
+      LEVELS_MAP.find(({ name }) => name === level)?.color,
   },
 })

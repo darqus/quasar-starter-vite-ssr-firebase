@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+import SidebarDrawer from 'src/components/SidebarDrawer.vue'
+import { TITLE } from 'src/utils/meta'
+
+const { VITE_ROUTER_BASE: BASE } = import.meta.env
+const leftDrawerOpen = ref(false)
+const title = ref(TITLE)
+const APP_NAME = import.meta.env.VITE_NAME_FULL
+
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
+</script>
+
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
@@ -38,23 +54,6 @@
   </q-layout>
 </template>
 
-<script setup lang="ts">
-import { ref, } from 'vue'
-
-import { TITLE, } from 'src/utils/meta'
-
-import SidebarDrawer from 'src/components/SidebarDrawer.vue'
-
-const { VITE_ROUTER_BASE: BASE, } = import.meta.env
-const leftDrawerOpen = ref(false)
-const title = ref(TITLE)
-const APP_NAME = import.meta.env.VITE_NAME_FULL
-
-const toggleLeftDrawer = () => {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
-</script>
-
 <style lang="scss">
-@import "./scss/main-layout";
+@import './scss/main-layout';
 </style>

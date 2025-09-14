@@ -1,8 +1,7 @@
-import { FIELD_TYPE, INPUT_TYPE, type Fields, } from 'src/types/form'
-
-import { DEBOUNCE, } from 'src/utils/constants'
-import { generateId, } from 'src/utils/generator'
-import { email, requiredInput, requiredSelect, word, } from 'src/utils/rules'
+import { FIELD_TYPE, type Fields, INPUT_TYPE } from 'src/types/form'
+import { DEBOUNCE } from 'src/utils/constants'
+import { generateId } from 'src/utils/generator'
+import { email, requiredInput, requiredSelect, word } from 'src/utils/rules'
 
 export const NEW_EMPLOYEE_FIELDS = (): Fields => [
   {
@@ -15,7 +14,7 @@ export const NEW_EMPLOYEE_FIELDS = (): Fields => [
     model: '',
     required: true,
     iconPrepend: 'person',
-    rule: [ ...requiredInput, ...word, ],
+    rule: [...requiredInput, ...word],
   },
   {
     id: generateId(),
@@ -27,7 +26,7 @@ export const NEW_EMPLOYEE_FIELDS = (): Fields => [
     model: '',
     required: true,
     iconPrepend: 'email',
-    rule: [ ...requiredInput, ...email, ],
+    rule: [...requiredInput, ...email],
   },
   {
     id: generateId(),
@@ -39,7 +38,7 @@ export const NEW_EMPLOYEE_FIELDS = (): Fields => [
     model: '',
     required: true,
     iconPrepend: 'group',
-    rule: [ ...requiredInput, ...word, ],
+    rule: [...requiredInput, ...word],
   },
   {
     id: generateId(),
@@ -49,12 +48,8 @@ export const NEW_EMPLOYEE_FIELDS = (): Fields => [
     model: null,
     required: true,
     iconPrepend: 'attribution',
-    options: [
-      'Падаван',
-      'Джедай',
-      'Ситх',
-    ],
-    rule: [ ...requiredSelect, ],
+    options: ['Падаван', 'Джедай', 'Ситх'],
+    rule: [...requiredSelect],
   },
   {
     id: generateId(),
@@ -64,14 +59,8 @@ export const NEW_EMPLOYEE_FIELDS = (): Fields => [
     model: null,
     required: true,
     iconPrepend: 'star',
-    options: [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-    ],
-    rule: [ ...requiredSelect, ],
+    options: ['1', '2', '3', '4', '5'],
+    rule: [...requiredSelect],
   },
   {
     id: generateId(),

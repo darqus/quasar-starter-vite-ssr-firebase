@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { LEVELS_MAP } from 'src/types/emloyee-card'
+</script>
+
 <template>
   <div class="q-pa-md q-gutter-md">
     <q-badge
@@ -10,7 +14,3 @@
     </q-badge>
   </div>
 </template>
-
-<script setup lang="ts">
-import { LEVELS_MAP, } from 'src/types/emloyee-card'
-</script>
