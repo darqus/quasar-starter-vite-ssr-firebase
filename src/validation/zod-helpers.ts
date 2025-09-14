@@ -7,7 +7,7 @@ import { MESSAGES, REGEXP } from './rules'
 // Basic required string with trimming and length limit
 export const zRequiredInputString = () =>
   z
-    .string({ required_error: MESSAGES.requiredInput })
+    .string()
     .min(1, MESSAGES.requiredInput)
     .refine((v) => REGEXP.string.test(v), MESSAGES.notTrailingSpaces)
     .refine((v) => REGEXP.overflowLimit.test(v), MESSAGES.overflowLimit)
@@ -15,21 +15,24 @@ export const zRequiredInputString = () =>
 // Word with min 2 letters (Cyrillic/Latin), consistent with legacy rules
 export const zWordMin2 = () =>
   z
-    .string({ required_error: MESSAGES.requiredInput })
+    .string()
+    .min(1, MESSAGES.requiredInput)
     .regex(REGEXP.fewLetters, MESSAGES.fewLetters)
     .regex(REGEXP.word, MESSAGES.onlyWord)
 
 // Email consistent with legacy rules
 export const zEmail = () =>
   z
-    .string({ required_error: MESSAGES.requiredInput })
+    .string()
     .trim()
+    .min(1, MESSAGES.requiredInput)
     .regex(REGEXP.email, MESSAGES.email)
 
 // Strong password according to legacy regex (not applied by default where tests expect len>=6)
 export const zPasswordStrict = () =>
   z
-    .string({ required_error: MESSAGES.requiredInput })
+    .string()
+    .min(1, MESSAGES.requiredInput)
     .regex(REGEXP.password, MESSAGES.password)
 
 // Phone according to legacy mask
