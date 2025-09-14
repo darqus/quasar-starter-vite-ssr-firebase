@@ -32,7 +32,7 @@ enum E_ZONE_LIST {
 const TIME_ZONE: E_TIME_ZONE_LIST = E_TIME_ZONE_LIST.RU
 const ZONE: E_ZONE_LIST = E_ZONE_LIST.RU
 
-type T_OPTIONS = Intl.DateTimeFormatOptions
+type TOptions = Intl.DateTimeFormatOptions
 
 type TTodayYesterdayDate = {
   today: Date
@@ -43,7 +43,7 @@ type TTodayYesterdayDate = {
   yesterdayIso: string
 }
 
-export const DATE_TIME_OPTIONS_PRESET: Record<string, T_OPTIONS> = {
+export const DATE_TIME_OPTIONS_PRESET: Record<string, TOptions> = {
   formattedDateAndTimeMonthShort: {
     year: E_OPTIONS_LIST.numeric,
     month: E_OPTIONS_LIST.short,
@@ -142,7 +142,7 @@ export const DATE_TIME_OPTIONS_PRESET: Record<string, T_OPTIONS> = {
  */
 export const formatISOToInternationalDateTime = (
   isoDate: string,
-  options: Intl.DateTimeFormatOptions = DATE_TIME_OPTIONS_PRESET.formattedDateAndTimeMonthShort
+  options: Intl.DateTimeFormatOptions = DATE_TIME_OPTIONS_PRESET.formattedDateAndTimeMonthShort ?? {}
 ): string => {
   // Create a new Date object from the ISO string
   const date = new Date(isoDate)
@@ -221,6 +221,10 @@ export const convertCustomFormatToIso = (
   }
 
   const [day, month, year] = customDate.split('.')
+
+  if (!day || !month || !year) {
+    return null
+  }
 
   return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
 }
@@ -316,7 +320,7 @@ export const getCurrentIsoDateTime = (
 
   const today = updatedTIme
 
-  return onlyDate ? today.toISOString().split('T')[0] : today.toISOString()
+  return onlyDate ? (today.toISOString().split('T')[0] ?? '') : today.toISOString()
 }
 
 export const getIsoDateFromIsoDateAndMinutes = (
@@ -333,6 +337,10 @@ export const getIsoDateFromIsoDateAndMinutes = (
 export const getCurrentMonthPrepositionalCase = (): string => {
   const date = new Date()
   const month = new Intl.DateTimeFormat('ru', { month: 'long' }).format(date)
+
+  if (!month) {
+    return ''
+  }
 
   return ['март', 'август'].includes(month)
     ? `${month}е`
