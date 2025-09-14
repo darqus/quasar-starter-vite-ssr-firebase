@@ -1,24 +1,18 @@
-@import "quasar/color-scheme";
-@import "quasar/colors";
-@import "quasar/space";
-@import "quasar/animate";
-@import "quasar/breakpoints";
-@import "quasar/flex";
-@import "quasar/body";
-@import "quasar/typography";
-@import "quasar/ios";
-@import "quasar/z-index";
-@import "quasar/shadows";
-@import "quasar/generic";
-@import "quasar/buttons";
-@import "quasar/chat-message";
-@import "quasar/editor";
-@import "quasar/table";
-@import "quasar/toolbar";
-@import "quasar/layout";
-@import "quasar/menu";
-@import "quasar/rating";
-@import "quasar/tooltip";
-@import "quasar/input";
-@import "quasar/img";
-@import "quasar/option";
+// Quasar SCSS variables file
+// It's highly recommended to change the default colors to match your app's branding
+
+// Here are your custom colors
+$primary   : #1976D2;
+$secondary : #26A69A;
+$accent    : #9C27B0;
+
+$dark      : #1D1D1D;
+$dark-page : #121212;
+
+$positive  : #21BA45;
+$negative  : #C10015;
+$info      : #31CCEC;
+$warning   : #F2C037;
+
+// Tip: These are the ones you might want to change frequently if you
+// are using the color system extensively for theming purposes.
