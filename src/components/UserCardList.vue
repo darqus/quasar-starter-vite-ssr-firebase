@@ -3,7 +3,7 @@ import { useStoreEmployeeCards } from 'src/stores/store-employee-cards'
 
 const storeEmployeeCards = useStoreEmployeeCards()
 
-storeEmployeeCards.getEmployeeList()
+void storeEmployeeCards.getEmployeeList()
 </script>
 
 <template>
