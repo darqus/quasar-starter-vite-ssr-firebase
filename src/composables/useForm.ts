@@ -106,6 +106,25 @@ export function useForm<F extends readonly AnyFormField[]>(
     }
   }
 
+  // Live validation on change (schema-based), if enabled
+  if (options.validateOnChange) {
+    watch(
+      () => fields.value.map((f) => f.model),
+      () => {
+        if (!options.schema) return
+        const res = parseAndCollectErrors(options.schema, getFormData())
+        if (res.ok) {
+          errors.value = {}
+          isValid.value = true
+        } else {
+          errors.value = res.errors
+          isValid.value = false
+        }
+      },
+      { deep: true }
+    )
+  }
+
   // Submit form
   const submit = async (): Promise<void> => {
     if (isSubmitting.value) return

@@ -18,6 +18,7 @@ import { newEmployeeSchema } from 'src/validation/schemas'
 const { fields, formRef, reset, submit, isValid, isSubmitting } = useForm({
   fields: getNewEmployeeFields,
   schema: newEmployeeSchema,
+  validateOnChange: true,
   onSubmit: async () => {
     Loading.show()
     const name = getFieldString(fields, EMPLOYEE_FIELD.FIO)

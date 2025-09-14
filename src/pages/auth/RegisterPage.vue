@@ -25,6 +25,7 @@ const router = useRouter()
 const { fields, formRef, reset, submit, isValid } = useForm({
   fields: getCurrentAuthFields(AUTH_TYPE.REGISTER),
   schema: registerSchema,
+  validateOnChange: true,
   onSubmit: async () => {
     Loading.show()
     const email = getFieldString(fields, AUTH_FIELD.LOGIN)
