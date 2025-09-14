@@ -105,4 +105,79 @@ describe('utils/form', () => {
     const map = toFormDataMap(fieldsRef)
     expect(map.fio).toBe('Петров Петр')
   })
+
+  it('handles empty fields array safely', () => {
+    const fields: Fields = []
+    expect(getFieldModel(fields, 'any')).toBeNull()
+    expect(getFieldString(fields, 'any')).toBe('')
+    expect(toFormDataMap(fields)).toEqual({})
+  })
+
+  it('ignores fields without a valid name', () => {
+    const invalidField = {
+      id: 'x',
+      fieldType: FIELD_TYPE.INPUT as const,
+      label: 'No Name',
+      // simulate invalid name at runtime
+      name: undefined as unknown as string,
+      inputType: INPUT_TYPE.TEXT as const,
+      model: 'val',
+      rule: undefined,
+    }
+    const fields: Fields = [invalidField as unknown as Fields[number]]
+
+    // lookups by any name should miss
+    expect(getFieldModel(fields, 'missing')).toBeNull()
+    expect(getFieldString(fields, 'missing', 'fallback')).toBe('fallback')
+    // map should skip invalid name keys
+    expect(toFormDataMap(fields)).toEqual({})
+  })
+
+  it('prefers the first field when duplicate names exist', () => {
+    const fields: Fields = [
+      {
+        id: '1',
+        fieldType: FIELD_TYPE.INPUT,
+        label: 'A',
+        name: 'dup',
+        inputType: INPUT_TYPE.TEXT,
+        model: 'first',
+        rule: undefined,
+      },
+      {
+        id: '2',
+        fieldType: FIELD_TYPE.INPUT,
+        label: 'B',
+        name: 'dup',
+        inputType: INPUT_TYPE.TEXT,
+        model: 'second',
+        rule: undefined,
+      },
+    ]
+
+    expect(getFieldString(fields, 'dup')).toBe('first')
+    // toFormDataMap will accumulate last occurrence due to reduce overwrite
+    expect(toFormDataMap(fields)).toEqual({ dup: 'second' })
+  })
+
+  it('supports select with object options and null model', () => {
+    const fields: Fields = [
+      {
+        id: 's1',
+        fieldType: FIELD_TYPE.SELECT,
+        label: 'Role',
+        name: 'role',
+        model: null,
+        options: [
+          { label: 'Admin', value: 'admin' },
+          { label: 'User', value: 'user' },
+        ],
+        rule: undefined,
+      },
+    ]
+
+    expect(getFieldModel(fields, 'role')).toBeNull()
+    expect(getFieldString(fields, 'role')).toBe('')
+    expect(toFormDataMap(fields)).toEqual({ role: null })
+  })
 })

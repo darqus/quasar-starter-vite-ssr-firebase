@@ -12,6 +12,7 @@ import FormFields from 'src/components/form-fields/FormFields.vue'
 import { getCurrentAuthFields } from 'src/stores/authForms'
 import { useStoreAuth } from 'src/stores/store-auth'
 import { AUTH_TYPE, BUTTON_TYPE } from 'src/types/form'
+import { AUTH_FIELD } from 'src/types/form-names'
 import { getFieldString } from 'src/utils/form'
 
 const storeAuth = useStoreAuth()
@@ -50,7 +51,7 @@ const onForgot = async () => {
   }
 
   Loading.show()
-  const email = getFieldString(currentAuthFormRef, 'login')
+  const email = getFieldString(currentAuthFormRef, AUTH_FIELD.LOGIN)
   sendPasswordResetEmail(auth, email)
     .then(() => {
       storeAuth.onForgotSuccess(router)

@@ -12,6 +12,7 @@ import FormFields from 'src/components/form-fields/FormFields.vue'
 import { getCurrentAuthFields } from 'src/stores/authForms'
 import { useStoreAuth } from 'src/stores/store-auth'
 import { AUTH_TYPE, BUTTON_TYPE } from 'src/types/form'
+import { AUTH_FIELD } from 'src/types/form-names'
 import { ROUTE_TYPE } from 'src/types/route'
 import { getFieldString } from 'src/utils/form'
 
@@ -51,8 +52,8 @@ const onRegister = async () => {
   }
 
   Loading.show()
-  const email = getFieldString(currentAuthFormRef, 'login')
-  const password = getFieldString(currentAuthFormRef, 'password')
+  const email = getFieldString(currentAuthFormRef, AUTH_FIELD.LOGIN)
+  const password = getFieldString(currentAuthFormRef, AUTH_FIELD.PASSWORD)
   createUserWithEmailAndPassword(auth, email, password)
     .then(({ user }) => {
       const { uid, email: userEmail } = user

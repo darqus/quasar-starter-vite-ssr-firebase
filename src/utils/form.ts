@@ -28,7 +28,9 @@ export function getFieldString(
 export function toFormDataMap(fields: Ref<Fields> | Fields): Record<string, unknown> {
   const list = unwrapFields(fields)
   return list.reduce((acc, f) => {
-    acc[f.name] = f.model
+    const name = typeof f.name === 'string' ? f.name.trim() : ''
+    if (!name) return acc
+    acc[name] = f.model
     return acc
   }, {} as Record<string, unknown>)
 }

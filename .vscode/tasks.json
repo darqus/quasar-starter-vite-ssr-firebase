@@ -28,6 +28,48 @@
 				"$vitest"
 			],
 			"group": "build"
+		},
+		{
+			"label": "Run unit tests (vitest)",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$vitest"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Run unit tests (vitest)",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$vitest"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Run unit tests (vitest)",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$vitest"
+			],
+			"group": "build"
 		}
 	]
 }

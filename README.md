@@ -5,6 +5,7 @@ quasar-starter-vite-ssr-firebase
 ## Documentation
 
 - Forms: named access pattern — see `docs/employee-form-example.md`
+- Auth forms: typed submit examples — see `docs/auth-form-examples.md`
 - Stores migration to Composition API — see `docs/StoresMigration.md`
 
 ## Install the dependencies
