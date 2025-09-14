@@ -8,6 +8,7 @@ import EssentialForm from 'src/components/form/EssentialForm.vue'
 import FormFields from 'src/components/form-fields/FormFields.vue'
 import { getNewEmployeeFields } from 'src/stores/employeeForms'
 import { BUTTON_TYPE } from 'src/types/form'
+import { getFieldString } from 'src/utils/form'
 import { createNotify } from 'src/utils/notify'
 
 const loading = ref(false)
@@ -51,20 +52,23 @@ const add = async () => {
 
   toggleLoading()
   Loading.show()
+  const name = getFieldString(employeeFormRef, 'fio')
+  const email = getFieldString(employeeFormRef, 'login')
+  const position = getFieldString(employeeFormRef, 'position')
+  const level = getFieldString(employeeFormRef, 'level')
+  const rate = getFieldString(employeeFormRef, 'rate')
+  const description = getFieldString(employeeFormRef, 'description')
+
   addDoc('employees', {
-    name: employeeFormRef.value[0]?.model,
-    email: employeeFormRef.value[1]?.model,
-    position: employeeFormRef.value[2]?.model,
-    level: employeeFormRef.value[3]?.model,
-    rate: employeeFormRef.value[4]?.model,
-    description: employeeFormRef.value[5]?.model,
+    name,
+    email,
+    position,
+    level,
+    rate,
+    description,
   })
     .then(() => {
-      createNotify(
-        `Сотрудник "${employeeFormRef.value[0]?.model}" добавлен`,
-        'green-4',
-        'how_to_reg'
-      )
+      createNotify(`Сотрудник "${name}" добавлен`, 'green-4', 'how_to_reg')
       void reset()
     })
     .catch((error) => {

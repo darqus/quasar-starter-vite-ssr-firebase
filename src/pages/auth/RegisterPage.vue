@@ -13,6 +13,7 @@ import { getCurrentAuthFields } from 'src/stores/authForms'
 import { useStoreAuth } from 'src/stores/store-auth'
 import { AUTH_TYPE, BUTTON_TYPE } from 'src/types/form'
 import { ROUTE_TYPE } from 'src/types/route'
+import { getFieldString } from 'src/utils/form'
 
 const storeAuth = useStoreAuth()
 const router = useRouter()
@@ -50,16 +51,14 @@ const onRegister = async () => {
   }
 
   Loading.show()
-  createUserWithEmailAndPassword(
-    auth,
-    String(currentAuthFormRef.value[0]?.model ?? ''),
-    String(currentAuthFormRef.value[1]?.model ?? '')
-  )
+  const email = getFieldString(currentAuthFormRef, 'login')
+  const password = getFieldString(currentAuthFormRef, 'password')
+  createUserWithEmailAndPassword(auth, email, password)
     .then(({ user }) => {
-      const { uid, email } = user
+      const { uid, email: userEmail } = user
 
-      if (currentAuthFormRef.value[0]?.model === email && uid) {
-        storeAuth.onRegisterSuccess(uid, email ?? '', router)
+      if (userEmail && email === userEmail && uid) {
+        storeAuth.onRegisterSuccess(uid, userEmail ?? '', router)
         void reset()
       }
     })
