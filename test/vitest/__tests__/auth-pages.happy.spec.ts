@@ -35,17 +35,35 @@ vi.mock('src/stores/store-auth', () => ({
     loading: false,
     valid: true,
     disabledSubmitButton: false,
-    onLoginSuccess: onLoginSuccessSpy,
-    onRegisterSuccess: onRegisterSuccessSpy,
+    // simulate real store routing side-effect and call spy for assertion
+    onLoginSuccess: (router: { push: (to: { path: string }) => void }) => {
+      onLoginSuccessSpy(router)
+      router.push({ path: '/account' })
+    },
+    onRegisterSuccess: (
+      uid: string,
+      email: string,
+      router: { push: (to: { path: string }) => void }
+    ) => {
+      onRegisterSuccessSpy(uid, email, router)
+      router.push({ path: '/account' })
+    },
     createErrorMessage: createErrorMessageSpy,
   }),
 }))
 
-// Simulate Firebase auth functions used in pages
+// Simulate Firebase auth functions used in pages (hoisted to allow per-test overrides)
+const authMocks = vi.hoisted(() => ({
+  getAuth: vi.fn(() => ({})),
+  signInWithEmailAndPassword: vi.fn(() => Promise.resolve({})),
+  createUserWithEmailAndPassword: vi.fn(() =>
+    Promise.resolve({ user: { uid: 'uid', email: 'user@example.com' } })
+  ),
+}))
 vi.mock('firebase/auth', () => ({
-  getAuth: () => ({}),
-  signInWithEmailAndPassword: () => Promise.resolve({}),
-  createUserWithEmailAndPassword: () => Promise.resolve({ user: { uid: 'uid', email: 'user@example.com' } }),
+  getAuth: authMocks.getAuth,
+  signInWithEmailAndPassword: authMocks.signInWithEmailAndPassword,
+  createUserWithEmailAndPassword: authMocks.createUserWithEmailAndPassword,
 }))
 
 function setFieldModel(wrapper: ReturnType<typeof mount>, name: string, value: unknown) {
@@ -82,6 +100,7 @@ describe('Auth pages happy path', () => {
   it('LoginPage submits and calls success handler', async () => {
   const pinia = createPinia()
     const router = makeRouter()
+    const pushSpy = vi.spyOn(router, 'push')
 
     const wrapper = mount(LoginPage, {
       global: {
@@ -110,11 +129,19 @@ describe('Auth pages happy path', () => {
     // ensure no crash and page rendered
     expect(wrapper.html()).toContain('Вход')
     expect(onLoginSuccessSpy).toHaveBeenCalled()
+    expect(pushSpy).toHaveBeenCalledWith({ path: '/account' })
+
+    // reset called: models cleared
+    const formFields = wrapper.findComponent(FormFields)
+    const props = formFields.props() as { fields: Array<{ name: string; model: unknown }> }
+    expect(props.fields.find((f) => f.name === 'login')?.model).toBe('')
+    expect(props.fields.find((f) => f.name === 'password')?.model).toBe('')
   })
 
   it('RegisterPage submits and calls success handler', async () => {
   const pinia = createPinia()
     const router = makeRouter()
+    const pushSpy = vi.spyOn(router, 'push')
 
     const wrapper = mount(RegisterPage, {
       global: {
@@ -142,6 +169,13 @@ describe('Auth pages happy path', () => {
 
     expect(wrapper.html()).toContain('Регистрация')
     expect(onRegisterSuccessSpy).toHaveBeenCalled()
+    expect(pushSpy).toHaveBeenCalledWith({ path: '/account' })
+
+    // reset called: models cleared
+    const formFields = wrapper.findComponent(FormFields)
+    const props = formFields.props() as { fields: Array<{ name: string; model: unknown }> }
+    expect(props.fields.find((f) => f.name === 'login')?.model).toBe('')
+    expect(props.fields.find((f) => f.name === 'password')?.model).toBe('')
   })
 
   it('LoginPage: validation blocks submit when invalid', async () => {
@@ -174,5 +208,46 @@ describe('Auth pages happy path', () => {
 
     expect(onLoginSuccessSpy).not.toHaveBeenCalled()
     expect(createErrorMessageSpy).not.toHaveBeenCalled() // страница сама не кидает ошибок в этом месте
+  })
+
+  it('LoginPage: failure path shows error message', async () => {
+    const pinia = createPinia()
+    const router = makeRouter()
+
+    // make validate return true
+    const wrapper = mount(LoginPage, {
+      global: {
+        plugins: [pinia, router],
+        stubs: {
+          QPage: { template: '<div><slot /></div>' },
+          QForm: {
+            name: 'QForm',
+            template:
+              '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
+            methods: { resetValidation() {}, validate: () => true },
+            expose: ['resetValidation', 'validate'],
+          },
+        },
+      },
+    })
+
+    await router.isReady()
+
+    setFieldModel(wrapper, 'login', 'user@example.com')
+    setFieldModel(wrapper, 'password', 'badpass')
+
+    // cause auth failure
+    authMocks.signInWithEmailAndPassword.mockRejectedValueOnce(
+      new Error('auth/wrong-password')
+    )
+
+  // submit
+  emitFormSubmit(wrapper)
+  await flushPromises()
+  await flushPromises()
+
+    expect(authMocks.signInWithEmailAndPassword).toHaveBeenCalled()
+    expect(onLoginSuccessSpy).not.toHaveBeenCalled()
+    expect(createErrorMessageSpy).toHaveBeenCalled()
   })
 })
