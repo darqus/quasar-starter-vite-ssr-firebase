@@ -1,7 +1,7 @@
 import { config } from '@vue/test-utils'
 
 
-import { Quasar } from 'quasar'
+import { Loading, Notify, Quasar } from 'quasar'
 
 // Basic Vue Test Utils config; add plugins/mocks as needed
-config.global.plugins = [Quasar]
+config.global.plugins = [[Quasar, { plugins: { Notify, Loading } }]]

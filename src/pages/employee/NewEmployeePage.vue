@@ -7,6 +7,7 @@ import { addDoc } from 'src/boot/firebase'
 import EssentialForm from 'src/components/form/EssentialForm.vue'
 import FormFields from 'src/components/form-fields/FormFields.vue'
 import { getNewEmployeeFields } from 'src/stores/employeeForms'
+import { EMPLOYEE_FIELD } from 'src/types'
 import { BUTTON_TYPE } from 'src/types/form'
 import { getFieldString } from 'src/utils/form'
 import { createNotify } from 'src/utils/notify'
@@ -52,12 +53,12 @@ const add = async () => {
 
   toggleLoading()
   Loading.show()
-  const name = getFieldString(employeeFormRef, 'fio')
-  const email = getFieldString(employeeFormRef, 'login')
-  const position = getFieldString(employeeFormRef, 'position')
-  const level = getFieldString(employeeFormRef, 'level')
-  const rate = getFieldString(employeeFormRef, 'rate')
-  const description = getFieldString(employeeFormRef, 'description')
+  const name = getFieldString(employeeFormRef, EMPLOYEE_FIELD.FIO)
+  const email = getFieldString(employeeFormRef, EMPLOYEE_FIELD.LOGIN)
+  const position = getFieldString(employeeFormRef, EMPLOYEE_FIELD.POSITION)
+  const level = getFieldString(employeeFormRef, EMPLOYEE_FIELD.LEVEL)
+  const rate = getFieldString(employeeFormRef, EMPLOYEE_FIELD.RATE)
+  const description = getFieldString(employeeFormRef, EMPLOYEE_FIELD.DESCRIPTION)
 
   addDoc('employees', {
     name,

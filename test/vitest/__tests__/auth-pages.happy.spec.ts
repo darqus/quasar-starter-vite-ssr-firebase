@@ -1,6 +1,6 @@
 import { flushPromises, mount } from '@vue/test-utils'
 
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { createPinia } from 'pinia'
@@ -19,20 +19,25 @@ function makeRouter() {
       { path: `/${ROUTE_TYPE.LOGIN}`, component: LoginPage },
       { path: `/${ROUTE_TYPE.REGISTER}`, component: RegisterPage },
       { path: '/', component: { template: '<div>home</div>' } },
+      { path: `/${ROUTE_TYPE.FORGOT}`, component: { template: '<div>forgot</div>' } },
   { path: `/${ROUTE_TYPE.ACCOUNT}`, component: { template: '<div>account</div>' } },
     ],
   })
 }
 
 // Mock store-auth actions used in pages to avoid Firebase calls
+const onLoginSuccessSpy = vi.fn()
+const onRegisterSuccessSpy = vi.fn()
+const createErrorMessageSpy = vi.fn()
+
 vi.mock('src/stores/store-auth', () => ({
   useStoreAuth: () => ({
     loading: false,
     valid: true,
     disabledSubmitButton: false,
-    onLoginSuccess: vi.fn(),
-    onRegisterSuccess: vi.fn(),
-    createErrorMessage: vi.fn(),
+    onLoginSuccess: onLoginSuccessSpy,
+    onRegisterSuccess: onRegisterSuccessSpy,
+    createErrorMessage: createErrorMessageSpy,
   }),
 }))
 
@@ -52,10 +57,25 @@ function setFieldModel(wrapper: ReturnType<typeof mount>, name: string, value: u
   f.model = value
 }
 
+beforeEach(() => {
+  onLoginSuccessSpy.mockReset()
+  onRegisterSuccessSpy.mockReset()
+  createErrorMessageSpy.mockReset()
+})
+
 async function clickByText(wrapper: ReturnType<typeof mount>, text: string) {
   const btn = wrapper.findAll('button').find((b) => b.text().includes(text))
   if (!btn) throw new Error(`Button ${text} not found`)
   await btn.trigger('click')
+}
+
+function emitFormSubmit(wrapper: ReturnType<typeof mount>) {
+  const qform = wrapper.findComponent({ name: 'QForm' })
+  if (!qform.exists()) throw new Error('QForm component not found')
+  const vm = qform.vm as unknown as {
+    $emit: (e: string, evt: { preventDefault: () => void }) => void
+  }
+  vm.$emit('submit', { preventDefault: () => {} })
 }
 
 describe('Auth pages happy path', () => {
@@ -83,11 +103,13 @@ describe('Auth pages happy path', () => {
     setFieldModel(wrapper, 'login', 'user@example.com')
     setFieldModel(wrapper, 'password', '123456')
 
-    await clickByText(wrapper, 'Войти')
-    await flushPromises()
+  emitFormSubmit(wrapper)
+  await flushPromises()
+  await flushPromises()
 
     // ensure no crash and page rendered
     expect(wrapper.html()).toContain('Вход')
+    expect(onLoginSuccessSpy).toHaveBeenCalled()
   })
 
   it('RegisterPage submits and calls success handler', async () => {
@@ -114,9 +136,43 @@ describe('Auth pages happy path', () => {
     setFieldModel(wrapper, 'login', 'user@example.com')
     setFieldModel(wrapper, 'password', '123456')
 
-    await clickByText(wrapper, 'Зарегистрироваться')
-    await flushPromises()
+  emitFormSubmit(wrapper)
+  await flushPromises()
+  await flushPromises()
 
     expect(wrapper.html()).toContain('Регистрация')
+    expect(onRegisterSuccessSpy).toHaveBeenCalled()
+  })
+
+  it('LoginPage: validation blocks submit when invalid', async () => {
+    const pinia = createPinia()
+    const router = makeRouter()
+
+    const wrapper = mount(LoginPage, {
+      global: {
+        plugins: [pinia, router],
+        stubs: {
+          QPage: { template: '<div><slot /></div>' },
+          // Stub QForm with validate() returning false
+          QForm: {
+            name: 'QForm',
+            template: '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
+            methods: { resetValidation() {}, validate: () => false },
+            expose: ['resetValidation', 'validate'],
+          },
+        },
+      },
+    })
+
+    await router.isReady()
+
+    setFieldModel(wrapper, 'login', 'user@example.com')
+    setFieldModel(wrapper, 'password', '')
+
+    await clickByText(wrapper, 'Войти')
+    await flushPromises()
+
+    expect(onLoginSuccessSpy).not.toHaveBeenCalled()
+    expect(createErrorMessageSpy).not.toHaveBeenCalled() // страница сама не кидает ошибок в этом месте
   })
 })
