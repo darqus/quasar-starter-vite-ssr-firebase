@@ -34,11 +34,21 @@ const reset = async () => {
 }
 
 const validate = async () => {
-  await nextTick()
-  refForm.value?.validate().then((success: boolean) => (valid.value = success))
+  if (refForm.value) {
+    await nextTick()
+    const isValid = await refForm.value.validate()
+    valid.value = isValid
+    return isValid
+  }
+  return false
 }
 
-const add = () => {
+const add = async () => {
+  const isValid = await validate()
+  if (!isValid) {
+    return
+  }
+
   toggleLoading()
   Loading.show()
   addDoc('employees', {

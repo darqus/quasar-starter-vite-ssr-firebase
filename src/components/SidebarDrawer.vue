@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+
 import RouterMenuLink from 'src/components/RouterMenuLink.vue'
 import ThemeToggler from 'src/components/ThemeToggler.vue'
 import UserAvatar from 'src/components/UserAvatar.vue'
 import { useStoreAuth } from 'src/stores/store-auth'
 
 const storeAuth = useStoreAuth()
+const router = useRouter()
 </script>
 
 <template>
@@ -38,7 +41,7 @@ const storeAuth = useStoreAuth()
       label="Выйти"
       size="md"
       no-caps
-      @click="storeAuth.onLogout(true)"
+      @click="storeAuth.onLogout(router, true)"
     />
   </div>
 </template>

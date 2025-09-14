@@ -1,32 +1,40 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 
 import type { SelectFormField } from 'src/types/form'
 import { INPUT_REQUIRED } from 'src/utils/constants'
 
-defineEmits(['update:model'])
+const emit = defineEmits<{
+  'update:model': [value: string | number | null]
+}>()
 
 const props = defineProps<{
   field: SelectFormField
 }>()
 
-const localModel = ref(props.field.model)
+// Вычисляемое свойство для v-model
+const modelValue = computed({
+  get: () => props.field.model,
+  set: (value: string | number | null) => emit('update:model', value)
+})
 </script>
 
 <template>
   <q-select
-    v-model.trim="localModel"
+    v-model="modelValue"
     :bg-color="field.bgColor"
     :clearable="field.clearable"
     :disable="field.disable"
+    :name="field.name"
     :options="field.options"
     :required="field.required"
     :rounded="field.rounded"
-    :rules="field.rule"
+    :rules="field.required ? field.rule : []"
+    bottom-slots
     emit-value
     label-slot
+    lazy-rules
     map-options
-    @update:model-value="$emit('update:model', $event)"
   >
     <template #prepend>
       <q-icon :name="field.iconPrepend" />

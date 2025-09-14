@@ -92,7 +92,7 @@ export type TextareaFormField = {
 
 export type SelectFormField = {
   fieldType: FIELD_TYPE.SELECT
-  model: string | null
+  model: string | number | null
   rule: QSelectProps['rules']
   options: SelectOptions
 } & BaseFormField

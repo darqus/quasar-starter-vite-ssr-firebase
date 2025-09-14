@@ -1,32 +1,65 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 
 import { DATE_MASK, INPUT_MASK } from 'src/types/form'
 import type { DatePickerFormField } from 'src/types/form'
 import { INPUT_REQUIRED, OFFSET_POPUP_PROXY } from 'src/utils/constants'
 
-defineEmits(['update:model'])
+const emit = defineEmits<{
+  'update:model': [value: string]
+}>()
 
 const props = defineProps<{
   field: DatePickerFormField
 }>()
 
-const localModel = ref(props.field.model)
+// Вычисляемое свойство для v-model
+const modelValue = computed({
+  get: () => props.field.model,
+  set: (value: string) => emit('update:model', value)
+})
 </script>
 
 <template>
   <q-input
-    v-model.trim="localModel"
+    v-model.trim="modelValue"
     :disable="field.disable"
     :mask="INPUT_MASK"
-    :rules="field.rule"
+    :name="field.name"
+    :required="field.required"
+    :rules="field.required ? field.rule : []"
+    bottom-slots
     label-slot
+    lazy-rules
+    readonly
   >
     <template #prepend>
       <q-icon
         class="cursor-pointer"
         name="event"
-      />
+      >
+        <q-popup-proxy
+          :offset="OFFSET_POPUP_PROXY"
+          transition-hide="scale"
+          transition-show="scale"
+          cover
+        >
+          <q-date
+            v-model="modelValue"
+            :mask="DATE_MASK"
+            no-unset
+          >
+            <div class="row items-center justify-end">
+              <q-btn
+                v-close-popup
+                color="primary"
+                label="ОК"
+                flat
+              />
+            </div>
+          </q-date>
+        </q-popup-proxy>
+      </q-icon>
     </template>
     <template #label>
       <span v-text="field.label" />
@@ -36,17 +69,5 @@ const localModel = ref(props.field.model)
         v-text="INPUT_REQUIRED"
       />
     </template>
-    <q-popup-proxy
-      :offset="OFFSET_POPUP_PROXY"
-      transition-hide="scale"
-      transition-show="scale"
-    >
-      <q-date
-        v-model.trim="localModel"
-        :mask="DATE_MASK"
-        no-unset
-        @update:model-value="$emit('update:model', $event)"
-      />
-    </q-popup-proxy>
   </q-input>
 </template>

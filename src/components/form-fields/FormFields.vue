@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Fields } from 'src/types/form'
+import type { Fields, SelectFormField } from 'src/types/form'
 import { FIELD_TYPE } from 'src/types/form'
 
 import FormDatePicker from './components/FormDatePicker.vue'
@@ -25,7 +25,7 @@ defineProps<{
     <FormSelect
       v-else-if="field.fieldType === FIELD_TYPE.SELECT"
       :field="field"
-      @update:model="field.model = $event"
+      @update:model="(field as SelectFormField).model = $event"
     />
     <FormTextArea
       v-else-if="field.fieldType === FIELD_TYPE.TEXTAREA"

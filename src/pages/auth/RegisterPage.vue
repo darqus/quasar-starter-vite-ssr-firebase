@@ -2,6 +2,7 @@
 import { nextTick, type Ref, ref, watch } from 'vue'
 
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { useRouter } from 'vue-router'
 
 import { Loading } from 'quasar'
 
@@ -14,6 +15,7 @@ import { AUTH_TYPE, BUTTON_TYPE } from 'src/types/form'
 import { ROUTE_TYPE } from 'src/types/route'
 
 const storeAuth = useStoreAuth()
+const router = useRouter()
 
 const refRegisterForm: Ref = ref(null)
 
@@ -32,24 +34,32 @@ const reset = async () => {
 }
 
 const validate = async () => {
-  await nextTick()
-  refRegisterForm.value
-    ?.validate()
-    .then((success: boolean) => (storeAuth.valid = success))
+  if (refRegisterForm.value) {
+    await nextTick()
+    const isValid = await refRegisterForm.value.validate()
+    storeAuth.valid = isValid
+    return isValid
+  }
+  return false
 }
 
-const onRegister = () => {
+const onRegister = async () => {
+  const isValid = await validate()
+  if (!isValid) {
+    return
+  }
+
   Loading.show()
   createUserWithEmailAndPassword(
     auth,
-    currentAuthFormRef.value[0]?.model ?? '',
-    currentAuthFormRef.value[1]?.model ?? ''
+    String(currentAuthFormRef.value[0]?.model ?? ''),
+    String(currentAuthFormRef.value[1]?.model ?? '')
   )
     .then(({ user }) => {
       const { uid, email } = user
 
       if (currentAuthFormRef.value[0]?.model === email && uid) {
-        storeAuth.onRegisterSuccess(uid, email ?? '')
+        storeAuth.onRegisterSuccess(uid, email ?? '', router)
         void reset()
       }
     })

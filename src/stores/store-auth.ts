@@ -12,6 +12,7 @@ import { STORE_TYPES } from 'src/types/store'
 import { createNotify } from 'src/utils/notify'
 
 import type { AuthError } from 'firebase/auth'
+import type { Router } from 'vue-router'
 
 const getDefaultAuthState = (): TAuthState => ({
   currentUser: null,
@@ -84,8 +85,8 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
       })
     },
     // https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0#create_a_password-based_account
-    onRegisterSuccess(uid: string, email: string) {
-      void this.router
+    onRegisterSuccess(uid: string, email: string, router: Router) {
+      void router
         .push({ path: ROUTE_TYPE.ACCOUNT })
         .then(() =>
           createNotify(
@@ -96,15 +97,15 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
         )
     },
     // https://firebase.google.com/docs/auth/web/password-auth?hl=en&authuser=0#sign_in_a_user_with_an_email_address_and_password
-    onLoginSuccess() {
-      void this.router.push({ path: ROUTE_TYPE.ACCOUNT })
+    onLoginSuccess(router: Router) {
+      void router.push({ path: ROUTE_TYPE.ACCOUNT })
     },
-    onLogout(goToLogin?: boolean) {
+    onLogout(router: Router, goToLogin?: boolean) {
       Loading.show()
       signOut(auth)
         .then(() => {
           if (goToLogin) {
-            void this.router
+            void router
               .push({ path: ROUTE_TYPE.LOGIN })
               .then(() => this.onPostLogout())
           } else {
@@ -118,8 +119,8 @@ export const useStoreAuth = defineStore(STORE_TYPES.AUTH, {
           Loading.hide()
         })
     },
-    onForgotSuccess() {
-      void this.router.push({ path: ROUTE_TYPE.LOGIN }).then(() => {
+    onForgotSuccess(router: Router) {
+      void router.push({ path: ROUTE_TYPE.LOGIN }).then(() => {
         createNotify(
           'Проверьте почту и перейдите по ссылке для восстановления пароля',
           'green-4',

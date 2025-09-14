@@ -2,6 +2,7 @@
 import { nextTick, type Ref, ref, watch } from 'vue'
 
 import { sendPasswordResetEmail } from 'firebase/auth'
+import { useRouter } from 'vue-router'
 
 import { Loading } from 'quasar'
 
@@ -13,6 +14,7 @@ import { useStoreAuth } from 'src/stores/store-auth'
 import { AUTH_TYPE, BUTTON_TYPE } from 'src/types/form'
 
 const storeAuth = useStoreAuth()
+const router = useRouter()
 
 const refForgotForm: Ref = ref(null)
 
@@ -31,17 +33,25 @@ const reset = async () => {
 }
 
 const validate = async () => {
-  await nextTick()
-  refForgotForm.value
-    ?.validate()
-    .then((success: boolean) => (storeAuth.valid = success))
+  if (refForgotForm.value) {
+    await nextTick()
+    const isValid = await refForgotForm.value.validate()
+    storeAuth.valid = isValid
+    return isValid
+  }
+  return false
 }
 
-const onForgot = () => {
+const onForgot = async () => {
+  const isValid = await validate()
+  if (!isValid) {
+    return
+  }
+
   Loading.show()
-  sendPasswordResetEmail(auth, currentAuthFormRef.value[0]?.model ?? '')
+  sendPasswordResetEmail(auth, String(currentAuthFormRef.value[0]?.model ?? ''))
     .then(() => {
-      storeAuth.onForgotSuccess()
+      storeAuth.onForgotSuccess(router)
       void reset()
     })
     .catch((error) => {

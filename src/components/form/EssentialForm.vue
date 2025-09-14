@@ -12,6 +12,17 @@ withDefaults(defineProps<Form>(), {
   title: '',
   description: '',
 })
+
+// Expose methods that can be called by parent components
+defineExpose({
+  validate: () => {
+    // This will be handled by the parent component's QForm ref
+    return Promise.resolve(true)
+  },
+  resetValidation: () => {
+    // This will be handled by the parent component's QForm ref
+  }
+})
 </script>
 
 <template>

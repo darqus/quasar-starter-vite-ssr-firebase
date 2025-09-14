@@ -2,6 +2,7 @@
 import { nextTick, type Ref, ref, watch } from 'vue'
 
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import { useRouter } from 'vue-router'
 
 import { Loading } from 'quasar'
 
@@ -14,6 +15,7 @@ import { AUTH_TYPE, BUTTON_TYPE } from 'src/types/form'
 import { ROUTE_TYPE } from 'src/types/route'
 
 const storeAuth = useStoreAuth()
+const router = useRouter()
 
 const refLoginForm: Ref = ref(null)
 
@@ -32,22 +34,30 @@ const reset = async () => {
 }
 
 const validate = async () => {
-  await nextTick()
-  refLoginForm.value
-    ?.validate()
-    .then((success: boolean) => (storeAuth.valid = success))
+  if (refLoginForm.value) {
+    await nextTick()
+    const isValid = await refLoginForm.value.validate()
+    storeAuth.valid = isValid
+    return isValid
+  }
+  return false
 }
 
-const onLogin = () => {
+const onLogin = async () => {
+  const isValid = await validate()
+  if (!isValid) {
+    return
+  }
+
   Loading.show()
   signInWithEmailAndPassword(
     auth,
-    currentAuthFormRef.value[0]?.model ?? '',
-    currentAuthFormRef.value[1]?.model ?? ''
+    String(currentAuthFormRef.value[0]?.model ?? ''),
+    String(currentAuthFormRef.value[1]?.model ?? '')
   )
     .then(() => {
       void reset()
-      storeAuth.onLoginSuccess()
+      storeAuth.onLoginSuccess(router)
     })
     .catch((error) => {
       storeAuth.createErrorMessage(error)
