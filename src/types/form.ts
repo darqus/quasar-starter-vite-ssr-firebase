@@ -57,8 +57,9 @@ export enum BUTTON_TYPE {
   RESET = 'reset',
 }
 
-type SelectOption = QSelectProps['options'] | { label: string; value: unknown }
-type SelectOptions = SelectOption[] | string[]
+// Обобщённые опции для Select с выводом типа значения
+export type Option<V> = V | { label: string; value: V }
+export type Options<V> = ReadonlyArray<Option<V>>
 
 export type BaseFormField = {
   id: string
@@ -90,11 +91,12 @@ export type TextareaFormField = {
   rule: QInputProps['rules']
 } & BaseFormField
 
-export type SelectFormField = {
+// V — тип значения для select; по умолчанию string | number
+export type SelectFormField<V = string | number> = {
   fieldType: FIELD_TYPE.SELECT
-  model: string | number | null
+  model: V | null
   rule: QSelectProps['rules']
-  options: SelectOptions
+  options: Options<V> | string[]
 } & BaseFormField
 
 export type DatePickerFormField = {
@@ -107,6 +109,7 @@ export type DatePickerFormField = {
   rule: QInputProps['rules']
 } & BaseFormField
 
+// Сохранение совместимости, с возможностью уточнения типа значения select через обобщения
 export type FormField<T extends FIELD_TYPE> = T extends FIELD_TYPE.INPUT
   ? InputFormField
   : T extends FIELD_TYPE.TEXTAREA
@@ -117,4 +120,26 @@ export type FormField<T extends FIELD_TYPE> = T extends FIELD_TYPE.INPUT
         ? DatePickerFormField
         : never
 
-export type Fields = FormField<FIELD_TYPE>[]
+// Универсальное объединение всех полей формы
+export type AnyFormField =
+  | InputFormField
+  | TextareaFormField
+  | DatePickerFormField
+  | SelectFormField<unknown>
+
+// Базовый список полей (обратная совместимость)
+export type Fields = AnyFormField[]
+
+// Тип-утилита: выводит Shape (имя поля -> тип модели) из массива полей
+export type InferShape<F extends readonly AnyFormField[]> = {
+  [K in F[number] as K['name']]: K['model']
+}
+
+// Имя поля для заданного списка полей
+export type FieldName<F extends readonly AnyFormField[]> = F[number]['name']
+
+// Тип модели по имени для заданного списка полей
+export type FieldModelByName<
+  F extends readonly AnyFormField[],
+  N extends FieldName<F>
+> = Extract<F[number], { name: N }>['model']

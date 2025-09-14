@@ -2,19 +2,19 @@ import { nextTick, ref, type Ref } from 'vue'
 
 import type { QForm } from 'quasar'
 
-import type { Fields } from 'src/types/form'
+import type { AnyFormField, FieldModelByName, FieldName, Fields, InferShape } from 'src/types/form'
 import { FIELD_TYPE } from 'src/types/form'
 
 export type FormData = Record<string, unknown>
 
-export type UseFormOptions = {
-  fields: Fields
+export type UseFormOptions<F extends readonly AnyFormField[] = Fields> = {
+  fields: F | Fields
   onSubmit?: (formData: FormData) => Promise<void> | void
   onReset?: () => Promise<void> | void
   validateOnChange?: boolean
 }
 
-export type UseFormReturn = {
+export type UseFormReturn<F extends readonly AnyFormField[] = Fields> = {
   // Reactive data
   fields: Ref<Fields>
   formRef: Ref<QForm | null>
@@ -25,9 +25,9 @@ export type UseFormReturn = {
   validate: () => Promise<boolean>
   reset: () => Promise<void>
   submit: () => Promise<void>
-  setFieldValue: (fieldName: string, value: unknown) => void
-  getFieldValue: (fieldName: string) => unknown
-  getFormData: () => FormData
+  setFieldValue: <N extends FieldName<F>>(fieldName: N, value: FieldModelByName<F, N>) => void
+  getFieldValue: <N extends FieldName<F>>(fieldName: N) => FieldModelByName<F, N> | undefined
+  getFormData: () => Partial<InferShape<F>>
 
   // Field helpers
   updateField: (fieldId: string, updates: Partial<Fields[0]>) => void
@@ -35,8 +35,8 @@ export type UseFormReturn = {
   removeField: (fieldId: string) => void
 }
 
-export function useForm(options: UseFormOptions): UseFormReturn {
-  const fields = ref([...options.fields])
+export function useForm<F extends readonly AnyFormField[]>(options: UseFormOptions<F>): UseFormReturn<F> {
+  const fields = ref([...options.fields] as Fields)
   const formRef = ref<QForm | null>(null)
   const isValid = ref(false)
   const isSubmitting = ref(false)
@@ -88,25 +88,28 @@ export function useForm(options: UseFormOptions): UseFormReturn {
   }
 
   // Set field value by name
-  const setFieldValue = (fieldName: string, value: unknown): void => {
+  const setFieldValue = <N extends FieldName<F>>(fieldName: N, value: FieldModelByName<F, N>): void => {
     const field = fields.value.find(f => f.name === fieldName)
     if (field) {
-      field.model = value as string | number | null
+      ;(field as unknown as { model: FieldModelByName<F, N> }).model = value
     }
   }
 
   // Get field value by name
-  const getFieldValue = (fieldName: string): unknown => {
+  const getFieldValue = <N extends FieldName<F>>(fieldName: N): FieldModelByName<F, N> | undefined => {
     const field = fields.value.find(f => f.name === fieldName)
-    return field?.model
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return field ? (field.model as unknown as FieldModelByName<F, N>) : undefined
   }
 
   // Get all form data as object
-  const getFormData = (): FormData => {
+  const getFormData = (): Partial<InferShape<F>> => {
     return fields.value.reduce((data, field) => {
-      data[field.name] = field.model
+      const key = field.name as keyof InferShape<F>
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      data[key] = field.model as unknown as InferShape<F>[typeof key]
       return data
-    }, {} as FormData)
+    }, {} as Partial<InferShape<F>>)
   }
 
   // Update field by id
@@ -123,9 +126,9 @@ export function useForm(options: UseFormOptions): UseFormReturn {
   // Add field
   const addField = (field: Fields[0], index?: number): void => {
     if (index !== undefined) {
-      fields.value.splice(index, 0, field)
+      fields.value.splice(index, 0, field as unknown as (typeof fields.value)[number])
     } else {
-      fields.value.push(field)
+      fields.value.push(field as unknown as (typeof fields.value)[number])
     }
   }
 
