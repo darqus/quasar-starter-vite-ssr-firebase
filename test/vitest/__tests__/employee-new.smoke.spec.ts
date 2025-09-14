@@ -84,8 +84,8 @@ describe('NewEmployeePage smoke', () => {
   expect(Array.isArray(calls) && calls.length === 1).toBe(true)
   const collectionName = String(calls[0]?.[0])
   const payload = (calls[0]?.[1] ?? {}) as Record<string, unknown>
-  expect(collectionName).toBe('employees')
-  expect(payload).toMatchObject({
+    expect(collectionName).toBe('employees')
+    expect(payload).toMatchObject({
       name: 'Иван Иванов',
       email: 'ivan@example.com',
       position: 'Разработчик',
@@ -93,5 +93,15 @@ describe('NewEmployeePage smoke', () => {
       rate: '5',
       description: 'Отличный специалист',
     })
+
+    // After success, reset should clear fields
+    const formFields = wrapper.findComponent(FormFields)
+    const props = formFields.props() as { fields: Array<{ name: string; model: unknown }> }
+    expect(props.fields.find((f) => f.name === 'fio')?.model).toBe('')
+    expect(props.fields.find((f) => f.name === 'login')?.model).toBe('')
+    expect(props.fields.find((f) => f.name === 'position')?.model).toBe('')
+  expect(props.fields.find((f) => f.name === 'level')?.model).toBe('')
+  expect(props.fields.find((f) => f.name === 'rate')?.model).toBe('')
+    expect(props.fields.find((f) => f.name === 'description')?.model).toBe('')
   })
 })

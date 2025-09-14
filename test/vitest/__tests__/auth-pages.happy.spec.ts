@@ -250,4 +250,44 @@ describe('Auth pages happy path', () => {
     expect(onLoginSuccessSpy).not.toHaveBeenCalled()
     expect(createErrorMessageSpy).toHaveBeenCalled()
   })
+
+  it('RegisterPage: failure path shows error message', async () => {
+    const pinia = createPinia()
+    const router = makeRouter()
+
+    const wrapper = mount(RegisterPage, {
+      global: {
+        plugins: [pinia, router],
+        stubs: {
+          QPage: { template: '<div><slot /></div>' },
+          QForm: {
+            name: 'QForm',
+            template:
+              '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
+            methods: { resetValidation() {}, validate: () => true },
+            expose: ['resetValidation', 'validate'],
+          },
+        },
+      },
+    })
+
+    await router.isReady()
+
+    setFieldModel(wrapper, 'login', 'user@example.com')
+    setFieldModel(wrapper, 'password', 'badpass')
+
+    // cause auth failure
+    authMocks.createUserWithEmailAndPassword.mockRejectedValueOnce(
+      new Error('auth/email-already-in-use')
+    )
+
+    // submit
+    emitFormSubmit(wrapper)
+    await flushPromises()
+    await flushPromises()
+
+    expect(authMocks.createUserWithEmailAndPassword).toHaveBeenCalled()
+    expect(onRegisterSuccessSpy).not.toHaveBeenCalled()
+    expect(createErrorMessageSpy).toHaveBeenCalled()
+  })
 })
