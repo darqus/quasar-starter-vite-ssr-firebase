@@ -21,7 +21,27 @@ export function getFieldString(
   fallback = ''
 ): string {
   const val = getFieldModel(fields, name)
-  return val == null ? fallback : String(val)
+  if (val == null) return fallback
+
+  switch (typeof val) {
+    case 'string':
+      return val
+    case 'number':
+    case 'boolean':
+    case 'bigint':
+      return String(val)
+    case 'symbol':
+      return val.description ?? fallback
+    case 'object':
+      try {
+        const json = JSON.stringify(val)
+        return json ?? fallback
+      } catch {
+        return fallback
+      }
+    default:
+      return fallback
+  }
 }
 
 // Convert fields to a name -> value map
