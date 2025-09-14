@@ -1,90 +1,47 @@
 {
-  "[css]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.stylelint": "explicit"
-    },
-    "editor.defaultFormatter": "vscode.css-language-features",
-    "editor.formatOnSave": true
-  },
-  "[html]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit",
-      "source.fixAll.stylelint": "never"
-    },
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.formatOnSave": true
-  },
+  "editor.formatOnSave": true,
+  // Let Prettier handle formatting; ESLint handles code-quality/organize imports
+  "eslint.format.enable": false,
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue"],
+  "eslint.codeActionsOnSave.mode": "problems",
+  "stylelint.validate": ["css", "scss", "vue"],
   "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit",
+      "source.fixAll.prettier": "explicit",
       "source.fixAll.eslint": "explicit",
-      "source.fixAll.stylelint": "never",
       "source.organizeImports": "never"
-    },
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint", // eslint
-    "editor.formatOnSave": true
-  },
-  "[scss]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.stylelint": "explicit"
-    },
-    "editor.defaultFormatter": "stylelint.vscode-stylelint",
-    "editor.formatOnSave": true
+    }
   },
   "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit",
+      "source.fixAll.prettier": "explicit",
       "source.fixAll.eslint": "explicit",
-      "source.fixAll.stylelint": "never",
       "source.organizeImports": "never"
-    },
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint", // eslint
-    "editor.formatOnSave": true
-  },
-  "[typescript][vue]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit",
-      "source.fixAll.eslint": "explicit",
-      "source.fixAll.stylelint": "never",
-      "source.organizeImports": "never"
-    },
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint", // eslint
-    "editor.formatOnSave": true
+    }
   },
   "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit",
+      "source.fixAll.prettier": "explicit",
       "source.fixAll.eslint": "explicit",
-      "source.fixAll.stylelint": "never",
       "source.organizeImports": "never"
-    },
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint", // eslint
-    "editor.formatOnSave": true
+    }
   },
-  "css.validate": false,
-  "editor.bracketPairColorization.enabled": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "never"
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.prettier": "explicit",
+      "source.fixAll.stylelint": "explicit"
+    }
   },
-  "editor.formatOnSave": false,
-  "editor.guides.bracketPairs": true,
-  "eslint.validate": [
-    "javascript",
-    "typescript",
-    "vue"
-  ],
-  "scss.validate": false,
-  "stylelint.packageManager": "yarn",
-  "stylelint.validate": [
-    "html",
-    "scss"
-  ],
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": [
-    "Падаван",
-    "autogrow",
-    "VITE"
-  ]
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.prettier": "explicit",
+      "source.fixAll.stylelint": "explicit"
+    }
+  },
+  "cSpell.words": ["Падаван", "autogrow", "VITE"]
 }
