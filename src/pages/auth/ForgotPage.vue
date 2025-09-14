@@ -88,7 +88,7 @@ watch(
         </template>
 
         <template #buttons>
-          <div class="row">
+          <div class="row q-pt-md">
             <q-btn
               :disable="storeAuth.disabledSubmitButton"
               :loading="storeAuth.loading"

@@ -102,7 +102,7 @@ watch(
             label="I accept the license and terms"
           /> -->
 
-          <div class="row">
+          <div class="row q-pt-md">
             <q-btn
               :disable="storeAuth.loading"
               :type="BUTTON_TYPE.RESET"
