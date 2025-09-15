@@ -2,8 +2,7 @@
 .thumbs.db
 node_modules
 .firebase
-# Ignore only sensitive instruction file under .github, keep the rest tracked
-.github/instructions/main.instructions.md
+.github
 
 # Quasar core related directories
 .quasar
