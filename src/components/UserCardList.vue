@@ -52,7 +52,7 @@ void storeEmployeeCards.getEmployeeList()
   />
   <div
     v-else
-    class="row q-gutter-md user-card-list"
+    class="user-card-list"
   >
     <q-card
       v-for="{

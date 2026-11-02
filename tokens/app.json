@@ -4,6 +4,10 @@
     "sm": {
       "value": "8px",
       "description": "Compact gap: inline control groups, action rows"
+    },
+    "md": {
+      "value": "16px",
+      "description": "Default gap: grid gutters, grouped controls"
     }
   },
   "size": {

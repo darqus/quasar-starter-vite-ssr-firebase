@@ -101,6 +101,21 @@ npm run build:tokens   # node scripts/build-tokens.mjs (Style Dictionary)
 Запрещены «голые» имена вроде `.form-actions`, `.users-list`: они
 протекают на всё приложение.
 
+### Не смешивайте с layout-утилитами Quasar
+
+Элемент, которому наш модуль задаёт `display` (`grid`/`flex`), **не должен**
+нести Quasar-классы `.row`/`.column`: они неслоёные и перебивают наш слой —
+контейнер молча станет flex-строкой. Отступы в таких сетках задаём сами
+через `gap`, а не `q-gutter-*`.
+
+```vue
+<!-- было: .row побеждает display: grid из слоя -->
+<div class="row q-gutter-md user-card-list">
+
+<!-- стало -->
+<div class="user-card-list">
+```
+
 ## 5. Файлы
 
 ```
