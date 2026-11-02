@@ -2,8 +2,8 @@ import { ref, type Ref } from 'vue'
 
 import { describe, expect, it } from 'vitest'
 
-import { FIELD_TYPE, type Fields, INPUT_TYPE } from 'src/types/form'
-import { getFieldModel, getFieldString, toFormDataMap } from 'src/utils/form'
+import { FIELD_TYPE, type Fields, INPUT_TYPE } from '@/types/form'
+import { getFieldModel, getFieldString, toFormDataMap } from '@/utils/form'
 
 function makeFields(): Fields {
   return [

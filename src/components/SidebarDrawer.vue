@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-import RouterMenuLink from 'src/components/RouterMenuLink.vue'
-import ThemeToggler from 'src/components/ThemeToggler.vue'
-import UserAvatar from 'src/components/UserAvatar.vue'
-import { useStoreAuth } from 'src/stores/store-auth'
+import RouterMenuLink from '@/components/RouterMenuLink.vue'
+import ThemeToggler from '@/components/ThemeToggler.vue'
+import UserAvatar from '@/components/UserAvatar.vue'
+import { useStoreAuth } from '@/stores/store-auth'
 
 const storeAuth = useStoreAuth()
 const router = useRouter()

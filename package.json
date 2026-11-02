@@ -20,22 +20,23 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.4",
-    "firebase": "^12.2.1",
-    "pinia": "^3.0.1",
-    "quasar": "^2.16.0",
-    "vue": "3.5.21",
-    "vue-router": "^4.0.12",
-    "zod": "^4.1.8"
+    "@quasar/extras": "^2.1.0",
+    "@vue/devtools-api": "^8.2.1",
+    "firebase": "^13.2.0",
+    "pinia": "^4.1.0",
+    "quasar": "^2.35.2",
+    "vue": "3.5.44",
+    "vue-router": "^5.4.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@quasar/app-vite": "^2.1.0",
-    "@quasar/vite-plugin": "^1.10.0",
-    "@types/node": "^24.4.0",
-    "@vitejs/plugin-vue": "^6.0.1",
-    "@vue/test-utils": "^2.4.6",
-    "autoprefixer": "^10.4.2",
-    "happy-dom": "^18.0.1",
+    "@quasar/app-vite": "^3.10.3",
+    "@quasar/vite-plugin": "^2.0.2",
+    "@types/node": "^26.6.6",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "@vue/test-utils": "^2.5.1",
+    "autoprefixer": "^10.6.2",
+    "happy-dom": "^21.0.4",
     "oxfmt": "^0.75.0",
     "oxlint": "^1.90.0",
     "oxlint-tsgolint": "^7.0.2005",
@@ -43,14 +44,13 @@
     "stylelint": "^17.16.0",
     "stylelint-config-recess-order": "^7.10.0",
     "stylelint-config-standard-scss": "^17.0.0",
-    "typescript": "^5.9.2",
-    "vite-plugin-checker": "^0.10.3",
-    "vite-tsconfig-paths": "^5.1.4",
+    "typescript": "^5.9.3",
+    "vite-plugin-checker": "^0.14.5",
     "vitest": "^5.1.0",
-    "vue-tsc": "^3.0.7"
+    "vue-tsc": "^3.3.14"
   },
   "engines": {
-    "node": "^28 || ^26 || ^24 || ^22 || ^20",
+    "node": "^30 || ^28 || ^26 || ^24 || ^22.22.0",
     "npm": ">= 6.13.4"
   }
 }

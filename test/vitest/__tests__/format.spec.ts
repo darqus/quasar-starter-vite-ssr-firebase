@@ -6,7 +6,7 @@ import {
   incline,
   INCLINE,
   toCapitalCase,
-} from 'src/utils/format'
+} from '@/utils/format'
 
 describe('utils/format', () => {
   it('incline basic cases', () => {

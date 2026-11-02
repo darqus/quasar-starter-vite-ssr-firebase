@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import type { Fields, SelectFormField } from 'src/types/form'
-import { FIELD_TYPE } from 'src/types/form'
+import type { Fields, SelectFormField } from '@/types/form'
+import { FIELD_TYPE } from '@/types/form'
 
 import FormDatePicker from './components/FormDatePicker.vue'
 import FormInput from './components/FormInput.vue'

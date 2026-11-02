@@ -16,9 +16,9 @@ export type AuthFieldName = (typeof AUTH_FIELD)[keyof typeof AUTH_FIELD]
 ```ts
 import type { Ref } from 'vue'
 
-import type { Fields } from 'src/types/form'
-import { AUTH_FIELD } from 'src/types/form-names'
-import { getFieldString } from 'src/utils/form'
+import type { Fields } from '@/types/form'
+import { AUTH_FIELD } from '@/types/form-names'
+import { getFieldString } from '@/utils/form'
 
 function getAuthValue(fields: Ref<Fields> | Fields, name: AuthFieldName) {
   return getFieldString(fields, name)
@@ -36,9 +36,9 @@ async function onLoginSubmit(fields: Ref<Fields> | Fields) {
 ```ts
 import type { Ref } from 'vue'
 
-import type { Fields } from 'src/types/form'
-import { AUTH_FIELD } from 'src/types/form-names'
-import { getFieldString } from 'src/utils/form'
+import type { Fields } from '@/types/form'
+import { AUTH_FIELD } from '@/types/form-names'
+import { getFieldString } from '@/utils/form'
 
 async function onRegisterSubmit(fields: Ref<Fields> | Fields) {
   const email = getFieldString(fields, AUTH_FIELD.LOGIN)

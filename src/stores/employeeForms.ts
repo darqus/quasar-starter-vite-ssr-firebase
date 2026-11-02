@@ -1,8 +1,8 @@
-import { FIELD_TYPE, type Fields, INPUT_TYPE } from 'src/types/form'
-import { DEBOUNCE } from 'src/utils/constants'
-import { generateId } from 'src/utils/generator'
-import { rulesFromZodField } from 'src/validation/quasar-rules'
-import { newEmployeeSchema } from 'src/validation/schemas'
+import { FIELD_TYPE, type Fields, INPUT_TYPE } from '@/types/form'
+import { DEBOUNCE } from '@/utils/constants'
+import { generateId } from '@/utils/generator'
+import { rulesFromZodField } from '@/validation/quasar-rules'
+import { newEmployeeSchema } from '@/validation/schemas'
 
 export const NEW_EMPLOYEE_FIELDS = (): Fields => [
   {

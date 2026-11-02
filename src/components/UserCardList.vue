@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStoreEmployeeCards } from 'src/stores/store-employee-cards'
+import { useStoreEmployeeCards } from '@/stores/store-employee-cards'
 
 const storeEmployeeCards = useStoreEmployeeCards()
 

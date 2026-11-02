@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-import { INPUT_TYPE, PASSWORD_VISIBILITY_ICON } from 'src/types/form'
-import type { InputFormField } from 'src/types/form'
-import { INPUT_REQUIRED } from 'src/utils/constants'
+import { INPUT_TYPE, PASSWORD_VISIBILITY_ICON } from '@/types/form'
+import type { InputFormField } from '@/types/form'
+import { INPUT_REQUIRED } from '@/utils/constants'
 
 const emit = defineEmits<{
   'update:model': [value: string]

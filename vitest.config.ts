@@ -1,11 +1,18 @@
+import { fileURLToPath } from 'node:url'
+
 import vue from '@vitejs/plugin-vue'
-import tsconfigPaths from 'vite-tsconfig-paths'
 import { defineConfig } from 'vitest/config'
 
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    // Mirror the `@/` -> `/src` alias that Quasar CLI injects for the build
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   test: {
     environment: 'happy-dom',
     setupFiles: 'test/vitest/setup-file.ts',
@@ -21,6 +28,5 @@ export default defineConfig({
     quasar({
       sassVariables: 'src/css/quasar.variables.scss',
     }),
-    tsconfigPaths(),
   ],
 })

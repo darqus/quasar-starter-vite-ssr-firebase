@@ -1,4 +1,4 @@
-import type { FormSchema } from 'src/types/form.schema'
+import type { FormSchema } from '@/types/form.schema'
 
 export const loginSchema: FormSchema<
   [

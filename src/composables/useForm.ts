@@ -10,8 +10,8 @@ import type {
   FieldName,
   Fields,
   InferShape,
-} from 'src/types/form'
-import { parseAndCollectErrors } from 'src/validation/quasar-rules'
+} from '@/types/form'
+import { parseAndCollectErrors } from '@/validation/quasar-rules'
 
 export type FormData = Record<string, unknown>
 

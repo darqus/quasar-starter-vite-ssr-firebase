@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 import { LocalStorage, useQuasar } from 'quasar'
 
-import { StorageKey } from 'src/types/storage'
+import { StorageKey } from '@/types/storage'
 
 const $q = useQuasar()
 

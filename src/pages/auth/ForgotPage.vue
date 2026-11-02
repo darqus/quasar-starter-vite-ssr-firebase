@@ -6,16 +6,16 @@ import { useRouter } from 'vue-router'
 
 import { Loading } from 'quasar'
 
-import { auth } from 'src/boot/firebase'
-import FormFields from 'src/components/form-fields/FormFields.vue'
-import EssentialForm from 'src/components/form/EssentialForm.vue'
-import { useForm } from 'src/composables/useForm'
-import { getCurrentAuthFields } from 'src/stores/authForms'
-import { useStoreAuth } from 'src/stores/store-auth'
-import { AUTH_FIELD } from 'src/types'
-import { AUTH_TYPE, BUTTON_TYPE } from 'src/types/form'
-import { getFieldString } from 'src/utils/form'
-import { forgotSchema } from 'src/validation/schemas'
+import { auth } from '@/boot/firebase'
+import FormFields from '@/components/form-fields/FormFields.vue'
+import EssentialForm from '@/components/form/EssentialForm.vue'
+import { useForm } from '@/composables/useForm'
+import { getCurrentAuthFields } from '@/stores/authForms'
+import { useStoreAuth } from '@/stores/store-auth'
+import { AUTH_FIELD } from '@/types'
+import { AUTH_TYPE, BUTTON_TYPE } from '@/types/form'
+import { getFieldString } from '@/utils/form'
+import { forgotSchema } from '@/validation/schemas'
 
 const storeAuth = useStoreAuth()
 const router = useRouter()

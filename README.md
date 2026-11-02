@@ -12,6 +12,11 @@ Live: [https://skill-flash.web.app](https://skill-flash.web.app)
 - Auth forms: typed submit examples — see `docs/auth-form-examples.md`
 - Stores migration to Composition API — see `docs/StoresMigration.md`
 
+## Requirements
+
+- Node.js `22.22+`, `24`, `26`, `28` or `30`
+- npm 6.13.4+
+
 ## Install the dependencies
 
 ```bash
@@ -67,9 +72,18 @@ npm run format
 ### Build the app for production
 
 ```bash
-quasar build
+npm run build
 ```
+
+### Project conventions
+
+- Source imports use the `@/` alias, which Quasar CLI maps to `/src`:
+  `import { useForm } from '@/composables/useForm'`.
+- Quasar wrappers come from `#q-app`: `defineBoot` for boot files,
+  `defineRouter` for the router and `defineStore` for the Pinia instance.
+- Environment variables are read from `import.meta.env` (all `VITE_*`
+  variables are typed automatically in `.quasar/quasar.d.ts`).
 
 ### Customize the configuration
 
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+See [Configuring quasar.config.ts](https://quasar.dev/quasar-cli-vite/quasar-config-file).

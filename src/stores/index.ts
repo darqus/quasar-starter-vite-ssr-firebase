@@ -1,7 +1,8 @@
-import { store } from 'quasar/wrappers'
 import { type Router } from 'vue-router'
 
 import { createPinia } from 'pinia'
+
+import { defineStore } from '#q-app'
 
 /*
  * When adding new properties to stores, you should also
@@ -24,7 +25,7 @@ declare module 'pinia' {
  * with the Store instance.
  */
 
-export default store((/* { ssrContext } */) => {
+export default defineStore((/* { ssrContext } */) => {
   const pinia = createPinia()
 
   // You can add Pinia plugins here

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { zPasswordStrict } from 'src/validation/zod-helpers'
+import { zPasswordStrict } from '@/validation/zod-helpers'
 
 // Password policy per utils/rules.ts:
 // - Length: 8-20

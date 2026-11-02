@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 
-import { resolveField } from 'src/components/form-fields/registry'
-import type { FieldAny, FormSchema } from 'src/types/form.schema'
+import { resolveField } from '@/components/form-fields/registry'
+import type { FieldAny, FormSchema } from '@/types/form.schema'
 
 const props = defineProps<{
   schema: FormSchema<readonly FieldAny[]>

@@ -1,11 +1,11 @@
-import { boot } from 'quasar/wrappers'
-
 import { LocalStorage, useQuasar } from 'quasar'
 
-import { useStoreAuth } from 'src/stores/store-auth'
-import { StorageKey } from 'src/types/storage'
+import { useStoreAuth } from '@/stores/store-auth'
+import { StorageKey } from '@/types/storage'
 
-export default boot(({ store, app }) => {
+import { defineBoot } from '#q-app'
+
+export default defineBoot(({ store, app }) => {
   useStoreAuth(store).watchAuthStateChanged()
 
   // Initialize theme from LocalStorage (fallback to env)

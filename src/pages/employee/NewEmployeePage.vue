@@ -3,16 +3,16 @@ import { computed } from 'vue'
 
 import { Loading } from 'quasar'
 
-import { addDoc } from 'src/boot/firebase'
-import FormFields from 'src/components/form-fields/FormFields.vue'
-import EssentialForm from 'src/components/form/EssentialForm.vue'
-import { useForm } from 'src/composables/useForm'
-import { getNewEmployeeFields } from 'src/stores/employeeForms'
-import { EMPLOYEE_FIELD } from 'src/types'
-import { BUTTON_TYPE } from 'src/types/form'
-import { getFieldString } from 'src/utils/form'
-import { createNotify } from 'src/utils/notify'
-import { newEmployeeSchema } from 'src/validation/schemas'
+import { addDoc } from '@/boot/firebase'
+import FormFields from '@/components/form-fields/FormFields.vue'
+import EssentialForm from '@/components/form/EssentialForm.vue'
+import { useForm } from '@/composables/useForm'
+import { getNewEmployeeFields } from '@/stores/employeeForms'
+import { EMPLOYEE_FIELD } from '@/types'
+import { BUTTON_TYPE } from '@/types/form'
+import { getFieldString } from '@/utils/form'
+import { createNotify } from '@/utils/notify'
+import { newEmployeeSchema } from '@/validation/schemas'
 
 // Variant A: useForm with Zod schema for New Employee
 const { fields, formRef, reset, submit, isValid, isSubmitting } = useForm({

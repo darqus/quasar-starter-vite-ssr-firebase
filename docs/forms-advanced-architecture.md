@@ -164,8 +164,8 @@ export function resolveField(kind: string): FieldRenderer | undefined {
 <!-- src/components/SchemaForm.vue (планируемое) -->
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import type { FormSchema } from 'src/types/form.schema'
-import { resolveField } from 'src/components/form-fields/registry'
+import type { FormSchema } from '@/types/form.schema'
+import { resolveField } from '@/components/form-fields/registry'
 
 const props = defineProps<{
   schema: FormSchema<any, any>
@@ -273,7 +273,7 @@ export const loginValidation = z.object({
 ```ts
 import { z } from 'zod'
 
-import type { FormSchema } from 'src/types/form.schema'
+import type { FormSchema } from '@/types/form.schema'
 
 export const loginSchema: FormSchema<
   [

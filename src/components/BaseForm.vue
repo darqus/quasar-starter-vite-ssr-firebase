@@ -3,16 +3,16 @@ import { computed, toRefs, watchEffect } from 'vue'
 
 import type { QForm } from 'quasar'
 
-import FormDatePicker from 'src/components/form-fields/components/FormDatePicker.vue'
-import FormInput from 'src/components/form-fields/components/FormInput.vue'
-import FormSelect from 'src/components/form-fields/components/FormSelect.vue'
-import FormTextArea from 'src/components/form-fields/components/FormTextArea.vue'
+import FormDatePicker from '@/components/form-fields/components/FormDatePicker.vue'
+import FormInput from '@/components/form-fields/components/FormInput.vue'
+import FormSelect from '@/components/form-fields/components/FormSelect.vue'
+import FormTextArea from '@/components/form-fields/components/FormTextArea.vue'
 import {
   setupValidateOnChange,
   useForm,
   type UseFormOptions,
-} from 'src/composables/useForm'
-import { FIELD_TYPE } from 'src/types/form'
+} from '@/composables/useForm'
+import { FIELD_TYPE } from '@/types/form'
 
 export type BaseFormProps = {
   // Appearance

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { DATE_MASK, INPUT_MASK } from 'src/types/form'
-import type { DatePickerFormField } from 'src/types/form'
-import { INPUT_REQUIRED, OFFSET_POPUP_PROXY } from 'src/utils/constants'
+import { DATE_MASK, INPUT_MASK } from '@/types/form'
+import type { DatePickerFormField } from '@/types/form'
+import { INPUT_REQUIRED, OFFSET_POPUP_PROXY } from '@/utils/constants'
 
 const emit = defineEmits<{
   'update:model': [value: string]

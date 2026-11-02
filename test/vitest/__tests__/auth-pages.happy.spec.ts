@@ -10,7 +10,7 @@ const onLoginSuccessSpy = vi.fn()
 const onRegisterSuccessSpy = vi.fn()
 const createErrorMessageSpy = vi.fn()
 
-vi.mock('src/stores/store-auth', () => ({
+vi.mock('@/stores/store-auth', () => ({
   useStoreAuth: () => ({
     loading: false,
     valid: true,
@@ -45,10 +45,10 @@ vi.mock('firebase/auth', () => ({
   createUserWithEmailAndPassword: authMocks.createUserWithEmailAndPassword,
 }))
 
-import FormFields from 'src/components/form-fields/FormFields.vue'
-import LoginPage from 'src/pages/auth/LoginPage.vue'
-import RegisterPage from 'src/pages/auth/RegisterPage.vue'
-import { ROUTE_TYPE } from 'src/types/route'
+import FormFields from '@/components/form-fields/FormFields.vue'
+import LoginPage from '@/pages/auth/LoginPage.vue'
+import RegisterPage from '@/pages/auth/RegisterPage.vue'
+import { ROUTE_TYPE } from '@/types/route'
 
 // Minimal router for pages
 function makeRouter() {

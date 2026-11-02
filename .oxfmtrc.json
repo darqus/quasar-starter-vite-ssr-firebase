@@ -32,7 +32,7 @@
     }
   ],
   "sortImports": {
-    "internalPattern": ["src/"],
+    "internalPattern": ["@/"],
     "ignoreCase": true,
     "newlinesBetween": true,
     "order": "asc",

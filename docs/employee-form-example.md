@@ -13,7 +13,7 @@
 Ниже показан фрагмент логики из `src/pages/employee/NewEmployeePage.vue`, где все значения берутся по имени, а не по индексу:
 
 ```ts
-import { getFieldString } from 'src/utils/form'
+import { getFieldString } from '@/utils/form'
 
 // ... внутри обработчика submit
 const name = getFieldString(employeeFormRef, 'fio')

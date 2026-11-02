@@ -1,6 +1,6 @@
 import { isRef, type Ref } from 'vue'
 
-import type { Fields } from 'src/types/form'
+import type { Fields } from '@/types/form'
 
 // Get underlying array from Ref or plain array
 function unwrapFields(fields: Ref<Fields> | Fields): Fields {

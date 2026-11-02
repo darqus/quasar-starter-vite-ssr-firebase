@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { zRequiredInputString, zWordMin2 } from 'src/validation/zod-helpers'
+import { zRequiredInputString, zWordMin2 } from '@/validation/zod-helpers'
 
 describe('zod-helpers', () => {
   describe('zRequiredInputString', () => {

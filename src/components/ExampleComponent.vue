@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-import type { Meta, Todo } from 'src/types/models'
+import type { Meta, Todo } from '@/types/models'
 
 type Props = {
   title: string

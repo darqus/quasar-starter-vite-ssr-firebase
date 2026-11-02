@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { useStoreAuth } from 'src/stores/store-auth'
+import { useStoreAuth } from '@/stores/store-auth'
 
 const storeAuth = useStoreAuth()
 

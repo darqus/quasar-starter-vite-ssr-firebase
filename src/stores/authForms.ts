@@ -1,13 +1,9 @@
-import { AUTH_TYPE, FIELD_TYPE, INPUT_TYPE } from 'src/types/form'
-import { type Fields } from 'src/types/form'
-import { DEBOUNCE } from 'src/utils/constants'
-import { generateId } from 'src/utils/generator'
-import { rulesFromZodField } from 'src/validation/quasar-rules'
-import {
-  forgotSchema,
-  loginSchema,
-  registerSchema,
-} from 'src/validation/schemas'
+import { AUTH_TYPE, FIELD_TYPE, INPUT_TYPE } from '@/types/form'
+import { type Fields } from '@/types/form'
+import { DEBOUNCE } from '@/utils/constants'
+import { generateId } from '@/utils/generator'
+import { rulesFromZodField } from '@/validation/quasar-rules'
+import { forgotSchema, loginSchema, registerSchema } from '@/validation/schemas'
 
 const LOGIN_EMAIL_FIELDS = (): Fields => [
   {

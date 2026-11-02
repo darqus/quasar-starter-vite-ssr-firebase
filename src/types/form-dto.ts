@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
 
-import { getFieldString } from 'src/utils/form'
+import { getFieldString } from '@/utils/form'
 
 import type { Fields } from './form'
 import { AUTH_FIELD, type AuthFieldName, EMPLOYEE_FIELD } from './form-names'

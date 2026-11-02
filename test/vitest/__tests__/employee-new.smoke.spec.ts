@@ -5,9 +5,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import { createPinia } from 'pinia'
 
-import FormFields from 'src/components/form-fields/FormFields.vue'
-import NewEmployeePage from 'src/pages/employee/NewEmployeePage.vue'
-import { ROUTE_TYPE } from 'src/types/route'
+import FormFields from '@/components/form-fields/FormFields.vue'
+import NewEmployeePage from '@/pages/employee/NewEmployeePage.vue'
+import { ROUTE_TYPE } from '@/types/route'
 
 // Router with just the page route
 function makeRouter() {
@@ -22,7 +22,7 @@ function makeRouter() {
 
 // Spy on addDoc used by the page (use hoisted ref to be available during mock hoisting)
 const addDocSpy = vi.hoisted(() => vi.fn(() => Promise.resolve()))
-vi.mock('src/boot/firebase', () => ({
+vi.mock('@/boot/firebase', () => ({
   addDoc: addDocSpy,
 }))
 

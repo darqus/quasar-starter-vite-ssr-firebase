@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import type { SelectFormField } from 'src/types/form'
-import { INPUT_REQUIRED } from 'src/utils/constants'
+import type { SelectFormField } from '@/types/form'
+import { INPUT_REQUIRED } from '@/utils/constants'
 
 const emit = defineEmits<{
   'update:model': [value: unknown]

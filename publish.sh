@@ -17,9 +17,9 @@ echo 'git commit message:'
 echo '"'$COMMENT'"'
 echo
 
-quasar build
+npm run build
 firebase deploy --only hosting
-quasar clean
+npx quasar clean
 
 git checkout main
 git add .

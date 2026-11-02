@@ -16,8 +16,8 @@ vi.mock('firebase/auth', () => ({
   onAuthStateChanged: fbAuthMocks.onAuthStateChanged,
 }))
 
-import { useStoreAuth } from 'src/stores/store-auth'
-import { ROUTE_TYPE } from 'src/types/route'
+import { useStoreAuth } from '@/stores/store-auth'
+import { ROUTE_TYPE } from '@/types/route'
 
 describe('store-auth notify behavior', () => {
   it('onRegisterSuccess pushes to account and shows success notify', async () => {

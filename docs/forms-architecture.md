@@ -174,9 +174,9 @@ const formFields: Fields = [
 </template>
 
 <script setup>
-import { useForm } from 'src/composables/useForm'
-import { getCurrentAuthFields } from 'src/stores/authForms'
-import { AUTH_TYPE } from 'src/types/form'
+import { useForm } from '@/composables/useForm'
+import { getCurrentAuthFields } from '@/stores/authForms'
+import { AUTH_TYPE } from '@/types/form'
 
 const loginFields = getCurrentAuthFields(AUTH_TYPE.LOGIN_EMAIL)
 

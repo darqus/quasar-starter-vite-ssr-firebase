@@ -5,7 +5,7 @@ import {
   zPasswordStrict,
   zRequiredInputString,
   zRequiredSelect,
-} from 'src/validation/zod-helpers'
+} from '@/validation/zod-helpers'
 
 // Auth
 export const loginSchema = z.object({

@@ -2,10 +2,10 @@ import { computed, ref } from 'vue'
 
 import { defineStore } from 'pinia'
 
-import { getCollection } from 'src/boot/firebase'
-import { LEVELS_MAP } from 'src/types/emloyee-card'
-import type { TNewEmployee } from 'src/types/new-employee'
-import { STORE_TYPES } from 'src/types/store'
+import { getCollection } from '@/boot/firebase'
+import { LEVELS_MAP } from '@/types/emloyee-card'
+import type { TNewEmployee } from '@/types/new-employee'
+import { STORE_TYPES } from '@/types/store'
 
 export const useStoreEmployeeCards = defineStore(
   STORE_TYPES.EMPLOYEE_CARDS,

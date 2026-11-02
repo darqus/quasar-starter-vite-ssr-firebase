@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import type { TextareaFormField } from 'src/types/form'
-import { INPUT_REQUIRED } from 'src/utils/constants'
+import type { TextareaFormField } from '@/types/form'
+import { INPUT_REQUIRED } from '@/utils/constants'
 
 const emit = defineEmits<{
   'update:model': [value: string]
