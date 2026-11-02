@@ -297,6 +297,48 @@ Vite 8 умеет резолвить `paths` из tsconfig нативно
 | `npx quasar build`       | ✅ SPA-сборка, `dist/spa`                               |
 | `npx quasar dev -p 9123` | ✅ HTTP 200, `client-entry.js` компилируется            |
 
+### Регрессия: иконки отображались текстом (`menu_open`)
+
+**Симптом.** После обновления вместо глифов Material Icons в разметке был
+виден текст: `menu_open`, `person_add`, `dark_mode` и т.д.
+
+**Причина.** В Quasar 2.35 переработан `QIcon`: лигатура иконки больше не
+текстовый узел внутри `<i class="q-icon material-icons">`, а вложенный
+`<span aria-hidden="true">menu_open</span>` (сделано ради доступности —
+чтобы имя иконки не попадало в дерево доступности). А в
+`src/css/_global.scss` был универсальный селектор:
+
+```scss
+* {
+  font-family: Roboto, sans-serif;
+}
+```
+
+Универсальный `*` перебивал наследование для этого `<span>`, поэтому
+`font-family: 'Material Icons'` + `font-feature-settings: 'liga'` с `<i>` на
+текст не действовали, и браузер рисовал имя иконки шрифтом Roboto.
+
+Подтверждено через headless Chrome + CDP: у спана `font-family: Roboto,
+sans-serif`, ширина 60 px (текст); после правки — `"Material Icons"`,
+24 px (глиф). CSS, шрифт и `@font-face` при этом были в порядке — проблема
+была только в каскаде.
+
+**Правка.** Из `src/css/_global.scss` убран `font-family` из `*`
+(шрифт body и так задаёт типографика Quasar), остался только
+`scrollbar-width: thin`. В файле оставлен комментарий-предупреждение,
+чтобы правило не вернули.
+
+**Проверки после правки:**
+
+| Команда                        | Результат                                      |
+| ------------------------------ | ---------------------------------------------- |
+| `npm run lint`                 | ✅ 0                                           |
+| `npm run typecheck`            | ✅ 0 ошибок                                    |
+| `npm test`                     | ✅ 8 файлов / 76 тестов                        |
+| `npx quasar build`             | ✅ SPA-сборка, `dist/spa`                      |
+| `quasar dev` + headless Chrome | ✅ глифы (скриншот, computed `Material Icons`) |
+| прод-сборка на статик-сервере  | ✅ глифы (скриншот `dist/spa`)                 |
+
 ### Что осталось за рамками
 
 - `typescript` 7 не обновлялся: пакет v7 — нативная реализация без
