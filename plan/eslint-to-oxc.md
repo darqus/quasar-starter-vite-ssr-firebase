@@ -161,8 +161,9 @@ ESLint в этом проекте делает две разные вещи:
 пакетов `stylelint` и конфигов в зависимостях нет — сейчас это мёртвая настройка.
 
 Выбран вариант **A**: установлены `stylelint`, `stylelint-config-standard-scss`,
-`stylelint-config-recess-order`, `postcss-scss`; `stylelint "src/**/*.{css,scss}"`
-входит в `lint`, `--fix` — в `fix`.
+`stylelint-config-recess-order`, `postcss-scss`, `postcss-html`;
+`stylelint "src/**/*.{css,scss,vue}"` входит в `lint`, `--fix` — в `fix`.
+Для `.vue` в `.stylelintrc.json` задан `customSyntax: "postcss-html"`.
 
 ### 2.6. Проверки
 
@@ -219,6 +220,14 @@ ESLint в этом проекте делает две разные вещи:
   опциональными (устраняет `vue/no-required-prop-with-default`).
 - **Stylelint:** `--fix` отсортировал свойства в `_global.scss` и убрал лишние
   пустые строки в `quasar.variables.scss`.
+- **Stylelint и `.vue` (доработка):** при миграции из конфига ушли
+  `stylelint-config-recommended-vue` и оверрайды для `*.vue`, поэтому
+  Stylelint в VS Code стал парсить `<script>` как CSS и падал с
+  `CssSyntaxError: Unknown word computed/useMeta`. Добавлен `postcss-html` и
+  оверрайд `{ "files": ["**/*.vue"], "customSyntax": "postcss-html" }`,
+  glob в `lint`/`fix` расширен до `{css,scss,vue}`. Заодно в
+  `BaseForm.vue` стили переведены на `lang="scss"` и вложенность, чтобы
+  соблюсти `scss/selector-nest-combinators`.
 - **Менеджер пакетов:** yarn 1 → npm; `yarn.lock` (5780 строк) удалён,
   сгенерирован `package-lock.json`; `.npmrc` с pnpm-опциями удалён (npm на них
   ругался), README переведён на `npm run ...`.

@@ -325,7 +325,7 @@ defineExpose({
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .base-form {
   width: 100%;
 }
@@ -342,17 +342,17 @@ defineExpose({
 .form-actions {
   display: flex;
   gap: 8px;
-}
 
-.form-actions.text-center {
-  justify-content: center;
-}
+  &.text-center {
+    justify-content: center;
+  }
 
-.form-actions.text-right {
-  justify-content: flex-end;
-}
+  &.text-right {
+    justify-content: flex-end;
+  }
 
-.form-actions.text-left {
-  justify-content: flex-start;
+  &.text-left {
+    justify-content: flex-start;
+  }
 }
 </style>

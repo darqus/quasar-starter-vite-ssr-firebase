@@ -6,6 +6,10 @@
   "overrides": [
     {
       "files": ["src/*.scss", "src/**/*.scss"]
+    },
+    {
+      "files": ["**/*.vue"],
+      "customSyntax": "postcss-html"
     }
   ],
   "rules": {
