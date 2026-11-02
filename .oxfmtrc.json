@@ -17,6 +17,7 @@
     "dist/**",
     ".quasar/**",
     ".firebase/**",
+    "src/css/_tokens.scss",
     "firebase-debug.log",
     "yarn.lock",
     "package-lock.json",

@@ -1,0 +1,6 @@
+@layer components {
+  .user-card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-card-min), 1fr));
+  }
+}

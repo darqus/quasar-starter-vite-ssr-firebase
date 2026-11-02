@@ -177,7 +177,7 @@ defineExpose({
         <q-card-section>
           <div
             :class="fieldsClass"
-            class="form-fields"
+            class="base-form__fields"
           >
             <slot name="before-fields" />
 
@@ -242,7 +242,7 @@ defineExpose({
       <template v-else>
         <div
           v-if="title || subtitle"
-          class="form-header q-mb-md"
+          class="base-form__header q-mb-md"
         >
           <div
             v-if="title"
@@ -260,7 +260,7 @@ defineExpose({
 
         <div
           :class="fieldsClass"
-          class="form-fields"
+          class="base-form__fields"
         >
           <slot name="before-fields" />
 
@@ -295,8 +295,8 @@ defineExpose({
 
         <div
           v-if="showActions"
-          :class="`text-${actionsAlign}`"
-          class="form-actions q-mt-md"
+          :class="`base-form__actions--${actionsAlign}`"
+          class="base-form__actions q-mt-md"
         >
           <slot
             :form="formMethods"
@@ -324,35 +324,3 @@ defineExpose({
     </q-form>
   </div>
 </template>
-
-<style scoped lang="scss">
-.base-form {
-  width: 100%;
-}
-
-.form-fields {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-header {
-  text-align: center;
-}
-
-.form-actions {
-  display: flex;
-  gap: 8px;
-
-  &.text-center {
-    justify-content: center;
-  }
-
-  &.text-right {
-    justify-content: flex-end;
-  }
-
-  &.text-left {
-    justify-content: flex-start;
-  }
-}
-</style>

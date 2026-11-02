@@ -1,0 +1,18 @@
+/**
+ * Layout shell backgrounds.
+ *
+ * Asset URLs are relative to this file (`src/css/`), so they must start
+ * with `../` — Quasar bundles them through Vite and hashes the emitted
+ * files.
+ */
+@layer components {
+  .main-layout__page {
+    background-image: url("../assets/svg/bg-main-layout.svg");
+    background-size: cover;
+  }
+
+  .main-layout__drawer {
+    background-image: url("../assets/svg/bg-drawer.svg");
+    background-size: cover;
+  }
+}

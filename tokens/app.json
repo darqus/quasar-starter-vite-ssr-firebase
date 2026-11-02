@@ -1,0 +1,15 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "space": {
+    "sm": {
+      "value": "8px",
+      "description": "Compact gap: inline control groups, action rows"
+    }
+  },
+  "size": {
+    "card-min": {
+      "value": "300px",
+      "description": "Minimum width of an auto-fill card in a card grid"
+    }
+  }
+}

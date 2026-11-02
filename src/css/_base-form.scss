@@ -1,0 +1,31 @@
+@layer components {
+  .base-form {
+    width: 100%;
+  }
+
+  .base-form__fields {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .base-form__header {
+    text-align: center;
+  }
+
+  .base-form__actions {
+    display: flex;
+    gap: var(--space-sm);
+
+    &--left {
+      justify-content: flex-start;
+    }
+
+    &--center {
+      justify-content: center;
+    }
+
+    &--right {
+      justify-content: flex-end;
+    }
+  }
+}

@@ -36,8 +36,9 @@ npm run lint
 ```
 
 `lint` runs Oxlint, checks the Oxfmt formatting, verifies the CSS/SCSS property
-order with Stylelint, and validates the attribute order in Vue templates. The
-same checks can be fixed automatically:
+order with Stylelint, rejects `<style>` blocks in Vue components, and validates
+the attribute order in Vue templates. The same checks can be fixed
+automatically:
 
 ```bash
 npm run fix
@@ -75,6 +76,23 @@ npm run format
 npm run build
 ```
 
+### Styles
+
+Styles live in SCSS modules under `src/css/`, one `_<component>.scss` partial
+per component, inside the cascade layers declared in `_reset.scss`. Vue
+components never contain `<style>` blocks — `npm run lint` fails if one is
+added (`scripts/check-no-style-blocks.mjs`).
+
+Design tokens are generated from `tokens/app.json`:
+
+```bash
+npm run build:tokens
+```
+
+`src/css/_tokens.scss` is a committed artifact; edit the JSON source and
+re-run the script instead of touching the SCSS file. The full rules (layers,
+tokens, BEM, Quasar overrides) are in `src/css/STYLE_GUIDE.md`.
+
 ### Project conventions
 
 - Source imports use the `@/` alias, which Quasar CLI maps to `/src`:
@@ -83,6 +101,7 @@ npm run build
   `defineRouter` for the router and `defineStore` for the Pinia instance.
 - Environment variables are read from `import.meta.env` (all `VITE_*`
   variables are typed automatically in `.quasar/quasar.d.ts`).
+- Component styles are BEM blocks in `src/css/`, never `<style>` in an SFC.
 
 ### Customize the configuration
 

@@ -1,8 +1,0 @@
-// Never set font-family through a universal selector: it overrides
-// inheritance for every descendant, including the nested <span> that
-// QIcon uses to render icon-font ligatures (e.g. Material Icons), which
-// turns icon names such as "menu_open" into visible text. The body font
-// comes from Quasar typography.
-* {
-  scrollbar-width: thin;
-}

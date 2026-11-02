@@ -52,7 +52,7 @@ void storeEmployeeCards.getEmployeeList()
   />
   <div
     v-else
-    class="row q-gutter-md users-list"
+    class="row q-gutter-md user-card-list"
   >
     <q-card
       v-for="{
@@ -105,7 +105,3 @@ void storeEmployeeCards.getEmployeeList()
     </q-card>
   </div>
 </template>
-
-<style lang="scss">
-@import './scss/user-card-list';
-</style>

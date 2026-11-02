@@ -42,18 +42,14 @@ const toggleLeftDrawer = () => {
 
     <q-drawer
       v-model="leftDrawerOpen"
-      class="bg-drawer"
+      class="main-layout__drawer"
       bordered
       show-if-above
     >
       <SidebarDrawer />
     </q-drawer>
-    <q-page-container class="bg-main-layout">
+    <q-page-container class="main-layout__page">
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
-
-<style lang="scss">
-@import './scss/main-layout';
-</style>
