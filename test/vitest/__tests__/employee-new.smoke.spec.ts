@@ -1,7 +1,8 @@
-/* eslint-disable import/order */
 import { flushPromises, mount } from '@vue/test-utils'
+
 import { describe, expect, it, vi } from 'vitest'
 import { createRouter, createWebHistory } from 'vue-router'
+
 import { createPinia } from 'pinia'
 
 import FormFields from 'src/components/form-fields/FormFields.vue'
@@ -34,18 +35,24 @@ function setFieldModel(
   value: unknown
 ) {
   const formFields = wrapper.findComponent(FormFields)
-  if (!formFields.exists()) throw new Error('FormFields component not found')
+  if (!formFields.exists()) {
+    throw new Error('FormFields component not found')
+  }
   const props = formFields.props() as {
     fields: Array<{ name: string; model: unknown }>
   }
   const f = props.fields.find((x) => x.name === name)
-  if (!f) throw new Error(`Field ${name} not found`)
+  if (!f) {
+    throw new Error(`Field ${name} not found`)
+  }
   f.model = value
 }
 
 function emitFormSubmit(wrapper: ReturnType<typeof mount>) {
   const qform = wrapper.findComponent({ name: 'QForm' })
-  if (!qform.exists()) throw new Error('QForm component not found')
+  if (!qform.exists()) {
+    throw new Error('QForm component not found')
+  }
   const vm = qform.vm as unknown as { $emit: (e: string) => void }
   ;(
     vm as unknown as {

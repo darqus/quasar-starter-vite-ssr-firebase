@@ -9,7 +9,7 @@ import { createPinia } from 'pinia'
  * @see https://pinia.vuejs.org/core-concepts/plugins.html#typing-new-store-properties
  */
 declare module 'pinia' {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  // oxlint-disable-next-line typescript/consistent-type-definitions -- module augmentation requires an interface
   export interface PiniaCustomProperties {
     readonly router: Router
   }

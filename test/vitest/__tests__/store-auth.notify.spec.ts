@@ -2,7 +2,6 @@ import { describe, expect, it, vi } from 'vitest'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { createPinia, setActivePinia } from 'pinia'
-
 import { Notify } from 'quasar'
 
 // Hoisted firebase/auth mocks to satisfy getAuth (used by boot/firebase) and signOut
@@ -37,9 +36,7 @@ describe('store-auth notify behavior', () => {
     // Notify plugin is globally registered in test setup; just spy on it
 
     const store = useStoreAuth()
-    const pushSpy = vi
-      .spyOn(router, 'push')
-      .mockResolvedValue(undefined as unknown as never)
+    const pushSpy = vi.spyOn(router, 'push').mockResolvedValue(undefined)
 
     // Ensure Notify.create exists and is spy-able in this runtime
     if (!(Notify as unknown as { create?: unknown }).create) {
@@ -80,9 +77,7 @@ describe('store-auth notify behavior', () => {
     })
 
     const store = useStoreAuth()
-    const pushSpy = vi
-      .spyOn(router, 'push')
-      .mockResolvedValue(undefined as unknown as never)
+    const pushSpy = vi.spyOn(router, 'push').mockResolvedValue(undefined)
     if (!(Notify as unknown as { create?: unknown }).create) {
       // @ts-expect-error augment for test
       Notify.create = () => {}
@@ -118,9 +113,7 @@ describe('store-auth notify behavior', () => {
     })
 
     const store = useStoreAuth()
-    const pushSpy = vi
-      .spyOn(router, 'push')
-      .mockResolvedValue(undefined as unknown as never)
+    const pushSpy = vi.spyOn(router, 'push').mockResolvedValue(undefined)
     if (!(Notify as unknown as { create?: unknown }).create) {
       // @ts-expect-error augment for test
       Notify.create = () => {}

@@ -6,7 +6,9 @@ export function rulesFromZodField(schema: ZodTypeAny) {
   return [
     (v: unknown) => {
       const res = schema.safeParse(v)
-      if (res.success) return true
+      if (res.success) {
+        return true
+      }
       const issue = res.error.issues[0]
       return issue?.message ?? 'Некорректное значение'
     },
@@ -19,7 +21,9 @@ export function parseAndCollectErrors<T extends Record<string, unknown>>(
   data: T
 ): { ok: true; data: T } | { ok: false; errors: Record<string, string[]> } {
   const res = schema.safeParse(data)
-  if (res.success) return { ok: true, data: res.data as T }
+  if (res.success) {
+    return { ok: true, data: res.data as T }
+  }
   const map: Record<string, string[]> = {}
   for (const issue of res.error.issues) {
     const path = issue.path.join('.')

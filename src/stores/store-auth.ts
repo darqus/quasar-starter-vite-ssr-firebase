@@ -1,9 +1,9 @@
 import { computed, ref } from 'vue'
 
 import { type AuthError, onAuthStateChanged, signOut } from 'firebase/auth'
+import type { Router } from 'vue-router'
 
 import { defineStore } from 'pinia'
-
 import { Loading } from 'quasar'
 
 import { auth } from 'src/boot/firebase'
@@ -12,8 +12,6 @@ import { INPUT_TYPE, PASSWORD_VISIBILITY_ICON } from 'src/types/form'
 import { ROUTE_ICON, ROUTE_NAME, ROUTE_TYPE } from 'src/types/route'
 import { STORE_TYPES } from 'src/types/store'
 import { createNotify } from 'src/utils/notify'
-
-import type { Router } from 'vue-router'
 
 export const useStoreAuth = defineStore(STORE_TYPES.AUTH, () => {
   // state

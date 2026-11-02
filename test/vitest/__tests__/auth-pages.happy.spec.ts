@@ -78,12 +78,16 @@ function setFieldModel(
   value: unknown
 ) {
   const formFields = wrapper.findComponent(FormFields)
-  if (!formFields.exists()) throw new Error('FormFields component not found')
+  if (!formFields.exists()) {
+    throw new Error('FormFields component not found')
+  }
   const props = formFields.props() as {
     fields: Array<{ name: string; model: unknown }>
   }
   const f = props.fields.find((x) => x.name === name)
-  if (!f) throw new Error(`Field ${name} not found`)
+  if (!f) {
+    throw new Error(`Field ${name} not found`)
+  }
   f.model = value
 }
 
@@ -95,13 +99,17 @@ beforeEach(() => {
 
 async function clickByText(wrapper: ReturnType<typeof mount>, text: string) {
   const btn = wrapper.findAll('button').find((b) => b.text().includes(text))
-  if (!btn) throw new Error(`Button ${text} not found`)
+  if (!btn) {
+    throw new Error(`Button ${text} not found`)
+  }
   await btn.trigger('click')
 }
 
 function emitFormSubmit(wrapper: ReturnType<typeof mount>) {
   const qform = wrapper.findComponent({ name: 'QForm' })
-  if (!qform.exists()) throw new Error('QForm component not found')
+  if (!qform.exists()) {
+    throw new Error('QForm component not found')
+  }
   const vm = qform.vm as unknown as {
     $emit: (e: string, evt: { preventDefault: () => void }) => void
   }

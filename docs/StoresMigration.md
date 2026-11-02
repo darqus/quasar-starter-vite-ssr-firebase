@@ -12,6 +12,7 @@
 
 ```ts
 import { ref, computed } from 'vue'
+
 import { defineStore } from 'pinia'
 
 export const useExampleStore = defineStore('example', () => {
@@ -36,7 +37,7 @@ export const useExampleStore = defineStore('example', () => {
 - Преобразуйте `state` → `ref(...)`, `getters` → `computed(...)`.
 - Методы из `actions` сделайте обычными функциями. Не используйте `this` — обращайтесь к `ref` напрямую.
 - Верните из `setup` только то, что должно быть публичным.
-- Проверьте импорты и сортировку (`eslint-plugin-import`).
+- Проверьте импорты и сортировку (`oxfmt`, `sortImports`).
 
 ## Итоги миграции в проекте
 

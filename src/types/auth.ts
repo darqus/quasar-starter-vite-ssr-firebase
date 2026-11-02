@@ -1,6 +1,6 @@
-import type { Loading, Valid } from './models'
-
 import type { User } from 'firebase/auth'
+
+import type { Loading, Valid } from './models'
 
 export type CurrentUser = User | null
 

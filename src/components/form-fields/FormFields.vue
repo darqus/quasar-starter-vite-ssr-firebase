@@ -39,9 +39,7 @@ const visibleFields = computed(() =>
       :field="field as unknown as SelectFormField"
       @update:model="
         (field as unknown as SelectFormField).model = $event as unknown as
-          | string
-          | number
-          | null
+          string | number | null
       "
     />
     <FormTextArea

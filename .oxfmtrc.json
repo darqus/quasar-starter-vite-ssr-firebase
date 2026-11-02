@@ -1,0 +1,69 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "bracketSameLine": false,
+  "singleAttributePerLine": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "vueIndentScriptAndStyle": false,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "dist/**",
+    ".quasar/**",
+    ".firebase/**",
+    "firebase-debug.log",
+    "yarn.lock",
+    "package-lock.json",
+    "**/database.rules.json",
+    "**/*.min.*"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.css", "**/*.scss"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ],
+  "sortImports": {
+    "internalPattern": ["src/"],
+    "ignoreCase": true,
+    "newlinesBetween": true,
+    "order": "asc",
+    "customGroups": [
+      {
+        "groupName": "framework-vue",
+        "elementNamePattern": ["vue", "@vue/**"]
+      },
+      {
+        "groupName": "framework-quasar",
+        "elementNamePattern": ["quasar", "@quasar/**", "pinia"]
+      }
+    ],
+    "groups": [
+      ["value-builtin", "type-builtin"],
+      "framework-vue",
+      ["value-external", "type-external"],
+      "framework-quasar",
+      ["value-internal", "type-internal"],
+      ["value-subpath", "type-subpath"],
+      [
+        "value-parent",
+        "type-parent",
+        "value-sibling",
+        "type-sibling",
+        "value-index",
+        "type-index"
+      ],
+      "side_effect_style",
+      "side_effect",
+      "unknown"
+    ]
+  }
+}

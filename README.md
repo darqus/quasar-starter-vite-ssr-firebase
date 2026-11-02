@@ -15,30 +15,52 @@ Live: [https://skill-flash.web.app](https://skill-flash.web.app)
 ## Install the dependencies
 
 ```bash
-yarn
-# or
 npm install
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
-quasar dev
+npm run dev
 ```
 
 ### Lint the files
 
 ```bash
-yarn lint
-# or
 npm run lint
 ```
+
+`lint` runs Oxlint, checks the Oxfmt formatting, verifies the CSS/SCSS property
+order with Stylelint, and validates the attribute order in Vue templates. The
+same checks can be fixed automatically:
+
+```bash
+npm run fix
+```
+
+Only the Vue template attribute order:
+
+```bash
+npm run check:vue-attrs
+npm run fix:vue-attrs
+```
+
+Oxlint does not parse Vue templates, so the order is enforced by a project
+script, `scripts/check-vue-attribute-order.mjs`:
+
+`DEFINITION → LIST_RENDERING → CONDITIONALS → RENDER_MODIFIERS → GLOBAL →
+[UNIQUE, SLOT] → TWO_WAY_BINDING → OTHER_DIRECTIVES → ATTR_DYNAMIC →
+ATTR_STATIC → ATTR_SHORTHAND_BOOL → EVENTS → CONTENT`, alphabetically inside a
+group. Tags with `v-bind="object"`, `v-pre`, or repeated attribute targets
+(except `class`/`style`) are reported only and fixed manually.
+
+In VS Code the fixer runs on save through the Run On Save extension
+(`emeraldwalk.runonsave` in `.vscode/settings.json`); without that extension
+the `lint` gate still applies.
 
 ### Format the files
 
 ```bash
-yarn format
-# or
 npm run format
 ```
 

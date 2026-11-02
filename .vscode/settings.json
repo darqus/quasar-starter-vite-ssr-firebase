@@ -1,53 +1,19 @@
 {
   "editor.formatOnSave": true,
-  // Let Prettier handle formatting; ESLint handles code-quality/organize imports
-  "eslint.format.enable": false,
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue"
-  ],
-  "eslint.codeActionsOnSave.mode": "problems",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always",
+    "source.fixAll.stylelint": "always"
+  },
   "stylelint.validate": ["css", "scss", "vue"],
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": {
-      "source.fixAll.prettier": "explicit",
-      "source.fixAll.eslint": "explicit",
-      "source.organizeImports": "never"
-    }
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": {
-      "source.fixAll.prettier": "explicit",
-      "source.fixAll.eslint": "explicit",
-      "source.organizeImports": "never"
-    }
-  },
-  "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": {
-      "source.fixAll.prettier": "explicit",
-      "source.fixAll.eslint": "explicit",
-      "source.organizeImports": "never"
-    }
-  },
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": {
-      "source.fixAll.prettier": "explicit",
-      "source.fixAll.stylelint": "explicit"
-    }
-  },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": {
-      "source.fixAll.prettier": "explicit",
-      "source.fixAll.stylelint": "explicit"
-    }
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.vue$",
+        "cmd": "PATH=\"$HOME/.nvm/current/bin:$PATH\" node \"${workspaceFolder}/scripts/check-vue-attribute-order.mjs\" --fix \"${file}\"",
+        "autoShowOutputPanel": "error"
+      }
+    ]
   },
   "cSpell.words": ["Падаван", "autogrow", "VITE"]
 }

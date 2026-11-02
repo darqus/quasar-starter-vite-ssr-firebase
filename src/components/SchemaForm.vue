@@ -26,7 +26,9 @@ onMounted(() => {
 watch(
   () => props.modelValue,
   (ext) => {
-    if (!ext) return
+    if (!ext) {
+      return
+    }
     Object.assign(values.value, ext)
   },
   { deep: true }

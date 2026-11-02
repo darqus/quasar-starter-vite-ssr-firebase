@@ -1,5 +1,7 @@
 import { nextTick, ref, type Ref, watch } from 'vue'
 
+import type { ZodTypeAny } from 'zod'
+
 import type { QForm } from 'quasar'
 
 import type {
@@ -10,8 +12,6 @@ import type {
   InferShape,
 } from 'src/types/form'
 import { parseAndCollectErrors } from 'src/validation/quasar-rules'
-
-import type { ZodTypeAny } from 'zod'
 
 export type FormData = Record<string, unknown>
 
@@ -111,7 +111,9 @@ export function useForm<F extends readonly AnyFormField[]>(
     watch(
       () => fields.value.map((f) => f.model),
       () => {
-        if (!options.schema) return
+        if (!options.schema) {
+          return
+        }
         const res = parseAndCollectErrors(options.schema, getFormData())
         if (res.ok) {
           errors.value = {}
@@ -127,10 +129,14 @@ export function useForm<F extends readonly AnyFormField[]>(
 
   // Submit form
   const submit = async (): Promise<void> => {
-    if (isSubmitting.value) return
+    if (isSubmitting.value) {
+      return
+    }
 
     const valid = await validate()
-    if (!valid) return
+    if (!valid) {
+      return
+    }
 
     isSubmitting.value = true
 
@@ -160,7 +166,7 @@ export function useForm<F extends readonly AnyFormField[]>(
   ): FieldModelByName<F, N> | undefined => {
     const field = fields.value.find((f) => f.name === fieldName)
 
-    return field ? (field.model as FieldModelByName<F, N>) : undefined
+    return field ? field.model : undefined
   }
 
   // Get all form data as object
@@ -190,13 +196,9 @@ export function useForm<F extends readonly AnyFormField[]>(
   // Add field
   const addField = (field: Fields[0], index?: number): void => {
     if (index !== undefined) {
-      fields.value.splice(
-        index,
-        0,
-        field as unknown as (typeof fields.value)[number]
-      )
+      fields.value.splice(index, 0, field)
     } else {
-      fields.value.push(field as unknown as (typeof fields.value)[number])
+      fields.value.push(field)
     }
   }
 
@@ -238,11 +240,15 @@ export function setupValidateOnChange(
   isValid: Ref<boolean>,
   enabled?: boolean
 ) {
-  if (!enabled) return
+  if (!enabled) {
+    return
+  }
   watch(
     () => fields.value.map((f) => f.model),
     async () => {
-      if (!formRef.value) return
+      if (!formRef.value) {
+        return
+      }
       await nextTick()
       const valid = await formRef.value.validate()
       isValid.value = valid

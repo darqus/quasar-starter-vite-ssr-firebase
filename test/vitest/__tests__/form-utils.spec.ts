@@ -124,7 +124,7 @@ describe('utils/form', () => {
       model: 'val',
       rule: undefined,
     }
-    const fields: Fields = [invalidField as unknown as Fields[number]]
+    const fields: Fields = [invalidField]
 
     // lookups by any name should miss
     expect(getFieldModel(fields, 'missing')).toBeNull()

@@ -2,9 +2,9 @@
 const { VITE_ROUTER_BASE: BASE } = import.meta.env
 
 type Form = {
-  cardStyle: string
-  title: string
-  description: string
+  cardStyle?: string
+  title?: string
+  description?: string
 }
 
 withDefaults(defineProps<Form>(), {

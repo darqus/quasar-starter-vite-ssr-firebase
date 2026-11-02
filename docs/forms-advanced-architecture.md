@@ -271,8 +271,9 @@ export const loginValidation = z.object({
 ## Пример схемы (Login)
 
 ```ts
-import type { FormSchema } from 'src/types/form.schema'
 import { z } from 'zod'
+
+import type { FormSchema } from 'src/types/form.schema'
 
 export const loginSchema: FormSchema<
   [

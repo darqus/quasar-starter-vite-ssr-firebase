@@ -21,7 +21,9 @@ export const useStoreEmployeeCards = defineStore(
     const isEmployeeList = computed(() => employeeList.value.length > 0)
 
     const filteredEmployeeList = computed(() => {
-      if (!isFilterVisible.value) return employeeList.value
+      if (!isFilterVisible.value) {
+        return employeeList.value
+      }
 
       if (
         !selectedFromLevel.value &&

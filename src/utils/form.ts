@@ -21,7 +21,9 @@ export function getFieldString(
   fallback = ''
 ): string {
   const val = getFieldModel(fields, name)
-  if (val == null) return fallback
+  if (val == null) {
+    return fallback
+  }
 
   switch (typeof val) {
     case 'string':
@@ -52,7 +54,9 @@ export function toFormDataMap(
   return list.reduce(
     (acc, f) => {
       const name = typeof f.name === 'string' ? f.name.trim() : ''
-      if (!name) return acc
+      if (!name) {
+        return acc
+      }
       acc[name] = f.model
       return acc
     },

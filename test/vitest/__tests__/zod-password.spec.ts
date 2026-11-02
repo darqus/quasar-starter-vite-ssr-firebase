@@ -69,7 +69,7 @@ describe('zPasswordStrict', () => {
 
     it('too long (>20)', () => {
       // 21 chars: start with valid core then pad to exceed length
-      const long = 'Abcdef1!' + 'abcdefghij' + 'ABC' // 8 + 10 + 3 = 21
+      const long = 'Abcdef1!abcdefghijABC' // 8 + 10 + 3 = 21
       const res = schema.safeParse(long)
       expect(res.success).toBe(false)
     })

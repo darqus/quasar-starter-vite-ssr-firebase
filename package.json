@@ -10,8 +10,12 @@
     "dev": "quasar dev",
     "build": "quasar build",
     "postinstall": "quasar prepare",
-    "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
-    "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "lint": "oxlint --type-aware . && stylelint \"src/**/*.{css,scss}\" && oxfmt --check && node scripts/check-vue-attribute-order.mjs",
+    "fix": "oxlint --type-aware --fix . && stylelint --fix \"src/**/*.{css,scss}\" && oxfmt && node scripts/check-vue-attribute-order.mjs --fix",
+    "format": "oxfmt",
+    "check:vue-attrs": "node scripts/check-vue-attribute-order.mjs",
+    "fix:vue-attrs": "node scripts/check-vue-attribute-order.mjs --fix",
+    "typecheck": "vue-tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -25,30 +29,28 @@
     "zod": "^4.1.8"
   },
   "devDependencies": {
-    "@eslint/js": "^9.14.0",
     "@quasar/app-vite": "^2.1.0",
     "@quasar/vite-plugin": "^1.10.0",
     "@types/node": "^24.4.0",
     "@vitejs/plugin-vue": "^6.0.1",
-    "@vue/eslint-config-prettier": "^10.1.0",
-    "@vue/eslint-config-typescript": "^14.4.0",
     "@vue/test-utils": "^2.4.6",
     "autoprefixer": "^10.4.2",
-    "eslint": "^9.14.0",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-vue": "^10.4.0",
-    "globals": "^16.4.0",
     "happy-dom": "^18.0.1",
-    "prettier": "^3.3.3",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
+    "oxlint-tsgolint": "^7.0.2005",
+    "postcss-scss": "^4.0.9",
+    "stylelint": "^17.16.0",
+    "stylelint-config-recess-order": "^7.10.0",
+    "stylelint-config-standard-scss": "^17.0.0",
     "typescript": "^5.9.2",
     "vite-plugin-checker": "^0.10.3",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.4",
+    "vitest": "^5.1.0",
     "vue-tsc": "^3.0.7"
   },
   "engines": {
     "node": "^28 || ^26 || ^24 || ^22 || ^20",
-    "npm": ">= 6.13.4",
-    "yarn": ">= 1.21.1"
+    "npm": ">= 6.13.4"
   }
 }

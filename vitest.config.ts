@@ -11,6 +11,7 @@ export default defineConfig({
     setupFiles: 'test/vitest/setup-file.ts',
     include: [
       'test/vitest/__tests__/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      'scripts/**/*.test.mjs',
     ],
   },
   plugins: [
