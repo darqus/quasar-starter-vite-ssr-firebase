@@ -1,5 +1,3 @@
-import { isCorrectDate } from '../utils/datetime'
-
 const INPUT_LIMIT = 255
 
 const RE_OVERFLOW_LIMIT = new RegExp(`^.{0,${INPUT_LIMIT}}$`)
@@ -69,33 +67,3 @@ export const REGEXP = {
   phone: /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
   date: /^\d{2}.\d{2}.\d{4}$/,
 }
-
-export const requiredInput = [
-  (v: string) => REGEXP.required.test(v) || MESSAGES.requiredInput,
-  (v: string) => REGEXP.string.test(v) || MESSAGES.notTrailingSpaces,
-  (v: string) => REGEXP.overflowLimit.test(v) || MESSAGES.overflowLimit,
-]
-
-export const requiredSelect = [
-  (v: string) => REGEXP.required.test(v) || MESSAGES.requiredSelect,
-  (v: string) => REGEXP.string.test(v) || MESSAGES.notTrailingSpaces,
-  (v: string) => REGEXP.overflowLimit.test(v) || MESSAGES.overflowLimit,
-]
-
-export const word = [
-  (v: string) => REGEXP.fewLetters.test(v) || MESSAGES.fewLetters,
-  (v: string) => REGEXP.word.test(v) || MESSAGES.onlyWord,
-]
-
-export const email = [(v: string) => REGEXP.email.test(v) || MESSAGES.email]
-
-export const password = [
-  (v: string) => REGEXP.password.test(v) || MESSAGES.password,
-]
-
-export const phone = [(v: string) => REGEXP.phone.test(v) || MESSAGES.phone]
-
-export const date = [
-  (v: string) => REGEXP.date.test(v) || MESSAGES.dateFormat,
-  (v: string) => isCorrectDate(v) || MESSAGES.dateCorrect,
-]

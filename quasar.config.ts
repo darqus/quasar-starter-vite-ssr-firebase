@@ -1,7 +1,15 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli-vite/quasar-config-file
 
+import { readFileSync } from 'node:fs'
+
 import { defineConfig } from '#q-app'
+
+const pkg = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url), 'utf8')
+) as { version: string }
+
+const BUILD_DATE = new Date().toISOString()
 
 export default defineConfig((/* ctx */) => {
   return {
@@ -11,7 +19,7 @@ export default defineConfig((/* ctx */) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli-vite/boot-files
-    boot: ['auth', 'firebase', 'register-form-fields'],
+    boot: ['auth', 'firebase'],
 
     // https://quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -61,7 +69,15 @@ export default defineConfig((/* ctx */) => {
       // minify: false,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      // Build metadata is generated at build time instead of being committed
+      // into .env by publish.sh.
+      extendViteConf(viteConf) {
+        viteConf.define = {
+          ...viteConf.define,
+          __APP_VERSION__: JSON.stringify(pkg.version),
+          __BUILD_DATE__: JSON.stringify(BUILD_DATE),
+        }
+      },
       // viteVuePluginOptions: {},
 
       vitePlugins: [

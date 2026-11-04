@@ -1,17 +1,20 @@
 import { LocalStorage, useQuasar } from 'quasar'
 
-import { useStoreAuth } from '@/stores/store-auth'
+import { useStoreAuth } from '@/features/auth'
+import { resolveInitialDark } from '@/shared/lib/theme'
 import { StorageKey } from '@/types/storage'
 
 import { defineBoot } from '#q-app'
 
 export default defineBoot(({ store, app }) => {
-  useStoreAuth(store).watchAuthStateChanged()
+  const storeAuth = useStoreAuth(store)
+  void storeAuth.watchAuthStateChanged()
 
-  // Initialize theme from LocalStorage (fallback to env)
   const $q = app.config.globalProperties.$q || useQuasar()
   const saved = LocalStorage.getItem(StorageKey.ThemeDark)
-  const fallback = Boolean(import.meta.env.VITE_DARK)
-  const isDark = typeof saved === 'boolean' ? saved : fallback
+  const isDark = resolveInitialDark(
+    typeof saved === 'boolean' ? saved : null,
+    import.meta.env.VITE_DARK
+  )
   $q.dark.set(isDark)
 })

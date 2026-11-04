@@ -5,29 +5,37 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import { createPinia } from 'pinia'
 
-import FormFields from '@/components/form-fields/FormFields.vue'
+const employeeRepositoryMocks = vi.hoisted(() => ({
+  createEmployee: vi.fn(() => Promise.resolve('employee-id')),
+  listEmployees: vi.fn(() => Promise.resolve([])),
+}))
+vi.mock(
+  '@/features/employees/api/employeeRepository',
+  () => employeeRepositoryMocks
+)
+
 import NewEmployeePage from '@/pages/employee/NewEmployeePage.vue'
-import { ROUTE_TYPE } from '@/types/route'
+import FormFields from '@/shared/form/FormFields.vue'
+import { ROUTE_NAME, ROUTE_PATH } from '@/types/route'
 
 // Router with just the page route
 function makeRouter() {
   return createRouter({
     history: createWebHistory(),
     routes: [
-      { path: `/${ROUTE_TYPE.NEW_EMPLOYEE}`, component: NewEmployeePage },
-      { path: '/', component: { template: '<div>home</div>' } },
+      {
+        path: ROUTE_PATH.NEW_EMPLOYEE,
+        name: ROUTE_NAME.NEW_EMPLOYEE,
+        component: NewEmployeePage,
+      },
+      {
+        path: ROUTE_PATH.HOME,
+        name: ROUTE_NAME.HOME,
+        component: { template: '<div>home</div>' },
+      },
     ],
   })
 }
-
-// Spy on addDoc used by the page (use hoisted ref to be available during mock hoisting)
-const addDocSpy = vi.hoisted(() => vi.fn(() => Promise.resolve()))
-vi.mock('@/boot/firebase', () => ({
-  addDoc: addDocSpy,
-}))
-
-// Stub Quasar Loading and Notify used by the page
-// No need to mock 'quasar' module; Quasar plugin is registered in test setup
 
 function setFieldModel(
   wrapper: ReturnType<typeof mount>,
@@ -41,11 +49,11 @@ function setFieldModel(
   const props = formFields.props() as {
     fields: Array<{ name: string; model: unknown }>
   }
-  const f = props.fields.find((x) => x.name === name)
-  if (!f) {
+  const field = props.fields.find((item) => item.name === name)
+  if (!field) {
     throw new Error(`Field ${name} not found`)
   }
-  f.model = value
+  field.model = value
 }
 
 function emitFormSubmit(wrapper: ReturnType<typeof mount>) {
@@ -53,16 +61,14 @@ function emitFormSubmit(wrapper: ReturnType<typeof mount>) {
   if (!qform.exists()) {
     throw new Error('QForm component not found')
   }
-  const vm = qform.vm as unknown as { $emit: (e: string) => void }
-  ;(
-    vm as unknown as {
-      $emit: (e: string, evt: { preventDefault: () => void }) => void
-    }
-  ).$emit('submit', { preventDefault: () => {} })
+  const vm = qform.vm as unknown as {
+    $emit: (event: string, payload: { preventDefault: () => void }) => void
+  }
+  vm.$emit('submit', { preventDefault: () => {} })
 }
 
 describe('NewEmployeePage smoke', () => {
-  it('submits form and sends correct payload', async () => {
+  it('submits form and sends correct payload to the repository', async () => {
     const pinia = createPinia()
     const router = makeRouter()
 
@@ -94,13 +100,8 @@ describe('NewEmployeePage smoke', () => {
     emitFormSubmit(wrapper)
     await flushPromises()
 
-    expect(addDocSpy).toHaveBeenCalledTimes(1)
-    const calls = addDocSpy.mock.calls as unknown as unknown[][]
-    expect(Array.isArray(calls) && calls.length === 1).toBe(true)
-    const collectionName = String(calls[0]?.[0])
-    const payload = (calls[0]?.[1] ?? {}) as Record<string, unknown>
-    expect(collectionName).toBe('employees')
-    expect(payload).toMatchObject({
+    expect(employeeRepositoryMocks.createEmployee).toHaveBeenCalledTimes(1)
+    expect(employeeRepositoryMocks.createEmployee).toHaveBeenCalledWith({
       name: 'Иван Иванов',
       email: 'ivan@example.com',
       position: 'Разработчик',
@@ -117,8 +118,8 @@ describe('NewEmployeePage smoke', () => {
     expect(props.fields.find((f) => f.name === 'fio')?.model).toBe('')
     expect(props.fields.find((f) => f.name === 'login')?.model).toBe('')
     expect(props.fields.find((f) => f.name === 'position')?.model).toBe('')
-    expect(props.fields.find((f) => f.name === 'level')?.model).toBe('')
-    expect(props.fields.find((f) => f.name === 'rate')?.model).toBe('')
+    expect(props.fields.find((f) => f.name === 'level')?.model).toBe(null)
+    expect(props.fields.find((f) => f.name === 'rate')?.model).toBe(null)
     expect(props.fields.find((f) => f.name === 'description')?.model).toBe('')
   })
 })

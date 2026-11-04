@@ -1,32 +1,10 @@
-import { type FirebaseApp, initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import {
-  collection,
-  doc,
-  getDocs,
-  getFirestore,
-  setDoc,
-} from 'firebase/firestore'
+import { defineBoot } from '#q-app'
 
-// init firebase app
-const firebaseApp: FirebaseApp = initializeApp({
-  apiKey: import.meta.env.VITE_API_KEY,
-  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-  messagingSenderId: String(import.meta.env.VITE_MESSAGING_SENDER_ID),
-  appId: import.meta.env.VITE_APP_ID,
+// Import-time initialization, kept in a boot file so Firebase is ready before
+// the router guard and the auth session store start working.
+// oxlint-disable-next-line import/no-unassigned-import -- initialization is the side effect
+import '@/lib/firebase/client'
+
+export default defineBoot(() => {
+  // The client module performs the actual initialization.
 })
-
-// init services
-const db = getFirestore()
-
-export const auth = getAuth(firebaseApp)
-
-// get collection data
-export const getCollection = (collectionName: string) =>
-  getDocs(collection(db, collectionName))
-
-// set doc https://firebase.google.com/docs/firestore/query-data/queries?authuser=0&hl=en
-export const addDoc = (collectionName: string, data: unknown) =>
-  setDoc(doc(collection(db, collectionName)), data)

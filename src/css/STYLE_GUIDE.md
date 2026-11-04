@@ -81,12 +81,14 @@ npm run build:tokens   # node scripts/build-tokens.mjs (Style Dictionary)
 
 ```scss
 @layer components {
-  .base-form__actions {
-    display: flex;
-    gap: var(--space-sm);
+  .user-card-list {
+    display: grid;
+    gap: var(--space-md);
+  }
 
-    &--left {
-      justify-content: flex-start;
+  .user-card-list__item {
+    &--featured {
+      outline: 1px solid var(--q-primary);
     }
   }
 }
@@ -128,8 +130,8 @@ src/css/
 └── _<component>.scss      # BEM-партиал компонента
 ```
 
-- Имя партиала = имя компонента в kebab-case: `BaseForm.vue` →
-  `_base-form.scss`.
+- Имя партиала = имя компонента в kebab-case: `MainLayout.vue` →
+  `_main-layout.scss`.
 - Импорты только через `@use './name';` (`@import` запрещён — устарел).
 - Статические ассеты: путь относительно файла (`../assets/svg/x.svg`).
   Абсолютные и `~`-пути не используются.

@@ -8,9 +8,24 @@ Live: [https://skill-flash.web.app](https://skill-flash.web.app)
 
 ## Documentation
 
-- Forms: named access pattern — see `docs/employee-form-example.md`
-- Auth forms: typed submit examples — see `docs/auth-form-examples.md`
+- Forms: current architecture — see `docs/forms.md`
+- Project structure and import boundaries — see `docs/architecture.md`
 - Stores migration to Composition API — see `docs/StoresMigration.md`
+
+## Deployment model
+
+The app is **SPA-only** (Quasar SPA + Firebase Hosting). SSR is not configured;
+see `docs/adr/0001-spa-first.md`.
+
+Environment variables are split by purpose:
+
+- `.env` — public app metadata and non-secret defaults (tracked);
+- `.env.local` — local Firebase web config (ignored, copy from `.env.example`);
+- `.env.example` — the full variable contract.
+
+Firebase web config is not a server secret, but local values must stay out of
+git. Build version and date are generated at build time from `package.json` and
+are not stored in `.env`.
 
 ## Requirements
 

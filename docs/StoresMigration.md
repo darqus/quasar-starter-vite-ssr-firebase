@@ -41,8 +41,11 @@ export const useExampleStore = defineStore('example', () => {
 
 ## Итоги миграции в проекте
 
-- `src/stores/store-auth.ts` — переписан на Composition API, публичный контракт сохранён.
-- `src/stores/store-employee-cards.ts` — переписан, вычисляемые поля и действия разделены.
-- `src/stores/example-store.ts` — пример минимального стора на Composition API.
+- Сторы принадлежат своим фичам: `src/features/auth/model/session.ts` и
+  `src/features/employees/model/store.ts`.
+- `src/stores/index.ts` содержит только настройку Pinia; стор кладётся в
+  `features/<name>/model`, если он относится к домену.
+- Legacy `store-auth`, `store-employee-cards` в `src/stores/` и
+  `example-store.ts` удалены (фазы 2 и 4).
 
 Если нужно, можно дополнить сторы типами возвращаемого API и добавить unit-тесты для действий/геттеров.

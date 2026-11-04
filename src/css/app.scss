@@ -9,7 +9,6 @@
 @use "./tokens";
 @use "./main-layout";
 @use "./user-card-list";
-@use "./base-form";
 
 /* Unlayered on purpose, keep it last: the only place where Quasar's own
    `.q-*` styles may be overridden (see STYLE_GUIDE.md). */

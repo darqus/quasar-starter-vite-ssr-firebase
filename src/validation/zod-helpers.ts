@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { isCorrectDate } from '@/utils/datetime'
+import { isCorrectDate } from '@/shared/lib/date'
 
 import { MESSAGES, REGEXP } from './rules'
 

@@ -1,0 +1,78 @@
+import { FIELD_TYPE, type Fields, INPUT_TYPE } from '@/shared/form/types'
+import { DEBOUNCE } from '@/shared/lib/constants'
+import { generateId } from '@/shared/lib/generator'
+import { rulesFromZodField } from '@/validation/quasar-rules'
+import { newEmployeeSchema } from '@/validation/schemas'
+
+export const createNewEmployeeFields = (): Fields => [
+  {
+    id: generateId(),
+    fieldType: FIELD_TYPE.INPUT,
+    debounce: DEBOUNCE,
+    label: 'ФИО',
+    name: 'fio',
+    inputType: INPUT_TYPE.TEXT,
+    model: '',
+    required: true,
+    iconPrepend: 'person',
+    rule: rulesFromZodField(newEmployeeSchema.shape.fio),
+  },
+  {
+    id: generateId(),
+    fieldType: FIELD_TYPE.INPUT,
+    debounce: DEBOUNCE,
+    label: 'Email',
+    name: 'login',
+    inputType: INPUT_TYPE.EMAIL,
+    model: '',
+    required: true,
+    iconPrepend: 'email',
+    rule: rulesFromZodField(newEmployeeSchema.shape.login),
+  },
+  {
+    id: generateId(),
+    fieldType: FIELD_TYPE.INPUT,
+    debounce: DEBOUNCE,
+    label: 'Должность',
+    name: 'position',
+    inputType: INPUT_TYPE.TEXT,
+    model: '',
+    required: true,
+    iconPrepend: 'group',
+    rule: rulesFromZodField(newEmployeeSchema.shape.position),
+  },
+  {
+    id: generateId(),
+    fieldType: FIELD_TYPE.SELECT,
+    label: 'Уровень',
+    name: 'level',
+    model: null,
+    required: true,
+    iconPrepend: 'attribution',
+    options: ['Падаван', 'Джедай', 'Ситх'],
+    rule: rulesFromZodField(newEmployeeSchema.shape.level),
+  },
+  {
+    id: generateId(),
+    fieldType: FIELD_TYPE.SELECT,
+    label: 'Рейтинг',
+    name: 'rate',
+    model: null,
+    required: true,
+    iconPrepend: 'star',
+    options: ['1', '2', '3', '4', '5'],
+    rule: rulesFromZodField(newEmployeeSchema.shape.rate),
+  },
+  {
+    id: generateId(),
+    fieldType: FIELD_TYPE.INPUT,
+    debounce: DEBOUNCE,
+    label: 'Описание',
+    name: 'description',
+    inputType: INPUT_TYPE.TEXT,
+    model: '',
+    required: false,
+    iconPrepend: 'description',
+    rule: rulesFromZodField(newEmployeeSchema.shape.description),
+  },
+]

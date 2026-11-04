@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useMeta } from 'quasar'
 
-import { meta } from '@/utils/meta'
+import { meta } from '@/shared/lib/meta'
 
 defineOptions({
   name: 'App',

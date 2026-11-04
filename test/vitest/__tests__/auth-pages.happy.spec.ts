@@ -4,73 +4,79 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { createPinia } from 'pinia'
+import { Notify } from 'quasar'
 
-// Hoist and apply mocks BEFORE importing components
-const onLoginSuccessSpy = vi.fn()
-const onRegisterSuccessSpy = vi.fn()
-const createErrorMessageSpy = vi.fn()
-
-vi.mock('@/stores/store-auth', () => ({
-  useStoreAuth: () => ({
-    loading: false,
-    valid: true,
-    disabledSubmitButton: false,
-    // simulate real store routing side-effect and call spy for assertion
-    onLoginSuccess: (router: { push: (to: { path: string }) => void }) => {
-      onLoginSuccessSpy(router)
-      router.push({ path: '/account' })
-    },
-    onRegisterSuccess: (
-      uid: string,
-      email: string,
-      router: { push: (to: { path: string }) => void }
-    ) => {
-      onRegisterSuccessSpy(uid, email, router)
-      router.push({ path: '/account' })
-    },
-    createErrorMessage: createErrorMessageSpy,
-  }),
+const authApiMocks = vi.hoisted(() => ({
+  signIn: vi.fn(),
+  signUp: vi.fn(),
+  sendReset: vi.fn(),
+  signOutUser: vi.fn(),
+  observeAuthState: vi.fn(() => () => {}),
 }))
+vi.mock('@/features/auth/api/authApi', () => authApiMocks)
 
-const authMocks = vi.hoisted(() => ({
-  getAuth: vi.fn(() => ({})),
-  signInWithEmailAndPassword: vi.fn(() => Promise.resolve({})),
-  createUserWithEmailAndPassword: vi.fn(() =>
-    Promise.resolve({ user: { uid: 'uid', email: 'user@example.com' } })
-  ),
-}))
-vi.mock('firebase/auth', () => ({
-  getAuth: authMocks.getAuth,
-  signInWithEmailAndPassword: authMocks.signInWithEmailAndPassword,
-  createUserWithEmailAndPassword: authMocks.createUserWithEmailAndPassword,
-}))
-
-import FormFields from '@/components/form-fields/FormFields.vue'
+import ForgotPage from '@/pages/auth/ForgotPage.vue'
 import LoginPage from '@/pages/auth/LoginPage.vue'
 import RegisterPage from '@/pages/auth/RegisterPage.vue'
-import { ROUTE_TYPE } from '@/types/route'
+import FormFields from '@/shared/form/FormFields.vue'
+import { ROUTE_NAME, ROUTE_PATH } from '@/types/route'
+
+type PageComponent = typeof LoginPage
 
 // Minimal router for pages
 function makeRouter() {
   return createRouter({
     history: createWebHistory(),
     routes: [
-      { path: `/${ROUTE_TYPE.LOGIN}`, component: LoginPage },
-      { path: `/${ROUTE_TYPE.REGISTER}`, component: RegisterPage },
-      { path: '/', component: { template: '<div>home</div>' } },
+      { path: ROUTE_PATH.LOGIN, name: ROUTE_NAME.LOGIN, component: LoginPage },
       {
-        path: `/${ROUTE_TYPE.FORGOT}`,
-        component: { template: '<div>forgot</div>' },
+        path: ROUTE_PATH.REGISTER,
+        name: ROUTE_NAME.REGISTER,
+        component: RegisterPage,
       },
       {
-        path: `/${ROUTE_TYPE.ACCOUNT}`,
+        path: ROUTE_PATH.HOME,
+        name: ROUTE_NAME.HOME,
+        component: { template: '<div>home</div>' },
+      },
+      {
+        path: ROUTE_PATH.FORGOT,
+        name: ROUTE_NAME.FORGOT,
+        component: ForgotPage,
+      },
+      {
+        path: ROUTE_PATH.ACCOUNT,
+        name: ROUTE_NAME.ACCOUNT,
         component: { template: '<div>account</div>' },
       },
     ],
   })
 }
 
-// (mocks moved above imports to guarantee application before component load)
+async function mountPage(Page: PageComponent) {
+  const pinia = createPinia()
+  const router = makeRouter()
+
+  const wrapper = mount(Page, {
+    global: {
+      plugins: [pinia, router],
+      stubs: {
+        QPage: { template: '<div><slot /></div>' },
+        QForm: {
+          name: 'QForm',
+          template:
+            '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
+          methods: { resetValidation() {}, validate: () => true },
+          expose: ['resetValidation', 'validate'],
+        },
+      },
+    },
+  })
+
+  await router.isReady()
+
+  return { wrapper, router }
+}
 
 function setFieldModel(
   wrapper: ReturnType<typeof mount>,
@@ -84,25 +90,22 @@ function setFieldModel(
   const props = formFields.props() as {
     fields: Array<{ name: string; model: unknown }>
   }
-  const f = props.fields.find((x) => x.name === name)
-  if (!f) {
+  const field = props.fields.find((item) => item.name === name)
+  if (!field) {
     throw new Error(`Field ${name} not found`)
   }
-  f.model = value
+  field.model = value
 }
 
-beforeEach(() => {
-  onLoginSuccessSpy.mockReset()
-  onRegisterSuccessSpy.mockReset()
-  createErrorMessageSpy.mockReset()
-})
-
-async function clickByText(wrapper: ReturnType<typeof mount>, text: string) {
-  const btn = wrapper.findAll('button').find((b) => b.text().includes(text))
-  if (!btn) {
-    throw new Error(`Button ${text} not found`)
+function getFieldModel(
+  wrapper: ReturnType<typeof mount>,
+  name: string
+): unknown {
+  const formFields = wrapper.findComponent(FormFields)
+  const props = formFields.props() as {
+    fields: Array<{ name: string; model: unknown }>
   }
-  await btn.trigger('click')
+  return props.fields.find((item) => item.name === name)?.model
 }
 
 function emitFormSubmit(wrapper: ReturnType<typeof mount>) {
@@ -111,212 +114,120 @@ function emitFormSubmit(wrapper: ReturnType<typeof mount>) {
     throw new Error('QForm component not found')
   }
   const vm = qform.vm as unknown as {
-    $emit: (e: string, evt: { preventDefault: () => void }) => void
+    $emit: (event: string, payload: { preventDefault: () => void }) => void
   }
   vm.$emit('submit', { preventDefault: () => {} })
 }
 
-describe('Auth pages happy path', () => {
-  it('LoginPage submits and calls success handler', async () => {
-    const pinia = createPinia()
-    const router = makeRouter()
-    const pushSpy = vi.spyOn(router, 'push')
+async function submitValidLogin(wrapper: ReturnType<typeof mount>) {
+  setFieldModel(wrapper, 'login', 'user@example.com')
+  // Strong password to satisfy zPasswordStrict
+  setFieldModel(wrapper, 'password', 'Qwe123!@')
+  emitFormSubmit(wrapper)
+  await flushPromises()
+  await flushPromises()
+}
 
-    const wrapper = mount(LoginPage, {
-      global: {
-        plugins: [pinia, router],
-        stubs: {
-          QPage: { template: '<div><slot /></div>' },
-          QForm: {
-            name: 'QForm',
-            template:
-              '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
-            methods: { resetValidation() {}, validate: () => true },
-            expose: ['resetValidation', 'validate'],
-          },
-        },
-      },
+beforeEach(() => {
+  vi.restoreAllMocks()
+  vi.clearAllMocks()
+})
+
+describe('Auth pages', () => {
+  it('LoginPage signs in, navigates to account and resets fields', async () => {
+    authApiMocks.signIn.mockResolvedValue({
+      user: { email: 'user@example.com' },
     })
 
-    await router.isReady()
+    const { wrapper, router } = await mountPage(LoginPage)
+    const pushSpy = vi.spyOn(router, 'push')
+
+    await submitValidLogin(wrapper)
+
+    expect(authApiMocks.signIn).toHaveBeenCalledWith(
+      'user@example.com',
+      'Qwe123!@'
+    )
+    expect(pushSpy).toHaveBeenCalledWith({ name: ROUTE_NAME.ACCOUNT })
+    expect(getFieldModel(wrapper, 'login')).toBe('')
+    expect(getFieldModel(wrapper, 'password')).toBe('')
+  })
+
+  it('LoginPage shows a human-readable error and stays on the page', async () => {
+    authApiMocks.signIn.mockRejectedValue({ code: 'auth/invalid-credential' })
+
+    const { wrapper, router } = await mountPage(LoginPage)
+    const pushSpy = vi.spyOn(router, 'push')
+    const notifySpy = vi.spyOn(Notify, 'create')
+
+    await submitValidLogin(wrapper)
+
+    expect(pushSpy).not.toHaveBeenCalledWith({ name: ROUTE_NAME.ACCOUNT })
+    expect(notifySpy).toHaveBeenCalledWith(
+      expect.objectContaining({ message: 'Неверный email или пароль' })
+    )
+    // The form keeps user input on failure.
+    expect(getFieldModel(wrapper, 'login')).toBe('user@example.com')
+  })
+
+  it('RegisterPage signs up, navigates to account and resets fields', async () => {
+    authApiMocks.signUp.mockResolvedValue({
+      user: { email: 'user@example.com' },
+    })
+
+    const { wrapper, router } = await mountPage(RegisterPage)
+    const pushSpy = vi.spyOn(router, 'push')
+
+    await submitValidLogin(wrapper)
+
+    expect(authApiMocks.signUp).toHaveBeenCalledWith(
+      'user@example.com',
+      'Qwe123!@'
+    )
+    expect(pushSpy).toHaveBeenCalledWith({ name: ROUTE_NAME.ACCOUNT })
+    expect(getFieldModel(wrapper, 'login')).toBe('')
+    expect(getFieldModel(wrapper, 'password')).toBe('')
+  })
+
+  it('RegisterPage maps email-already-in-use errors', async () => {
+    authApiMocks.signUp.mockRejectedValue({ code: 'auth/email-already-in-use' })
+
+    const { wrapper } = await mountPage(RegisterPage)
+    const notifySpy = vi.spyOn(Notify, 'create')
+
+    await submitValidLogin(wrapper)
+
+    expect(notifySpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: 'Аккаунт с таким email уже существует',
+      })
+    )
+  })
+
+  it('ForgotPage sends a reset email and returns to login', async () => {
+    authApiMocks.sendReset.mockResolvedValue(undefined)
+
+    const { wrapper, router } = await mountPage(ForgotPage)
+    const pushSpy = vi.spyOn(router, 'push')
 
     setFieldModel(wrapper, 'login', 'user@example.com')
-    // Strong password to satisfy zPasswordStrict: length, digit, uppercase, special char
-    setFieldModel(wrapper, 'password', 'Qwe123!@')
-
     emitFormSubmit(wrapper)
     await flushPromises()
     await flushPromises()
 
-    // ensure no crash and page rendered
-    expect(wrapper.html()).toContain('Вход')
-    expect(onLoginSuccessSpy).toHaveBeenCalled()
-    expect(pushSpy).toHaveBeenCalledWith({ path: '/account' })
-
-    // reset called: models cleared
-    const formFields = wrapper.findComponent(FormFields)
-    const props = formFields.props() as {
-      fields: Array<{ name: string; model: unknown }>
-    }
-    expect(props.fields.find((f) => f.name === 'login')?.model).toBe('')
-    expect(props.fields.find((f) => f.name === 'password')?.model).toBe('')
+    expect(authApiMocks.sendReset).toHaveBeenCalledWith('user@example.com')
+    expect(pushSpy).toHaveBeenCalledWith({ name: ROUTE_NAME.LOGIN })
+    expect(getFieldModel(wrapper, 'login')).toBe('')
   })
 
-  it('RegisterPage submits and calls success handler', async () => {
-    const pinia = createPinia()
-    const router = makeRouter()
-    const pushSpy = vi.spyOn(router, 'push')
-
-    const wrapper = mount(RegisterPage, {
-      global: {
-        plugins: [pinia, router],
-        stubs: {
-          QPage: { template: '<div><slot /></div>' },
-          QForm: {
-            name: 'QForm',
-            template:
-              '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
-            methods: { resetValidation() {}, validate: () => true },
-            expose: ['resetValidation', 'validate'],
-          },
-        },
-      },
-    })
-
-    await router.isReady()
-
-    setFieldModel(wrapper, 'login', 'user@example.com')
-    setFieldModel(wrapper, 'password', 'Qwe123!@')
-
-    emitFormSubmit(wrapper)
-    await flushPromises()
-    await flushPromises()
-
-    expect(wrapper.html()).toContain('Регистрация')
-    expect(onRegisterSuccessSpy).toHaveBeenCalled()
-    expect(pushSpy).toHaveBeenCalledWith({ path: '/account' })
-
-    // reset called: models cleared
-    const formFields = wrapper.findComponent(FormFields)
-    const props = formFields.props() as {
-      fields: Array<{ name: string; model: unknown }>
-    }
-    expect(props.fields.find((f) => f.name === 'login')?.model).toBe('')
-    expect(props.fields.find((f) => f.name === 'password')?.model).toBe('')
-  })
-
-  it('LoginPage: validation blocks submit when invalid', async () => {
-    const pinia = createPinia()
-    const router = makeRouter()
-
-    const wrapper = mount(LoginPage, {
-      global: {
-        plugins: [pinia, router],
-        stubs: {
-          QPage: { template: '<div><slot /></div>' },
-          // Stub QForm with validate() returning false
-          QForm: {
-            name: 'QForm',
-            template:
-              '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
-            methods: { resetValidation() {}, validate: () => false },
-            expose: ['resetValidation', 'validate'],
-          },
-        },
-      },
-    })
-
-    await router.isReady()
+  it('LoginPage: validation blocks submit when the form is invalid', async () => {
+    const { wrapper } = await mountPage(LoginPage)
 
     setFieldModel(wrapper, 'login', 'user@example.com')
     setFieldModel(wrapper, 'password', '')
-
-    await clickByText(wrapper, 'Войти')
-    await flushPromises()
-
-    expect(onLoginSuccessSpy).not.toHaveBeenCalled()
-    expect(createErrorMessageSpy).not.toHaveBeenCalled() // страница сама не кидает ошибок в этом месте
-  })
-
-  it('LoginPage: failure path shows error message', async () => {
-    const pinia = createPinia()
-    const router = makeRouter()
-
-    // make validate return true
-    const wrapper = mount(LoginPage, {
-      global: {
-        plugins: [pinia, router],
-        stubs: {
-          QPage: { template: '<div><slot /></div>' },
-          QForm: {
-            name: 'QForm',
-            template:
-              '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
-            methods: { resetValidation() {}, validate: () => true },
-            expose: ['resetValidation', 'validate'],
-          },
-        },
-      },
-    })
-
-    await router.isReady()
-
-    setFieldModel(wrapper, 'login', 'user@example.com')
-    // Use a strong-ish password too; the failure will be triggered by mocked reject
-    setFieldModel(wrapper, 'password', 'Qwe123!@')
-
-    // cause auth failure
-    authMocks.signInWithEmailAndPassword.mockRejectedValueOnce(
-      new Error('auth/wrong-password')
-    )
-
-    // submit
     emitFormSubmit(wrapper)
     await flushPromises()
-    await flushPromises()
 
-    expect(authMocks.signInWithEmailAndPassword).toHaveBeenCalled()
-    expect(onLoginSuccessSpy).not.toHaveBeenCalled()
-    expect(createErrorMessageSpy).toHaveBeenCalled()
-  })
-
-  it('RegisterPage: failure path shows error message', async () => {
-    const pinia = createPinia()
-    const router = makeRouter()
-
-    const wrapper = mount(RegisterPage, {
-      global: {
-        plugins: [pinia, router],
-        stubs: {
-          QPage: { template: '<div><slot /></div>' },
-          QForm: {
-            name: 'QForm',
-            template:
-              '<form @submit.prevent="$emit(\'submit\')" @reset="$emit(\'reset\')"><slot /></form>',
-            methods: { resetValidation() {}, validate: () => true },
-            expose: ['resetValidation', 'validate'],
-          },
-        },
-      },
-    })
-
-    await router.isReady()
-
-    setFieldModel(wrapper, 'login', 'user@example.com')
-    setFieldModel(wrapper, 'password', 'Qwe123!@')
-
-    // cause auth failure
-    authMocks.createUserWithEmailAndPassword.mockRejectedValueOnce(
-      new Error('auth/email-already-in-use')
-    )
-
-    // submit
-    emitFormSubmit(wrapper)
-    await flushPromises()
-    await flushPromises()
-
-    expect(authMocks.createUserWithEmailAndPassword).toHaveBeenCalled()
-    expect(onRegisterSuccessSpy).not.toHaveBeenCalled()
-    expect(createErrorMessageSpy).toHaveBeenCalled()
+    expect(authApiMocks.signIn).not.toHaveBeenCalled()
   })
 })

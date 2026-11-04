@@ -1,53 +1,56 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { Loading } from 'quasar'
-
-import { addDoc } from '@/boot/firebase'
-import FormFields from '@/components/form-fields/FormFields.vue'
-import EssentialForm from '@/components/form/EssentialForm.vue'
-import { useForm } from '@/composables/useForm'
-import { getNewEmployeeFields } from '@/stores/employeeForms'
-import { EMPLOYEE_FIELD } from '@/types'
-import { BUTTON_TYPE } from '@/types/form'
-import { getFieldString } from '@/utils/form'
-import { createNotify } from '@/utils/notify'
+import {
+  createEmployee,
+  createNewEmployeeFields,
+  EMPLOYEE_FIELD,
+} from '@/features/employees'
+import { getFieldModel, getFieldString } from '@/shared/form/access'
+import EssentialForm from '@/shared/form/EssentialForm.vue'
+import FormFields from '@/shared/form/FormFields.vue'
+import { BUTTON_TYPE } from '@/shared/form/types'
+import { useForm } from '@/shared/form/useForm'
+import { createFeedback } from '@/shared/ui/feedback'
 import { newEmployeeSchema } from '@/validation/schemas'
 
-// Variant A: useForm with Zod schema for New Employee
-const { fields, formRef, reset, submit, isValid, isSubmitting } = useForm({
-  fields: getNewEmployeeFields,
-  schema: newEmployeeSchema,
-  validateOnChange: true,
-  onSubmit: async () => {
-    Loading.show()
-    const name = getFieldString(fields, EMPLOYEE_FIELD.FIO)
-    const email = getFieldString(fields, EMPLOYEE_FIELD.LOGIN)
-    const position = getFieldString(fields, EMPLOYEE_FIELD.POSITION)
-    const level = getFieldString(fields, EMPLOYEE_FIELD.LEVEL)
-    const rate = getFieldString(fields, EMPLOYEE_FIELD.RATE)
-    const description = getFieldString(fields, EMPLOYEE_FIELD.DESCRIPTION)
+const { run } = createFeedback()
 
-    return addDoc('employees', {
-      name,
-      email,
-      position,
-      level,
-      rate,
-      description,
-    })
-      .then(async () => {
-        createNotify(`Сотрудник "${name}" добавлен`, 'green-4', 'how_to_reg')
+// Variant A: useForm with Zod schema for New Employee
+const { fields, formRef, reset, submit, isValid, isSubmitting, errors } =
+  useForm({
+    fields: createNewEmployeeFields(),
+    schema: newEmployeeSchema,
+    validateOnChange: true,
+    onSubmit: async () => {
+      const name = getFieldString(fields, EMPLOYEE_FIELD.FIO)
+      const email = getFieldString(fields, EMPLOYEE_FIELD.LOGIN)
+      const position = getFieldString(fields, EMPLOYEE_FIELD.POSITION)
+      const level = getFieldString(fields, EMPLOYEE_FIELD.LEVEL)
+      const rate = getFieldModel(fields, EMPLOYEE_FIELD.RATE)
+      const description = getFieldString(fields, EMPLOYEE_FIELD.DESCRIPTION)
+
+      const success = await run(
+        () =>
+          createEmployee({
+            name,
+            email,
+            position,
+            level,
+            rate: rate === null ? '' : String(rate),
+            description,
+          }),
+        {
+          successMessage: `Сотрудник "${name}" добавлен`,
+          successIcon: 'how_to_reg',
+        }
+      )
+
+      if (success) {
         await reset()
-      })
-      .catch((error) => {
-        createNotify(error)
-      })
-      .finally(() => {
-        Loading.hide()
-      })
-  },
-})
+      }
+    },
+  })
 
 const disabledSubmitButton = computed(() => !isValid.value)
 </script>
@@ -65,7 +68,10 @@ const disabledSubmitButton = computed(() => !isValid.value)
         title="Новый сотрудник"
       >
         <template #fields>
-          <FormFields :fields="fields" />
+          <FormFields
+            :errors="errors"
+            :fields="fields"
+          />
         </template>
 
         <template #buttons>

@@ -1,55 +1,31 @@
 <script setup lang="ts">
-import { watch } from 'vue'
-
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { useRouter } from 'vue-router'
-
-import { Loading } from 'quasar'
-
-import { auth } from '@/boot/firebase'
-import FormFields from '@/components/form-fields/FormFields.vue'
-import EssentialForm from '@/components/form/EssentialForm.vue'
-import { useForm } from '@/composables/useForm'
-import { getCurrentAuthFields } from '@/stores/authForms'
-import { useStoreAuth } from '@/stores/store-auth'
-import { AUTH_FIELD } from '@/types'
-import { AUTH_TYPE, BUTTON_TYPE } from '@/types/form'
-import { ROUTE_TYPE } from '@/types/route'
-import { getFieldString } from '@/utils/form'
+import { AUTH_FIELD, createAuthFields, useAuthActions } from '@/features/auth'
+import { getFieldString } from '@/shared/form/access'
+import EssentialForm from '@/shared/form/EssentialForm.vue'
+import FormFields from '@/shared/form/FormFields.vue'
+import { AUTH_TYPE, BUTTON_TYPE } from '@/shared/form/types'
+import { useForm } from '@/shared/form/useForm'
+import { ROUTE_NAME } from '@/types/route'
 import { registerSchema } from '@/validation/schemas'
 
-const storeAuth = useStoreAuth()
-const router = useRouter()
+const { register } = useAuthActions()
 
 // Variant A: useForm with Zod schema
-const { fields, formRef, reset, submit, isValid } = useForm({
-  fields: getCurrentAuthFields(AUTH_TYPE.REGISTER),
-  schema: registerSchema,
-  validateOnChange: true,
-  onSubmit: async () => {
-    Loading.show()
-    const email = getFieldString(fields, AUTH_FIELD.LOGIN)
-    const password = getFieldString(fields, AUTH_FIELD.PASSWORD)
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then(async ({ user }) => {
-        const { uid, email: userEmail } = user
-        if (userEmail && email === userEmail && uid) {
-          storeAuth.onRegisterSuccess(uid, userEmail ?? '', router)
-          await reset()
-        }
-      })
-      .catch((error) => {
-        storeAuth.createErrorMessage(error)
-      })
-      .finally(() => {
-        Loading.hide()
-      })
-  },
-})
+const { fields, formRef, reset, submit, isValid, isSubmitting, errors } =
+  useForm({
+    fields: createAuthFields(AUTH_TYPE.REGISTER),
+    schema: registerSchema,
+    validateOnChange: true,
+    onSubmit: async () => {
+      const email = getFieldString(fields, AUTH_FIELD.LOGIN)
+      const password = getFieldString(fields, AUTH_FIELD.PASSWORD)
+      const success = await register(email, password)
 
-watch(isValid, (v) => {
-  storeAuth.valid = v
-})
+      if (success) {
+        await reset()
+      }
+    },
+  })
 </script>
 
 <template>
@@ -65,7 +41,10 @@ watch(isValid, (v) => {
         title="Регистрация"
       >
         <template #fields>
-          <FormFields :fields="fields" />
+          <FormFields
+            :errors="errors"
+            :fields="fields"
+          />
         </template>
 
         <template #buttons>
@@ -76,7 +55,7 @@ watch(isValid, (v) => {
 
           <div class="row q-pt-md">
             <q-btn
-              :disable="storeAuth.loading"
+              :disable="isSubmitting"
               :type="BUTTON_TYPE.RESET"
               color="primary"
               label="Очистить"
@@ -85,8 +64,8 @@ watch(isValid, (v) => {
               rounded
             />
             <q-btn
-              :disable="storeAuth.disabledSubmitButton"
-              :loading="storeAuth.loading"
+              :disable="!isValid"
+              :loading="isSubmitting"
               :type="BUTTON_TYPE.SUBMIT"
               class="col-grow"
               color="primary"
@@ -101,7 +80,7 @@ watch(isValid, (v) => {
             <div class="q-mt-sm">
               Уже есть аккаунт?
               <router-link
-                :to="ROUTE_TYPE.LOGIN"
+                :to="{ name: ROUTE_NAME.LOGIN }"
                 class="text-primary"
               >
                 Войти

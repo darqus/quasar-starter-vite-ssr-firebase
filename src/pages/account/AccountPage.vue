@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import EssentialForm from '@/components/form/EssentialForm.vue'
-import { useStoreAuth } from '@/stores/store-auth'
+import { useStoreAuth } from '@/features/auth'
+import EssentialForm from '@/shared/form/EssentialForm.vue'
 
 const storeAuth = useStoreAuth()
 </script>

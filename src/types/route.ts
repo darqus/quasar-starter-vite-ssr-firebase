@@ -1,26 +1,34 @@
-export enum ROUTE_TYPE {
+export enum ROUTE_NAME {
+  HOME = 'home',
   REGISTER = 'register',
   LOGIN = 'login',
   FORGOT = 'forgot',
   ACCOUNT = 'account',
   NEW_EMPLOYEE = 'new-employee',
+  NOT_FOUND = 'not-found',
 }
 
-export enum ROUTE_NAME {
-  HOME = 'Главная',
-  ERROR = 'Ошибка',
-  REGISTER = 'Регистрация',
-  LOGIN = 'Войти',
-  FORGOT = 'Забыли пароль?',
-  ACCOUNT = 'Профиль',
-  NEW_EMPLOYEE = 'Новый сотрудник',
+export enum ROUTE_PATH {
+  HOME = '/',
+  REGISTER = '/register',
+  LOGIN = '/login',
+  FORGOT = '/forgot',
+  ACCOUNT = '/account',
+  NEW_EMPLOYEE = '/new-employee',
 }
 
-export enum ROUTE_ICON {
-  HOME = 'home',
-  REGISTER = 'person_add',
-  LOGIN = 'login',
-  FORGOT = 'lock_reset',
-  ACCOUNT = 'account_circle',
-  NEW_EMPLOYEE = 'badge',
+export type MenuVisibility = 'always' | 'authenticated' | 'anonymous'
+
+export type AppRouteMeta = {
+  title: string
+  icon?: string
+  menu?: boolean
+  menuVisibility?: MenuVisibility
+  requiresAuth?: boolean
+  publicOnly?: boolean
+}
+
+declare module 'vue-router' {
+  // oxlint-disable-next-line typescript/consistent-type-definitions -- module augmentation requires an interface
+  export interface RouteMeta extends AppRouteMeta {}
 }

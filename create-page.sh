@@ -1,46 +1,60 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# Creates a page component that matches the current conventions:
+#   - folder and file names in kebab-case / PascalCase;
+#   - <script setup lang="ts">, no <style> block (see src/css/STYLE_GUIDE.md);
+#   - styles, if needed, go to a layered SCSS partial in src/css/.
+#
+# Usage:
+#   bash create-page.sh
+#   -> Enter page name: master-class
+#   -> src/pages/master-class/MasterClassPage.vue
 
-# usage:
-# type "bash create-page.sh" in terminal
-# type page name in snake_case and press Enter
+set -euo pipefail
 
-# for example: "home", "about", "contact", "master-class" etc
+read -r -p "Enter page name (kebab-case, e.g. master-class): " PAGE
 
-# don't forget add route to enum ROUTE_TYPE in src/types/enums.ts
-# don't forget add route to src/router/routes.ts
+PAGE_LC="$(printf '%s' "$PAGE" \
+  | tr '[:upper:]' '[:lower:]' \
+  | tr ' _' '--' \
+  | sed -E 's/-+/-/g; s/^-|-$//g')"
 
-read -p "Enter page name: " PAGE
+if [[ ! "$PAGE_LC" =~ ^[a-z][a-z0-9-]*$ ]]; then
+  echo "Error: use kebab-case, e.g. master-class." >&2
+  exit 1
+fi
 
-PAGE_LC="${PAGE,,}"
+PAGE_PC="$(printf '%s' "$PAGE_LC" | sed -E 's/(^|-)([a-z0-9])/\U\2/g')"
 
-PAGE_PC=$(echo ${PAGE_LC^} | sed -r 's/(^|-)(.)/\U\2/g')
+DIR="src/pages/$PAGE_LC"
+FILE="$DIR/${PAGE_PC}Page.vue"
 
-echo 'create page: '$PAGE_PC'Page.vue in src/pages/'$PAGE_LC
+if [[ -e "$FILE" ]]; then
+  echo "Error: $FILE already exists." >&2
+  exit 1
+fi
 
-FILE_PAGE='src/pages/'$PAGE_LC'/'$PAGE_PC'Page.vue'
+mkdir -p "$DIR"
 
-mkdir -p 'src/pages/'$PAGE_LC
-
-echo '<template>
-  <q-page class="row items-center justify-evenly page-'$PAGE_LC'">
-    <div class="container">
-      '$PAGE_PC' Page
-    </div>
-  </q-page>
-</template>
-
+cat > "$FILE" <<EOF
 <script setup lang="ts">
+// ${PAGE_PC} page logic goes here. Keep UI state local to the page and
+// move reusable scenarios to a feature (src/features/<name>).
 </script>
 
-<style lang="scss">
-@import "./scss/page-'$PAGE_LC'"
-</style>' > $FILE_PAGE
+<template>
+  <q-page class="q-pa-md">
+    <div class="text-h5">${PAGE_PC}</div>
+  </q-page>
+</template>
+EOF
 
+cat <<MSG
+Created $FILE
 
-echo 'create scss: page-'$PAGE_LC'.scss in src/pages/'$PAGE_LC'/scss'
-
-mkdir -p 'src/pages/'$PAGE_LC'/scss'
-
-echo '.page-'$PAGE_LC' {
-  background-color: $content-bg-color;
-}' > 'src/pages/'$PAGE_LC'/scss/page-'$PAGE_LC'.scss'
+Next steps:
+  1. Add ROUTE_NAME and ROUTE_PATH to src/types/route.ts.
+  2. Add the route to src/router/routes.ts (title, icon, menu, access meta).
+  3. If the page needs styles, add a layered partial in src/css/ and
+     @use it from src/css/app.scss (no <style> blocks in components).
+MSG

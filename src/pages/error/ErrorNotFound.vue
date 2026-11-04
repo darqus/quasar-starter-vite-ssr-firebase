@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
 
-const { VITE_ROUTER_BASE: BASE } = import.meta.env
+import { ROUTE_NAME } from '@/types/route'
 
 const $q = useQuasar()
 </script>
@@ -21,7 +21,7 @@ const $q = useQuasar()
       </div>
 
       <q-btn
-        :to="BASE"
+        :to="{ name: ROUTE_NAME.HOME }"
         color="white"
         label="На Главную"
         text-color="primary"

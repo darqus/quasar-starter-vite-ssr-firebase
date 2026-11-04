@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import UserCardList from '@/components/UserCardList.vue'
-import UserSkillList from '@/components/UserSkillList.vue'
+import { UserCardList, UserSkillList } from '@/features/employees'
 
 const tab = ref('UserCardList')
 </script>

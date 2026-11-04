@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import SidebarDrawer from '@/components/SidebarDrawer.vue'
-import { TITLE } from '@/utils/meta'
+import SidebarDrawer from '@/layouts/components/SidebarDrawer.vue'
+import { TITLE } from '@/shared/lib/meta'
+import { ROUTE_NAME } from '@/types/route'
 
-const { VITE_ROUTER_BASE: BASE } = import.meta.env
 const leftDrawerOpen = ref(false)
 const title = ref(TITLE)
 const APP_NAME = import.meta.env.VITE_NAME_FULL
@@ -29,7 +29,7 @@ const toggleLeftDrawer = () => {
 
         <q-toolbar-title>
           <router-link
-            :to="BASE"
+            :to="{ name: ROUTE_NAME.HOME }"
             class="text-white text-decoration-none"
           >
             {{ APP_NAME }}

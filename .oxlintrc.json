@@ -20,6 +20,10 @@
     "eslint/no-console": ["warn", { "allow": ["warn", "error"] }],
     "eslint/no-param-reassign": ["error", { "props": false }],
     "eslint/no-unused-expressions": "error",
+    "eslint/no-underscore-dangle": [
+      "warn",
+      { "allow": ["__APP_VERSION__", "__BUILD_DATE__"] }
+    ],
     "eslint/no-var": "error",
     "eslint/object-shorthand": ["error", "always"],
     "eslint/prefer-const": ["error", { "destructuring": "all" }],
